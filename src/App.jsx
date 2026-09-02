@@ -38,29 +38,26 @@ function App() {
   /*
     Update page SEO based on the selected airline.
   */
-  useEffect(() => {
-    const selected = airlines.find(
-      (item) => item.id === airline
-    );
+useEffect(() => {
+  const selected = airlines.find(
+    (item) => item.id === airline
+  );
 
-    if (!selected) return;
+  if (!selected) return;
 
-    const airlineName = selected.name;
+  const airlineName = selected.name;
 
-    if (!airlineParam) {
-      document.title =
-        "Baggage Size Checker | Check Airline Bag Limits";
+  if (!airlineParam) {
+    document.title =
+      "Baggage Size Checker | Check Airline Bag Limits";
 
-      document
-        .querySelector('meta[name="description"]')
-        ?.setAttribute(
-          "content",
-          "Check your bag size and weight against airline baggage limits before you travel."
-        );
-
-      return;
-    }
-
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute(
+        "content",
+        "Check your bag size and weight against airline baggage limits before you travel."
+      );
+  } else {
     document.title =
       `${airlineName} Baggage Size & Weight Checker | BagChecker`;
 
@@ -70,7 +67,150 @@ function App() {
         "content",
         `Check your ${airlineName} cabin and checked baggage size and weight limits with BagChecker.`
       );
-  }, [airline, airlineParam]);
+  }
+
+  const canonicalUrl = `https://bagchecker.in${
+    airlineParam ? `/${airlineParam}` : "/"
+  }`;
+
+  let canonical = document.querySelector(
+    'link[rel="canonical"]'
+  );
+
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.setAttribute("rel", "canonical");
+    document.head.appendChild(canonical);
+  }
+
+  canonical.setAttribute("href", canonicalUrl);
+
+  const existingSchema = document.getElementById("webapp-schema");
+
+if (!existingSchema) {
+  const script = document.createElement("script");
+
+  script.id = "webapp-schema";
+  script.type = "application/ld+json";
+
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "BagChecker",
+    url: "https://bagchecker.in/",
+    description:
+      "Check airline baggage size and weight limits before you travel.",
+    applicationCategory: "TravelApplication",
+    operatingSystem: "Any",
+  });
+
+  document.head.appendChild(script);
+}
+
+const existingFaqSchema = document.getElementById("faq-schema");
+
+if (!existingFaqSchema) {
+  const script = document.createElement("script");
+
+  script.id = "faq-schema";
+  script.type = "application/ld+json";
+
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "What is the cabin baggage size limit?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Cabin baggage size limits vary by airline. Airlines may specify maximum length, width and height as well as a maximum weight. Check your airline's rules before travelling.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How much weight can I take in a cabin bag?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Cabin baggage weight limits depend on the airline, fare and route. Select your airline in BagChecker to compare your bag with the available limits.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How is checked baggage size calculated?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Some airlines calculate checked baggage size by adding the length, width and height of the bag. Maximum dimensions vary by airline and travel conditions.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can baggage rules vary by airline?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "Yes. Baggage size and weight limits can vary between airlines, routes, fare types and travel classes. Always verify the final allowance with your airline.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "How does BagChecker check my bag?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text:
+            "BagChecker compares the dimensions and weight you enter with the available baggage limits for your selected airline and bag type.",
+        },
+      },
+    ],
+  });
+
+  document.head.appendChild(script);
+}
+
+const existingBreadcrumbSchema = document.getElementById(
+  "breadcrumb-schema"
+);
+
+const urlAirline = airlines.find(
+  (item) => item.id === airlineParam
+);
+
+const script =
+  existingBreadcrumbSchema || document.createElement("script");
+
+script.id = "breadcrumb-schema";
+script.type = "application/ld+json";
+
+script.textContent = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "BagChecker",
+      item: "https://bagchecker.in/",
+    },
+    ...(urlAirline
+      ? [
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: `${urlAirline.name} Baggage`,
+            item: `https://bagchecker.in/${airlineParam}`,
+          },
+        ]
+      : []),
+  ],
+});
+
+if (!existingBreadcrumbSchema) {
+  document.head.appendChild(script);
+}
+}, [airline, airlineParam]);
 
   const selectedAirline = airlines.find(
     (item) => item.id === airline
@@ -229,9 +369,9 @@ function App() {
 
             <div className="checker-heading">
 
-              <h2>
-                Check your bag
-              </h2>
+          <h2>
+            Check your bag
+          </h2>
 
               <p>
                 Enter your bag measurements to compare them
@@ -621,8 +761,8 @@ function App() {
             </p>
 
             <h2>
-              Know your baggage limits before you travel
-            </h2>
+            Airline baggage size and weight limits
+          </h2>
 
             <p>
               Different airlines have different rules for
@@ -690,7 +830,7 @@ function App() {
               </p>
 
               <h2>
-                Check your bag in a few seconds
+                How to check your baggage size and weight
               </h2>
 
               <p>
@@ -801,7 +941,18 @@ function App() {
             </p>
 
           </div>
+            <div className="airline-links">
+  <h2>Airline baggage checkers</h2>
 
+  <p>
+    Check baggage size and weight limits for popular airlines.
+  </p>
+
+  <div>
+    <a href="/indigo">IndiGo baggage checker</a>
+    <a href="/airindia">Air India baggage checker</a>
+  </div>
+</div>
         </section>
 
 
