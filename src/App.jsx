@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { airlines } from "./data/data";
+import airlines from "./data/data";
 
 function App() {
   const[airline,setAirline] = useState("indigo")
@@ -8,13 +8,53 @@ function App() {
   const[width,setWidth] = useState("")
   const[height,setHeight] = useState("")
   const[weight,setWeight] = useState("")
+  const [result, setResult] = useState(null);
 const handleCheckBag = () => {
-  console.log("Airline:", airline);
-  console.log("Bag Type:", bagtype);
-  console.log("Length:", length);
-  console.log("Width:", width);
-  console.log("Height:", height);
-  console.log("Weight:", weight);
+
+const index = airlines.findIndex(
+  (item) => item.id === airline
+);
+  const selectedAirline = airlines[index]
+  const checkedRule = selectedAirline.checked
+  const bagLength = Number(length);
+  const bagWidth = Number(width);
+  const bagHeight = Number(height);
+  const bagWeight = Number(weight);
+
+  const total = bagLength + bagWidth + bagHeight;
+    if (bagtype == "cabin") {
+
+        const cabinRule = selectedAirline.cabin;
+
+        if (
+          cabinRule.height < bagHeight || cabinRule.length < bagLength || cabinRule.width < bagWidth || cabinRule.maxWeight < bagWeight ||cabinRule.maxTotalDimensions < total) {
+          setResult({
+          status: "not-allowed",
+          message: "Your bag is not allowed"
+        });
+        } else {
+          setResult({
+          status: "allowed",
+          message: "Your bag is allowed"
+        });
+        }
+
+    } else if (bagtype == "checked") {
+        const checkedRule = selectedAirline.checked;
+
+        if (
+          checkedRule.maxWeight < bagWeight || checkedRule.maxTotalDimensions < total) {
+          setResult({
+          status: "not-allowed",
+          message: "Your bag is not allowed"
+        });
+        } else {
+          setResult({
+          status: "allowed",
+          message: "Your bag is allowed"
+        });
+      }
+    }
 };
   return (
     <>
@@ -75,7 +115,16 @@ const handleCheckBag = () => {
 />
       <br/><br/>
 
-<button onClick={handleCheckBag}>Check My Bag</button>
+<button onClick={handleCheckBag}>Check My Bag</button>'
+{result && (
+  <div>
+    <h2>
+      {result.status === "allowed" ? "🟢 Allowed" : "🔴 Not Allowed"}
+    </h2>
+
+    <p>{result.message}</p>
+  </div>
+)}
     </>
   );
 }
