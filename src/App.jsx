@@ -257,7 +257,10 @@ if (!existingBreadcrumbSchema) {
 
     const problems = [];
 
-    if (bagWeight > rule.maxWeight) {
+    if (
+      rule.maxWeight !== null &&
+      bagWeight > rule.maxWeight
+    ) {
       problems.push("heavy");
     }
 
@@ -711,7 +714,9 @@ if (!existingBreadcrumbSchema) {
                           </p>
 
                           <p>
-                            {selectedAirline.checked.maxWeight} kg
+                            {selectedAirline.checked.maxWeight !== null
+                              ? `${selectedAirline.checked.maxWeight} kg`
+                              : "Varies by fare"}
                           </p>
                         </>
                       )}
