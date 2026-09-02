@@ -69,7 +69,7 @@ useEffect(() => {
       );
   }
 
-  const canonicalUrl = `https://bagchecker.in${
+  const canonicalUrl = `https://bag-checker-omega.vercel.app${
     airlineParam ? `/${airlineParam}` : "/"
   }`;
 
@@ -97,7 +97,7 @@ if (!existingSchema) {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "BagChecker",
-    url: "https://bagchecker.in/",
+    url: "https://bag-checker-omega.vercel.app/",
     description:
       "Check airline baggage size and weight limits before you travel.",
     applicationCategory: "TravelApplication",
@@ -192,7 +192,7 @@ script.textContent = JSON.stringify({
       "@type": "ListItem",
       position: 1,
       name: "BagChecker",
-      item: "https://bagchecker.in/",
+      item: "https://bag-checker-omega.vercel.app/",
     },
     ...(urlAirline
       ? [
@@ -200,7 +200,7 @@ script.textContent = JSON.stringify({
             "@type": "ListItem",
             position: 2,
             name: `${urlAirline.name} Baggage`,
-            item: `https://bagchecker.in/${airlineParam}`,
+            item: `https://bag-checker-omega.vercel.app/${airlineParam}`,
           },
         ]
       : []),

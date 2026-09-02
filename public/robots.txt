@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bagchecker.in/sitemap.xml
+Sitemap: https://https://bag-checker-omega.vercel.app//sitemap.xml
