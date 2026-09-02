@@ -1194,3 +1194,9 @@ input[type="number"]:focus {
   }
 
 }
+
+
+
+.hero-title {
+  min-height: 2.4em;
+}

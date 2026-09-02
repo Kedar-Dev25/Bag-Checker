@@ -18,7 +18,8 @@ function App() {
     If URL contains an airline like /indigo,
     automatically select that airline.
   */
-const navigate = useNavigate();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!airlineParam) {
       setAirline("indigo");
@@ -33,6 +34,43 @@ const navigate = useNavigate();
       setAirline(matchedAirline.id);
     }
   }, [airlineParam]);
+
+  /*
+    Update page SEO based on the selected airline.
+  */
+  useEffect(() => {
+    const selected = airlines.find(
+      (item) => item.id === airline
+    );
+
+    if (!selected) return;
+
+    const airlineName = selected.name;
+
+    if (!airlineParam) {
+      document.title =
+        "Baggage Size Checker | Check Airline Bag Limits";
+
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute(
+          "content",
+          "Check your bag size and weight against airline baggage limits before you travel."
+        );
+
+      return;
+    }
+
+    document.title =
+      `${airlineName} Baggage Size & Weight Checker | BagChecker`;
+
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute(
+        "content",
+        `Check your ${airlineName} cabin and checked baggage size and weight limits with BagChecker.`
+      );
+  }, [airline, airlineParam]);
 
   const selectedAirline = airlines.find(
     (item) => item.id === airline
@@ -109,22 +147,10 @@ const navigate = useNavigate();
         problems,
       });
     }
-    
-    if (problems.length === 0) {
-  setResult({
-    status: "allowed",
-  });
-} else {
-  setResult({
-    status: "not-allowed",
-    problems,
-  });
-}
 
-if (!airlineParam) {
-  navigate(`/${airline}`);
-}
-
+    if (!airlineParam) {
+      navigate(`/${airline}`);
+    }
   };
 
   const resetResult = () => {
@@ -177,9 +203,11 @@ if (!airlineParam) {
             AIRLINE BAGGAGE CHECKER
           </p>
 
-          <h1>
-            Check if your bag meets airline limits
-          </h1>
+<h1 className="hero-title">
+  {airlineParam
+    ? `${selectedAirline.name} Baggage Size & Weight Checker`
+    : "Check if your bag meets airline limits"}
+</h1>
 
           <p className="hero-text">
             Check your cabin or checked baggage size and
@@ -223,10 +251,13 @@ if (!airlineParam) {
               <select
                 id="airline"
                 value={airline}
-                onChange={(e) => {
-                  setAirline(e.target.value);
-                  resetResult();
-                }}
+              onChange={(e) => {
+                const selected = e.target.value;
+
+                setAirline(selected);
+                resetResult();
+                navigate(`/${selected}`);
+              }}
               >
                 {airlines.map((item) => (
                   <option
