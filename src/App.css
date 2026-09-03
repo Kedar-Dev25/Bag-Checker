@@ -1,3 +1,7 @@
+/* =========================================
+   RESET
+========================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -16,8 +20,10 @@ body {
     "Segoe UI",
     sans-serif;
 
-  background: #f8fafc;
+  background: #f7f8fa;
   color: #111827;
+
+  -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -40,19 +46,25 @@ a {
 ========================================= */
 
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
   min-height: 64px;
 
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #e8eaee;
+
+  backdrop-filter: blur(10px);
 }
 
 .header-inner {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1120px;
   min-height: 64px;
 
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 18px;
 
   display: flex;
   align-items: center;
@@ -64,20 +76,22 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
 
   color: #111827;
   text-decoration: none;
 
-  font-weight: 650;
+  font-weight: 700;
   font-size: 16px;
+
+  letter-spacing: -0.02em;
 }
 
 .brand-mark {
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 31px;
 
-  border-radius: 8px;
+  border-radius: 9px;
 
   display: flex;
   align-items: center;
@@ -87,7 +101,7 @@ a {
   color: #ffffff;
 
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 750;
 }
 
 .nav {
@@ -105,7 +119,7 @@ a {
 
   margin: 0 auto;
 
-  padding: 42px 20px 60px;
+  padding: 38px 18px 64px;
 }
 
 
@@ -114,74 +128,95 @@ a {
 ========================================= */
 
 .hero {
-  margin-bottom: 28px;
+  margin-bottom: 26px;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
-
-  font-size: 12px;
-  font-weight: 700;
-
-  letter-spacing: 0.08em;
+  margin: 0 0 9px;
 
   color: #6b7280;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  min-height: 2.4em;
 }
 
 .hero h1 {
-  max-width: 680px;
+  max-width: 700px;
 
   margin: 0;
 
-  font-size: 32px;
-  line-height: 1.15;
+  color: #0f172a;
 
-  letter-spacing: -0.03em;
+  font-size: 32px;
+  line-height: 1.12;
+
+  letter-spacing: -0.035em;
 }
 
 .hero-text {
-  max-width: 560px;
+  max-width: 580px;
 
-  margin: 12px 0 0;
+  margin: 13px 0 0;
 
-  color: #6b7280;
+  color: #667085;
 
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 
 /* =========================================
-   CHECKER
+   CHECKER LAYOUT
 ========================================= */
 
 .product-layout {
   display: block;
 }
 
+
+/* =========================================
+   MAIN CHECKER CARD
+========================================= */
+
 .card {
+  position: relative;
+
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  border: 1px solid #e2e5e9;
+  border-radius: 16px;
 
-  padding: 20px;
+  padding: 21px;
 
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.03);
+    0 1px 2px rgba(15, 23, 42, 0.03),
+    0 8px 30px rgba(15, 23, 42, 0.035);
 }
 
 .checker-heading {
-  margin-bottom: 22px;
+  margin-bottom: 23px;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #eef0f2;
 }
 
 .checker-heading h2 {
-  margin: 0 0 5px;
+  margin: 0 0 6px;
+
+  color: #111827;
 
   font-size: 19px;
   line-height: 1.3;
 
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 .checker-heading p {
@@ -189,18 +224,23 @@ a {
 
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
   font-size: 13px;
   line-height: 1.6;
 }
 
+
+/* =========================================
+   FORM
+========================================= */
+
 .form-group {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .form-group:last-of-type {
-  margin-bottom: 24px;
+  margin-bottom: 23px;
 }
 
 .form-group > label {
@@ -208,10 +248,10 @@ a {
 
   margin-bottom: 8px;
 
-  font-size: 14px;
-  font-weight: 600;
+  color: #344054;
 
-  color: #374151;
+  font-size: 13px;
+  font-weight: 650;
 }
 
 
@@ -224,11 +264,11 @@ input[type="number"] {
   width: 100%;
   height: 46px;
 
-  border: 1px solid #d1d5db;
-  border-radius: 9px;
+  border: 1px solid #d5d9df;
+  border-radius: 10px;
 
   background: #ffffff;
-  color: #111827;
+  color: #101828;
 
   padding: 0 12px;
 
@@ -236,7 +276,13 @@ input[type="number"] {
 
   transition:
     border-color 0.15s ease,
-    box-shadow 0.15s ease;
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+select:hover,
+input[type="number"]:hover {
+  border-color: #b9bec7;
 }
 
 select:focus,
@@ -247,6 +293,10 @@ input[type="number"]:focus {
     0 0 0 3px rgba(17, 24, 39, 0.08);
 }
 
+input::placeholder {
+  color: #98a2b3;
+}
+
 
 /* =========================================
    BAG TYPE
@@ -255,16 +305,16 @@ input[type="number"]:focus {
 .bag-types {
   display: grid;
 
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
 
-  gap: 10px;
+  gap: 9px;
 }
 
 .bag-option {
-  min-height: 62px;
+  min-height: 67px;
 
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
+  border: 1px solid #d9dde3;
+  border-radius: 11px;
 
   padding: 12px;
 
@@ -273,19 +323,34 @@ input[type="number"]:focus {
 
   gap: 10px;
 
+  background: #ffffff;
+
   cursor: pointer;
 
   transition:
     border-color 0.15s ease,
-    background 0.15s ease;
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.bag-option:hover {
+  border-color: #b8bec8;
 }
 
 .bag-option.active {
   border-color: #111827;
-  background: #f9fafb;
+  background: #f8fafc;
+
+  box-shadow:
+    0 0 0 1px #111827;
 }
 
 .bag-option input {
+  width: 16px;
+  height: 16px;
+
+  margin: 0;
+
   accent-color: #111827;
 }
 
@@ -297,13 +362,16 @@ input[type="number"]:focus {
 }
 
 .bag-option strong {
-  font-size: 14px;
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 650;
 }
 
 .bag-option small {
-  color: #6b7280;
+  color: #7a8493;
 
-  font-size: 12px;
+  font-size: 11px;
 }
 
 
@@ -314,9 +382,9 @@ input[type="number"]:focus {
 .dimensions {
   display: grid;
 
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .input-help {
@@ -324,9 +392,9 @@ input[type="number"]:focus {
 
   margin-top: 7px;
 
-  color: #9ca3af;
+  color: #98a2b3;
 
-  font-size: 12px;
+  font-size: 11px;
 }
 
 
@@ -350,9 +418,10 @@ input[type="number"]:focus {
 
   transform: translateY(-50%);
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 550;
 }
 
 
@@ -362,30 +431,42 @@ input[type="number"]:focus {
 
 .check-button {
   width: 100%;
-  height: 48px;
+  min-height: 48px;
 
   border: 0;
-  border-radius: 9px;
+  border-radius: 10px;
 
   background: #111827;
   color: #ffffff;
 
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 650;
 
   cursor: pointer;
 
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.08);
+
   transition:
     background 0.15s ease,
-    transform 0.1s ease;
+    transform 0.1s ease,
+    box-shadow 0.15s ease;
 }
 
 .check-button:hover {
   background: #1f2937;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.12);
 }
 
 .check-button:active {
   transform: translateY(1px);
+}
+
+.check-button:focus-visible {
+  outline: 3px solid rgba(17, 24, 39, 0.15);
+  outline-offset: 2px;
 }
 
 
@@ -394,22 +475,27 @@ input[type="number"]:focus {
 ========================================= */
 
 .result {
-  margin-top: 18px;
+  margin-top: 14px;
 
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  border: 1px solid #e1e4e8;
+  border-radius: 16px;
 
   padding: 20px;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.03);
 }
 
 .result-success {
-  border-color: #bbf7d0;
+  border-color: #b7e4c7;
+  background: #fbfefc;
 }
 
 .result-error {
-  border-color: #fecaca;
+  border-color: #f2c1c1;
+  background: #fffdfd;
 }
 
 .result-header {
@@ -420,8 +506,8 @@ input[type="number"]:focus {
 }
 
 .result-icon {
-  width: 30px;
-  height: 30px;
+  width: 31px;
+  height: 31px;
 
   flex-shrink: 0;
 
@@ -431,7 +517,8 @@ input[type="number"]:focus {
   align-items: center;
   justify-content: center;
 
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 750;
 }
 
 .result-success .result-icon {
@@ -447,18 +534,21 @@ input[type="number"]:focus {
 .result h2 {
   margin: 1px 0 5px;
 
-  font-size: 18px;
+  color: #111827;
 
-  letter-spacing: -0.01em;
+  font-size: 18px;
+  line-height: 1.3;
+
+  letter-spacing: -0.015em;
 }
 
 .result-header p {
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 
@@ -469,21 +559,23 @@ input[type="number"]:focus {
 .result-details {
   display: grid;
 
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
 
   gap: 1px;
 
-  margin-top: 20px;
+  margin-top: 19px;
 
-  background: #e5e7eb;
+  background: #e4e7eb;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 9px;
+  border: 1px solid #e4e7eb;
+  border-radius: 10px;
 
   overflow: hidden;
 }
 
 .detail-block {
+  min-width: 0;
+
   background: #ffffff;
 
   padding: 14px;
@@ -492,44 +584,56 @@ input[type="number"]:focus {
 .detail-label {
   display: block;
 
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 
-  color: #6b7280;
+  color: #7a8493;
 
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 10px;
+  font-weight: 750;
 
   text-transform: uppercase;
 
-  letter-spacing: 0.04em;
+  letter-spacing: 0.07em;
 }
 
 .detail-block p {
   margin: 3px 0;
 
-  font-size: 14px;
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 550;
 }
 
 
 /* =========================================
-   POLICY
+   POLICY LINK
 ========================================= */
 
 .policy-link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 
-  margin-top: 18px;
+  margin-top: 16px;
 
-  color: #111827;
+  color: #344054;
 
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 650;
 
   text-decoration: none;
+
+  border-bottom: 1px solid transparent;
+
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .policy-link:hover {
-  text-decoration: underline;
+  color: #111827;
+
+  border-color: #111827;
 }
 
 
@@ -538,35 +642,37 @@ input[type="number"]:focus {
 ========================================= */
 
 .disclaimer {
-  margin: 18px 4px 0;
+  margin: 14px 3px 0;
 
-  color: #9ca3af;
+  color: #8a94a3;
 
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.6;
 }
 
 
 /* =========================================
-   SEO CONTENT
+   AIRLINE SEO CONTENT
 ========================================= */
 
 .seo-content {
-  margin-top: 56px;
+  margin-top: 58px;
 
-  padding-bottom: 20px;
+  padding-top: 4px;
 }
 
 .seo-intro {
   max-width: 720px;
 
-  margin-bottom: 32px;
+  margin-bottom: 27px;
 }
 
 .seo-intro h2 {
-  margin: 0 0 12px;
+  margin: 0 0 11px;
 
-  font-size: 26px;
+  color: #111827;
+
+  font-size: 25px;
   line-height: 1.25;
 
   letter-spacing: -0.025em;
@@ -575,31 +681,48 @@ input[type="number"]:focus {
 .seo-intro > p:last-child {
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
   font-size: 14px;
   line-height: 1.75;
 }
 
 
-/* Guide Cards */
+/* =========================================
+   SEO CARDS
+========================================= */
 
 .seo-guides {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+
+  grid-template-columns: 1fr;
 
   gap: 12px;
 
-  margin-bottom: 48px;
+  margin-bottom: 44px;
 }
 
 .seo-card {
-  padding: 22px;
+  padding: 20px;
 
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #e3e6ea;
   border-radius: 14px;
+
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.025);
+
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.seo-card:hover {
+  border-color: #d2d6dc;
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.045);
 }
 
 .seo-card-label {
@@ -607,10 +730,10 @@ input[type="number"]:focus {
 
   margin-bottom: 8px;
 
-  color: #6b7280;
+  color: #8a94a3;
 
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 750;
 
   letter-spacing: 0.08em;
 }
@@ -618,41 +741,49 @@ input[type="number"]:focus {
 .seo-card h3 {
   margin: 0 0 8px;
 
-  font-size: 18px;
+  color: #1f2937;
+
+  font-size: 17px;
   line-height: 1.35;
+
+  letter-spacing: -0.015em;
 }
 
 .seo-card p {
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
 
-/* How It Works */
+/* =========================================
+   HOW IT WORKS
+========================================= */
 
 .seo-how {
-  padding: 26px 22px;
+  margin-bottom: 22px;
 
-  background: #f9fafb;
+  padding: 23px 20px;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
+  background: #f0f2f5;
 
-  margin-bottom: 24px;
+  border: 1px solid #e1e4e8;
+  border-radius: 15px;
 }
 
 .seo-how-header {
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
 .seo-how-header h2 {
-  margin: 0 0 10px;
+  margin: 0 0 9px;
 
-  font-size: 22px;
+  color: #111827;
+
+  font-size: 21px;
   line-height: 1.3;
 
   letter-spacing: -0.02em;
@@ -663,81 +794,147 @@ input[type="number"]:focus {
 
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
 
-/* Steps */
+/* =========================================
+   STEPS
+========================================= */
 
 .seo-steps {
   display: flex;
   flex-direction: column;
 
-  gap: 22px;
+  gap: 19px;
 }
 
 .seo-step {
   display: flex;
   align-items: flex-start;
 
-  gap: 14px;
+  gap: 13px;
 }
 
 .seo-step > span {
+  width: 28px;
+  height: 28px;
+
   flex-shrink: 0;
 
-  font-size: 12px;
-  font-weight: 700;
+  border-radius: 8px;
 
-  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+  border: 1px solid #dfe3e8;
+
+  color: #667085;
+
+  font-size: 10px;
+  font-weight: 750;
 }
 
 .seo-step h3 {
-  margin: 0 0 4px;
+  margin: 1px 0 4px;
 
-  font-size: 15px;
+  color: #1f2937;
+
+  font-size: 14px;
   line-height: 1.4;
 }
 
 .seo-step p {
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.6;
 }
 
 
-/* Important Note */
+/* =========================================
+   IMPORTANT NOTE
+========================================= */
 
 .seo-note {
-  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  gap: 10px;
+
+  padding: 16px 17px;
 
   background: #ffffff;
+
+  border: 1px solid #e1e4e8;
+  border-radius: 12px;
 }
 
 .seo-note strong {
-  display: block;
+  flex-shrink: 0;
 
-  margin-bottom: 6px;
+  color: #344054;
 
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .seo-note p {
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 13px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+
+/* =========================================
+   HOMEPAGE GUIDE
+========================================= */
+
+.homepage-guide {
+  margin-top: 56px;
+}
+
+.homepage-guide-header {
+  max-width: 720px;
+
+  margin-bottom: 26px;
+}
+
+.homepage-guide-header h2 {
+  margin: 0 0 10px;
+
+  color: #111827;
+
+  font-size: 25px;
+  line-height: 1.25;
+
+  letter-spacing: -0.025em;
+}
+
+.homepage-guide-header > p:last-child {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.homepage-guide-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 12px;
 }
 
 
@@ -746,22 +943,24 @@ input[type="number"]:focus {
 ========================================= */
 
 .faq-section {
-  margin-top: 48px;
+  margin-top: 54px;
 
-  padding-bottom: 20px;
+  padding-bottom: 12px;
 }
 
 .faq-header {
-  margin-bottom: 24px;
+  margin-bottom: 23px;
 }
 
 .faq-header h2 {
-  margin: 0 0 10px;
+  margin: 0 0 9px;
+
+  color: #111827;
 
   font-size: 24px;
   line-height: 1.3;
 
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
 }
 
 .faq-header p:last-child {
@@ -769,9 +968,9 @@ input[type="number"]:focus {
 
   margin: 0;
 
-  color: #6b7280;
+  color: #667085;
 
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
@@ -779,36 +978,193 @@ input[type="number"]:focus {
   display: flex;
   flex-direction: column;
 
-  gap: 10px;
+  gap: 8px;
 }
 
 .faq-list details {
-  padding: 18px 20px;
-
   background: #ffffff;
 
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border: 1px solid #e2e5e9;
+  border-radius: 11px;
+
+  padding: 0 16px;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.faq-list details:hover {
+  border-color: #cfd4da;
+}
+
+.faq-list details[open] {
+  background: #fbfcfd;
 }
 
 .faq-list summary {
+  position: relative;
+
   cursor: pointer;
 
-  font-size: 15px;
-  font-weight: 600;
+  padding: 16px 25px 16px 0;
+
+  color: #1f2937;
+
+  font-size: 13px;
+  font-weight: 650;
 
   line-height: 1.5;
+
+  list-style: none;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list summary::after {
+  content: "+";
+
+  position: absolute;
+
+  right: 2px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: #98a2b3;
+
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.faq-list details[open] summary::after {
+  content: "−";
 }
 
 .faq-list details p {
   max-width: 720px;
 
-  margin: 14px 0 0;
+  margin: 0;
 
-  color: #6b7280;
+  padding: 0 0 17px;
+
+  color: #667085;
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   AIRLINE LINKS
+========================================= */
+
+.airline-links {
+  margin-top: 58px;
+}
+
+.airline-links-header {
+  max-width: 620px;
+
+  margin-bottom: 22px;
+}
+
+.airline-links-header h2 {
+  margin: 5px 0 9px;
+
+  color: #111827;
+
+  font-size: 24px;
+  line-height: 1.3;
+
+  letter-spacing: -0.025em;
+}
+
+.airline-links-header > p:last-child {
+  margin: 0;
+
+  color: #667085;
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.airline-grid {
+  display: grid;
+
+  grid-template-columns: 1fr;
+
+  gap: 9px;
+}
+
+.airline-card {
+  min-height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 15px 17px;
+
+  background: #ffffff;
+
+  border: 1px solid #e2e5e9;
+  border-radius: 12px;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.airline-card:hover {
+  border-color: #cbd0d7;
+
+  background: #fcfcfd;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.05);
+}
+
+.airline-card-name {
+  color: #1f2937;
 
   font-size: 14px;
-  line-height: 1.7;
+  font-weight: 650;
+}
+
+.airline-card-action {
+  flex-shrink: 0;
+
+  color: #7a8493;
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.airline-card-action span {
+  margin-left: 4px;
+
+  transition: transform 0.15s ease;
+}
+
+.airline-card:hover .airline-card-action span {
+  transform: translateX(3px);
+}
+
+.airline-card:focus-visible {
+  outline: 3px solid rgba(17, 24, 39, 0.12);
+  outline-offset: 2px;
 }
 
 
@@ -817,12 +1173,12 @@ input[type="number"]:focus {
 ========================================= */
 
 .footer {
-  margin-top: 56px;
+  margin-top: 58px;
 
-  padding-top: 28px;
+  padding-top: 27px;
   padding-bottom: 20px;
 
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid #e2e5e9;
 }
 
 .footer-brand {
@@ -837,15 +1193,17 @@ input[type="number"]:focus {
 
   margin-top: 2px;
 
+  color: #1f2937;
+
   font-size: 14px;
 }
 
 .footer-brand p {
   margin: 4px 0 0;
 
-  color: #6b7280;
+  color: #7a8493;
 
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -853,30 +1211,30 @@ input[type="number"]:focus {
   display: flex;
   flex-wrap: wrap;
 
-  gap: 16px;
+  gap: 15px;
 
-  margin-top: 20px;
+  margin-top: 19px;
 }
 
 .footer-links a {
-  color: #4b5563;
+  color: #667085;
 
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 
   text-decoration: none;
 }
 
 .footer-links a:hover {
-  text-decoration: underline;
+  color: #111827;
 }
 
 .footer-copy {
-  margin: 20px 0 0;
+  margin: 19px 0 0;
 
-  color: #9ca3af;
+  color: #98a2b3;
 
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.6;
 }
 
@@ -887,94 +1245,146 @@ input[type="number"]:focus {
 
 @media (min-width: 600px) {
 
+  .header-inner {
+    padding: 0 24px;
+  }
+
   .container {
-    padding-top: 56px;
+    padding: 52px 24px 72px;
+  }
+
+  .hero {
+    margin-bottom: 30px;
   }
 
   .hero h1 {
     font-size: 38px;
   }
 
+  .hero-text {
+    font-size: 15px;
+  }
+
   .card {
-    padding: 26px;
+    padding: 25px;
   }
 
-  .bag-types {
+  .bag-option {
+    min-height: 62px;
+  }
+
+  .seo-guides {
     grid-template-columns: 1fr 1fr;
   }
 
-  .dimensions {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .result-details {
+  .homepage-guide-grid {
     grid-template-columns: 1fr 1fr;
   }
 
+  .homepage-guide-grid .seo-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .airline-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 
 /* =========================================
    DESKTOP
-   Mobile UI remains untouched
 ========================================= */
 
 @media (min-width: 900px) {
 
   .header-inner {
-    padding: 0 24px;
+    max-width: 1120px;
+
+    padding: 0 28px;
   }
 
   .nav {
     display: flex;
     align-items: center;
 
-    gap: 24px;
+    gap: 25px;
   }
 
   .nav a {
-    color: #6b7280;
+    position: relative;
 
-    font-size: 13px;
-    font-weight: 600;
+    color: #667085;
+
+    font-size: 12px;
+    font-weight: 650;
 
     text-decoration: none;
+  }
+
+  .nav a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: -7px;
+
+    height: 1px;
+
+    background: #111827;
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition: transform 0.15s ease;
   }
 
   .nav a:hover {
     color: #111827;
   }
 
+  .nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+
+  /* Main */
 
   .container {
-    max-width: 1080px;
+    max-width: 1120px;
 
-    padding: 42px 24px 60px;
+    padding: 52px 28px 80px;
   }
 
 
   /* Hero */
 
   .hero {
-    margin-bottom: 20px;
+    max-width: 820px;
+
+    margin-bottom: 30px;
   }
 
   .eyebrow {
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .hero h1 {
-    font-size: 38px;
-    line-height: 1.1;
+    max-width: 820px;
+
+    font-size: 42px;
+    line-height: 1.08;
   }
 
   .hero-text {
-    margin-top: 8px;
+    max-width: 620px;
+
+    margin-top: 10px;
 
     font-size: 14px;
-    line-height: 1.5;
   }
 
 
@@ -993,11 +1403,15 @@ input[type="number"]:focus {
   }
 
   .card {
-    padding: 20px;
+    padding: 22px;
+
+    border-radius: 15px;
   }
 
   .checker-heading {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+
+    padding-bottom: 17px;
   }
 
   .checker-heading h2 {
@@ -1008,76 +1422,65 @@ input[type="number"]:focus {
     font-size: 12px;
   }
 
-
   .form-group {
-    margin-bottom: 11px;
-  }
-
-  .form-group:last-of-type {
     margin-bottom: 13px;
   }
 
-  .form-group > label {
-    margin-bottom: 5px;
-
-    font-size: 13px;
+  .form-group:last-of-type {
+    margin-bottom: 15px;
   }
 
+  .form-group > label {
+    margin-bottom: 6px;
 
-  /* Inputs */
+    font-size: 12px;
+  }
 
   select,
   input[type="number"] {
-    height: 40px;
+    height: 41px;
 
     border-radius: 8px;
+
+    font-size: 13px;
   }
-
-
-  /* Bag type */
 
   .bag-types {
     gap: 8px;
   }
 
   .bag-option {
-    min-height: 48px;
+    min-height: 49px;
 
-    padding: 9px 10px;
+    padding: 8px 10px;
 
-    border-radius: 9px;
+    border-radius: 8px;
   }
 
   .bag-option strong {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .bag-option small {
-    font-size: 11px;
+    font-size: 10px;
   }
 
-
-  /* Dimensions */
-
   .dimensions {
-    gap: 8px;
+    gap: 7px;
   }
 
   .input-help {
     margin-top: 4px;
 
-    font-size: 11px;
+    font-size: 10px;
   }
 
-
-  /* Button */
-
   .check-button {
-    height: 42px;
+    min-height: 42px;
 
     border-radius: 8px;
 
-    font-size: 14px;
+    font-size: 13px;
   }
 
 
@@ -1086,7 +1489,9 @@ input[type="number"]:focus {
   .product-layout .result {
     margin-top: 0;
 
-    padding: 18px;
+    padding: 20px;
+
+    border-radius: 15px;
   }
 
   .result h2 {
@@ -1094,71 +1499,91 @@ input[type="number"]:focus {
   }
 
   .result-header p {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .result-details {
-    margin-top: 13px;
+    margin-top: 14px;
   }
 
   .detail-block {
-    padding: 11px;
+    padding: 12px;
   }
 
   .detail-label {
     margin-bottom: 6px;
 
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .detail-block p {
-    font-size: 13px;
-  }
-
-  .policy-link {
-    margin-top: 12px;
-
     font-size: 12px;
   }
 
-
-  /* Disclaimer */
-
-  .disclaimer {
-    margin-top: 8px;
+  .policy-link {
+    margin-top: 13px;
 
     font-size: 11px;
+  }
+
+  .disclaimer {
+    margin-top: 9px;
+
+    font-size: 10px;
   }
 
 
   /* SEO */
 
   .seo-content {
-    max-width: 900px;
+    max-width: 960px;
 
     margin: 72px auto 0;
+  }
 
-    padding-bottom: 20px;
+  .seo-intro {
+    margin-bottom: 31px;
   }
 
   .seo-intro h2 {
-    font-size: 28px;
+    font-size: 29px;
+  }
+
+  .seo-intro > p:last-child {
+    font-size: 14px;
   }
 
   .seo-guides {
-    flex-direction: row;
+    grid-template-columns: 1fr 1fr;
 
     gap: 16px;
+
+    margin-bottom: 50px;
   }
 
   .seo-card {
-    flex: 1;
-
-    padding: 26px;
+    padding: 25px;
   }
 
+  .seo-card h3 {
+    font-size: 18px;
+  }
+
+  .seo-card p {
+    font-size: 13px;
+  }
+
+
+  /* How */
+
   .seo-how {
-    padding: 32px;
+    padding: 30px;
+
+    border-radius: 16px;
+  }
+
+  .seo-how-header h2 {
+    font-size: 23px;
   }
 
   .seo-steps {
@@ -1166,130 +1591,117 @@ input[type="number"]:focus {
 
     grid-template-columns: 1fr 1fr;
 
-    gap: 28px 36px;
+    gap: 25px 40px;
+  }
+
+
+  /* Homepage guide */
+
+  .homepage-guide {
+    max-width: 960px;
+
+    margin: 72px auto 0;
+  }
+
+  .homepage-guide-header h2 {
+    font-size: 29px;
+  }
+
+  .homepage-guide-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .homepage-guide-grid .seo-card:last-child {
+    grid-column: auto;
   }
 
 
   /* FAQ */
 
   .faq-section {
-    max-width: 900px;
+    max-width: 960px;
 
-    margin: 64px auto 0;
-
-    padding-bottom: 20px;
+    margin: 68px auto 0;
   }
 
   .faq-header h2 {
-    font-size: 26px;
+    font-size: 27px;
+  }
+
+  .faq-list details {
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+
+  .faq-list summary {
+    font-size: 13px;
+  }
+
+
+  /* Airline links */
+
+  .airline-links {
+    max-width: 960px;
+
+    margin: 70px auto 0;
+  }
+
+  .airline-grid {
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 11px;
   }
 
 
   /* Footer */
 
   .footer {
-    max-width: 900px;
+    max-width: 960px;
 
-    margin: 64px auto 0;
-  }
-
-}
-
-
-
-.hero-title {
-  min-height: 2.4em;
-}
-
-
-
-/* Airline Links */
-
-.airline-links {
-  margin-top: 64px;
-}
-
-.airline-links-header {
-  max-width: 620px;
-  margin-bottom: 24px;
-}
-
-.airline-links-header h2 {
-  margin: 6px 0 10px;
-}
-
-.airline-links-header > p:last-child {
-  margin: 0;
-  color: #6b7280;
-  line-height: 1.6;
-}
-
-.airline-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.airline-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-
-  padding: 18px 20px;
-
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  text-decoration: none;
-  color: inherit;
-
-  transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.airline-card-name {
-  font-weight: 600;
-  font-size: 15px;
-}
-
-.airline-card-action {
-  flex-shrink: 0;
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.airline-card-action span {
-  margin-left: 4px;
-  transition: transform 0.2s ease;
-}
-
-.airline-card:hover {
-  border-color: #cbd5e1;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
-}
-
-.airline-card:hover .airline-card-action span {
-  transform: translateX(3px);
-}
-
-.airline-card:focus-visible {
-  outline: 3px solid rgba(59, 130, 246, 0.2);
-  outline-offset: 2px;
-}
-
-@media (min-width: 640px) {
-  .airline-grid {
-    grid-template-columns: repeat(2, 1fr);
+    margin: 70px auto 0;
   }
 }
 
-@media (min-width: 900px) {
-  .airline-grid {
-    grid-template-columns: repeat(3, 1fr);
+
+/* =========================================
+   LARGE DESKTOP
+========================================= */
+
+@media (min-width: 1200px) {
+
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .hero h1 {
+    font-size: 44px;
+  }
+
+  .product-layout {
+    gap: 22px;
+  }
+
+  .card {
+    padding: 25px;
+  }
+}
+
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }

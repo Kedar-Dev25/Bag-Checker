@@ -48,27 +48,24 @@ useEffect(() => {
 
   const airlineName = selected.name;
 
-  if (!airlineParam) {
-    document.title =
-      "Airline Baggage Size & Weight Checker | BagChecker";
+if (!airlineParam) {
+  document.title =
+      "Airline Baggage Size Checker – Bag Size & Weight | BagChecker"
+  document
+    .querySelector('meta[name="description"]')
+    ?.setAttribute(
+      "content",
+      "Check your bag size and weight against airline baggage limits. Compare cabin and checked baggage rules for popular airlines with BagChecker."    );
+} else {
+  document.title = selected.seo.title;
 
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute(
-        "content",
-        "Check your bag size and weight against airline baggage limits before you travel."
-      );
-  } else {
-    document.title =
-      `${airlineName} Baggage Size & Weight Checker | BagChecker`;
-
-    document
-      .querySelector('meta[name="description"]')
-      ?.setAttribute(
-        "content",
-        `Check your ${airlineName} cabin and checked baggage size and weight limits with BagChecker.`
-      );
-  }
+  document
+    .querySelector('meta[name="description"]')
+    ?.setAttribute(
+      "content",
+      selected.seo.description
+    );
+}
 
   const canonicalUrl = `https://bag-checker-omega.vercel.app${
     airlineParam ? `/${airlineParam}` : "/"
@@ -108,67 +105,33 @@ if (!existingSchema) {
   document.head.appendChild(script);
 }
 
-const existingFaqSchema = document.getElementById("faq-schema");
+const existingFaqSchema =
+  document.getElementById("faq-schema");
 
-if (!existingFaqSchema) {
-  const script = document.createElement("script");
+if (existingFaqSchema) {
+  existingFaqSchema.remove();
+}
 
-  script.id = "faq-schema";
-  script.type = "application/ld+json";
+if (airlineParam) {
+  const faqScript = document.createElement("script");
 
-  script.textContent = JSON.stringify({
+  faqScript.id = "faq-schema";
+  faqScript.type = "application/ld+json";
+
+  faqScript.textContent = JSON.stringify({
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "What is the cabin baggage size limit?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Cabin baggage size limits vary by airline. Airlines may specify maximum length, width and height as well as a maximum weight. Check your airline's rules before travelling.",
-        },
+    mainEntity: selected.faq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
       },
-      {
-        "@type": "Question",
-        name: "How much weight can I take in a cabin bag?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Cabin baggage weight limits depend on the airline, fare and route. Select your airline in BagChecker to compare your bag with the available limits.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How is checked baggage size calculated?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Some airlines calculate checked baggage size by adding the length, width and height of the bag. Maximum dimensions vary by airline and travel conditions.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Can baggage rules vary by airline?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "Yes. Baggage size and weight limits can vary between airlines, routes, fare types and travel classes. Always verify the final allowance with your airline.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How does BagChecker check my bag?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "BagChecker compares the dimensions and weight you enter with the available baggage limits for your selected airline and bag type.",
-        },
-      },
-    ],
+    })),
   });
 
-  document.head.appendChild(script);
+  document.head.appendChild(faqScript);
 }
 
 const existingBreadcrumbSchema = document.getElementById(
@@ -348,9 +311,9 @@ if (!existingBreadcrumbSchema) {
           </p>
 
 <h1 className="hero-title">
-  {airlineParam
-    ? `${selectedAirline.name} Baggage Size & Weight Checker`
-    : "Check if your bag meets airline limits"}
+{airlineParam
+  ? `${selectedAirline.name} Baggage Size Checker`
+  : "Check Your Bag Size & Weight Against Airline Limits"}
 </h1>
 
           <p className="hero-text">
@@ -754,77 +717,66 @@ if (!existingBreadcrumbSchema) {
         </p>
 
 
-        {/* SEO Content */}
-        <section
-          id="baggage-info"
-          className="seo-content"
-        >
+    {airlineParam && (
+  <section
+    id="baggage-info"
+    className="seo-content"
+  >
 
-          <div className="seo-intro">
+    <div className="seo-intro">
 
-            <p className="eyebrow">
-              BEFORE YOU FLY
-            </p>
+      <p className="eyebrow">
+        BEFORE YOU FLY
+      </p>
 
-            <h2>
-            Airline baggage size and weight limits
-          </h2>
+      <h2>
+        {selectedAirline.name} baggage size and weight limits
+      </h2>
 
-          <p>
-            Check {selectedAirline.name} baggage size and weight
-            limits before your flight. Enter your bag dimensions
-            and weight to compare them with the available
-            {selectedAirline.name} baggage limits.
-          </p>
+      <p>
+        {selectedAirline.content.intro}
+      </p>
 
-          </div>
+    </div>
 
+    <div className="seo-guides">
 
-          <div className="seo-guides">
+      <article className="seo-card">
 
-            <article className="seo-card">
+        <span className="seo-card-label">
+          CABIN BAGGAGE
+        </span>
 
-              <span className="seo-card-label">
-                CABIN BAGGAGE
-              </span>
+        <h3>
+          {selectedAirline.content.cabinTitle}
+        </h3>
 
-              <h3>
-                Cabin baggage size & weight
-              </h3>
+        <p>
+          {selectedAirline.content.cabinText}
+        </p>
 
-              <p>
-                Cabin bags usually have limits on both
-                dimensions and weight. Enter the length,
-                width, height and weight of your bag above
-                to see how it compares with your airline's
-                cabin baggage limits.
-              </p>
+      </article>
 
-            </article>
+      <article className="seo-card">
 
+        <span className="seo-card-label">
+          CHECKED BAGGAGE
+        </span>
 
-            <article className="seo-card">
+        <h3>
+          {selectedAirline.content.checkedTitle}
+        </h3>
 
-              <span className="seo-card-label">
-                CHECKED BAGGAGE
-              </span>
+        <p>
+          {selectedAirline.content.checkedText}
+        </p>
 
-              <h3>
-                Checked baggage size & weight
-              </h3>
+      </article>
 
-              <p>
-                Checked baggage can have different size and
-                weight limits from cabin baggage. Some
-                airlines use the combined length, width and
-                height of the bag when determining the
-                maximum size.
-              </p>
+    </div>
 
-            </article>
-
-          </div>
-
+  </section>
+)}
 
           {/* How It Works */}
           <div className="seo-how">
@@ -947,6 +899,207 @@ if (!existingBreadcrumbSchema) {
             </p>
 
           </div>
+
+
+          {/* Generic Baggage Guide - Homepage */}
+{!airlineParam && (
+  <section className="homepage-guide">
+
+    <div className="homepage-guide-header">
+
+      <p className="eyebrow">
+        BAGGAGE GUIDE
+      </p>
+
+      <h2>
+        Understand your baggage limits before you fly
+      </h2>
+
+      <p>
+        Baggage rules can be confusing. Your allowed bag size
+        and weight can depend on the airline, fare, route and
+        type of baggage. Here are the basics you should know
+        before packing.
+      </p>
+
+    </div>
+
+
+    <div className="homepage-guide-grid">
+
+      <article className="seo-card">
+
+        <span className="seo-card-label">
+          BAG DIMENSIONS
+        </span>
+
+        <h3>
+          How is baggage size measured?
+        </h3>
+
+        <p>
+          Bag dimensions are normally measured as length,
+          width and height. For checked baggage, airlines may
+          also use total dimensions, calculated as length +
+          width + height.
+        </p>
+
+      </article>
+
+
+      <article className="seo-card">
+
+        <span className="seo-card-label">
+          CABIN BAGGAGE
+        </span>
+
+        <h3>
+          What size bag can I take into the cabin?
+        </h3>
+
+        <p>
+          Cabin baggage size and weight limits vary between
+          airlines. Always check both the dimensions and
+          maximum weight allowed for your flight.
+        </p>
+
+      </article>
+
+
+      <article className="seo-card">
+
+        <span className="seo-card-label">
+          CHECKED BAGGAGE
+        </span>
+
+        <h3>
+          How does checked baggage work?
+        </h3>
+
+        <p>
+          Checked baggage is stored in the aircraft's hold.
+          Airlines may specify a maximum weight as well as a
+          maximum total dimension for each bag.
+        </p>
+
+      </article>
+
+    </div>
+
+
+    {/* Common Questions */}
+    <div className="homepage-faq">
+
+      <div className="faq-header">
+
+        <p className="eyebrow">
+          COMMON QUESTIONS
+        </p>
+
+        <h2>
+          Baggage questions people ask before flying
+        </h2>
+
+        <p>
+          Quick answers to common questions about airline
+          baggage size, weight and allowances.
+        </p>
+
+      </div>
+
+
+      <div className="faq-list">
+
+        <details>
+          <summary>
+            What size bag can I take on a flight?
+          </summary>
+
+          <p>
+            There is no single baggage size that applies to
+            every airline. Cabin and checked baggage limits
+            vary, so check the rules for the airline you are
+            travelling with.
+          </p>
+        </details>
+
+
+        <details>
+          <summary>
+            What is the standard cabin baggage size?
+          </summary>
+
+          <p>
+            Cabin baggage dimensions vary by airline. Common
+            limits are around 55 cm in length, but the allowed
+            width, height and weight can be different for each
+            airline.
+          </p>
+        </details>
+
+
+        <details>
+          <summary>
+            What does 158 cm total dimensions mean?
+          </summary>
+
+          <p>
+            It means the length, width and height of the bag
+            together should not exceed 158 cm. For example,
+            70 + 50 + 38 cm equals 158 cm.
+          </p>
+        </details>
+
+
+        <details>
+          <summary>
+            Is baggage allowance the same for every airline?
+          </summary>
+
+          <p>
+            No. Airlines can have different baggage size and
+            weight limits. Allowances can also change depending
+            on your fare, route and travel class.
+          </p>
+        </details>
+
+
+        <details>
+          <summary>
+            Does baggage allowance depend on my fare?
+          </summary>
+
+          <p>
+            Yes. Some fares include different baggage
+            allowances, particularly for checked baggage.
+            Your booking confirmation and the airline's
+            official baggage policy are the best sources for
+            your exact allowance.
+          </p>
+        </details>
+
+
+        <details>
+          <summary>
+            Should I check my airline's baggage policy before flying?
+          </summary>
+
+          <p>
+            Yes. BagChecker is designed as a quick reference,
+            but baggage rules can change and may depend on your
+            specific flight. Always confirm the final allowance
+            with the airline.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+
+  </section>
+)}
+
+
 <div className="airline-links">
   <div className="airline-links-header">
     <p className="eyebrow">AIRLINES</p>
@@ -1011,118 +1164,57 @@ if (!existingBreadcrumbSchema) {
 
   </div>
 </div>
-        </section>
+
+{/* FAQ */}
+{/* FAQ */}
+{airlineParam && (
+<section
+  id="faq"
+  className="faq-section"
+>
+
+  <div className="faq-header">
+
+    <p className="eyebrow">
+      FAQ
+    </p>
+
+    <h2>
+      Frequently asked questions
+    </h2>
+
+    <p>
+      Common questions about {airlineParam
+        ? `${selectedAirline.name} baggage size, weight limits and baggage rules.`
+        : "airline baggage size, weight limits and baggage rules."}
+    </p>
+
+  </div>
 
 
-        {/* FAQ */}
-        <section
-          id="faq"
-          className="faq-section"
-        >
+  <div className="faq-list">
 
-          <div className="faq-header">
+    {selectedAirline.faq.map((item, index) => (
 
-            <p className="eyebrow">
-              FAQ
-            </p>
+      <details key={index}>
 
-            <h2>
-              Frequently asked questions
-            </h2>
+        <summary>
+          {item.question}
+        </summary>
 
-            <p>
-              Common questions about airline baggage size,
-              weight limits and baggage rules.
-            </p>
+        <p>
+          {item.answer}
+        </p>
 
-          </div>
+      </details>
 
+    ))}
 
-          <div className="faq-list">
+  </div>
 
-            <details>
+</section>
 
-              <summary>
-                What is the cabin baggage size limit?
-              </summary>
-
-              <p>
-                Cabin baggage size limits vary by airline.
-                Airlines may specify maximum length, width
-                and height as well as a maximum weight.
-                Check your airline's rules before travelling.
-              </p>
-
-            </details>
-
-
-            <details>
-
-              <summary>
-                How much weight can I take in a cabin bag?
-              </summary>
-
-              <p>
-                Cabin baggage weight limits depend on the
-                airline, fare and route. Select your airline
-                in BagChecker to compare your bag with the
-                available limits.
-              </p>
-
-            </details>
-
-
-            <details>
-
-              <summary>
-                How is checked baggage size calculated?
-              </summary>
-
-              <p>
-                Some airlines calculate checked baggage size
-                by adding the length, width and height of the
-                bag. Maximum dimensions vary by airline and
-                travel conditions.
-              </p>
-
-            </details>
-
-
-            <details>
-
-              <summary>
-                Can baggage rules vary by airline?
-              </summary>
-
-              <p>
-                Yes. Baggage size and weight limits can vary
-                between airlines, routes, fare types and
-                travel classes. Always verify the final
-                allowance with your airline.
-              </p>
-
-            </details>
-
-
-            <details>
-
-              <summary>
-                How does BagChecker check my bag?
-              </summary>
-
-              <p>
-                BagChecker compares the dimensions and weight
-                you enter with the available baggage limits
-                for your selected airline and bag type.
-              </p>
-
-            </details>
-
-          </div>
-
-        </section>
-
-
+)}
         {/* Footer */}
         <footer className="footer">
 
