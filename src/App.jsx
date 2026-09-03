@@ -32,9 +32,10 @@ function App() {
 
     if (matchedAirline) {
       setAirline(matchedAirline.id);
+    } else {
+      navigate("/");
     }
-  }, [airlineParam]);
-
+  }, [airlineParam, navigate]);
   /*
     Update page SEO based on the selected airline.
   */
@@ -49,7 +50,7 @@ useEffect(() => {
 
   if (!airlineParam) {
     document.title =
-      "Baggage Size Checker | Check Airline Bag Limits";
+      "Airline Baggage Size & Weight Checker | BagChecker";
 
     document
       .querySelector('meta[name="description"]')
@@ -769,12 +770,12 @@ if (!existingBreadcrumbSchema) {
             Airline baggage size and weight limits
           </h2>
 
-            <p>
-              Different airlines have different rules for
-              baggage size and weight. BagChecker helps you
-              quickly understand whether your cabin or
-              checked bag meets the limits for your airline.
-            </p>
+          <p>
+            Check {selectedAirline.name} baggage size and weight
+            limits before your flight. Enter your bag dimensions
+            and weight to compare them with the available
+            {selectedAirline.name} baggage limits.
+          </p>
 
           </div>
 
@@ -946,16 +947,68 @@ if (!existingBreadcrumbSchema) {
             </p>
 
           </div>
-            <div className="airline-links">
-  <h2>Airline baggage checkers</h2>
+<div className="airline-links">
+  <div className="airline-links-header">
+    <p className="eyebrow">AIRLINES</p>
 
-  <p>
-    Check baggage size and weight limits for popular airlines.
-  </p>
+    <h2>Airline baggage checkers</h2>
 
-  <div>
-    <a href="/indigo">IndiGo baggage checker</a>
-    <a href="/airindia">Air India baggage checker</a>
+    <p>
+      Check baggage size and weight limits for popular airlines.
+    </p>
+  </div>
+
+  <div className="airline-grid">
+
+    <a href="/indigo" className="airline-card">
+      <span className="airline-card-name">IndiGo</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/airindia" className="airline-card">
+      <span className="airline-card-name">Air India</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/spicejet" className="airline-card">
+      <span className="airline-card-name">SpiceJet</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/akasa" className="airline-card">
+      <span className="airline-card-name">Akasa Air</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/allianceair" className="airline-card">
+      <span className="airline-card-name">Alliance Air</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/fly91" className="airline-card">
+      <span className="airline-card-name">FLY91</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
+    <a href="/airindiaexpress" className="airline-card">
+      <span className="airline-card-name">Air India Express</span>
+      <span className="airline-card-action">
+        Check baggage <span>→</span>
+      </span>
+    </a>
+
   </div>
 </div>
         </section>

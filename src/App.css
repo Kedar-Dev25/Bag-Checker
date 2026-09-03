@@ -1200,3 +1200,96 @@ input[type="number"]:focus {
 .hero-title {
   min-height: 2.4em;
 }
+
+
+
+/* Airline Links */
+
+.airline-links {
+  margin-top: 64px;
+}
+
+.airline-links-header {
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+.airline-links-header h2 {
+  margin: 6px 0 10px;
+}
+
+.airline-links-header > p:last-child {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.airline-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.airline-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px 20px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+
+  text-decoration: none;
+  color: inherit;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.airline-card-name {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.airline-card-action {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.airline-card-action span {
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.airline-card:hover {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.airline-card:hover .airline-card-action span {
+  transform: translateX(3px);
+}
+
+.airline-card:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.2);
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .airline-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .airline-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

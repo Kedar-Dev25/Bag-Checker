@@ -14,4 +14,24 @@
     <loc>https://bag-checker-omega.vercel.app/airindia</loc>
   </url>
 
+  <url>
+    <loc>https://bag-checker-omega.vercel.app/spicejet</loc>
+  </url>
+
+  <url>
+    <loc>https://bag-checker-omega.vercel.app/akasa</loc>
+  </url>
+
+  <url>
+    <loc>https://bag-checker-omega.vercel.app/allianceair</loc>
+  </url>
+
+  <url>
+    <loc>https://bag-checker-omega.vercel.app/fly91</loc>
+  </url>
+
+  <url>
+    <loc>https://bag-checker-omega.vercel.app/airindiaexpress</loc>
+  </url>
+
 </urlset>
