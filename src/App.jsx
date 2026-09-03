@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import airlines from "./data/data";
 import "./App.css";
@@ -13,7 +13,7 @@ function App() {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [result, setResult] = useState(null);
-
+  const resultRef = useRef(null);
   /*
     If URL contains an airline like /indigo,
     automatically select that airline.
@@ -179,7 +179,18 @@ if (!existingBreadcrumbSchema) {
   const selectedAirline = airlines.find(
     (item) => item.id === airline
   );
+  useEffect(() => {
+  if (!result) return;
 
+  const timer = setTimeout(() => {
+    resultRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+  }, 50);
+
+  return () => clearTimeout(timer);
+}, [result]);
   const handleCheckBag = () => {
     if (!bagtype || !length || !width || !height || !weight) {
       setResult({
@@ -541,15 +552,16 @@ if (!existingBreadcrumbSchema) {
 
 
           {/* Result */}
-          {result && (
-            <section
-              className={`result ${
-                result.status === "allowed"
-                  ? "result-success"
-                  : "result-error"
-              }`}
-              aria-live="polite"
-            >
+        {result && (
+          <section
+            ref={resultRef}
+            className={`result ${
+              result.status === "allowed"
+                ? "result-success"
+                : "result-error"
+            }`}
+            aria-live="polite"
+          >
 
               {result.status === "allowed" ? (
 
@@ -715,6 +727,125 @@ if (!existingBreadcrumbSchema) {
           Always check the airline's official policy before
           travelling.
         </p>
+
+{/* Homepage Standard Baggage Information */}
+{!airlineParam && (
+  <section className="standard-baggage-section">
+
+    <div className="standard-baggage-header">
+
+      <p className="standard-baggage-eyebrow">
+        STANDARD CABIN BAGGAGE
+      </p>
+
+      <h2>
+        What is the standard cabin baggage size in India?
+      </h2>
+
+      <div className="standard-answer">
+
+        <span className="standard-answer-label">
+          QUICK ANSWER
+        </span>
+
+        <p>
+          Many major Indian airlines allow a cabin bag
+          around <strong>55 × 35 × 25 cm</strong> with a
+          <strong> 7 kg</strong> weight limit. However,
+          baggage dimensions can differ between airlines.
+        </p>
+
+      </div>
+
+      <p className="standard-baggage-description">
+        Cabin baggage rules are not identical across every
+        airline. The allowed dimensions and weight can depend
+        on the airline, route, fare and travel class. Before
+        travelling, measure your bag and check the rules for
+        your specific airline.
+      </p>
+
+    </div>
+
+
+    <div className="standard-table-wrapper">
+
+      <div className="standard-table-heading">
+
+        <div>
+          <span className="standard-table-label">
+            AIRLINE COMPARISON
+          </span>
+
+          <h3>
+            Cabin baggage limits by airline
+          </h3>
+        </div>
+
+        <span className="standard-table-unit">
+          Dimensions in cm
+        </span>
+
+      </div>
+
+
+      <div className="standard-table-scroll">
+
+        <table className="standard-baggage-table">
+
+          <thead>
+            <tr>
+              <th>Airline</th>
+              <th>Cabin bag size</th>
+              <th>Weight</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            {airlines.map((item) => (
+              <tr key={item.id}>
+
+                <td>
+                  <a href={`/${item.id}`}>
+                    {item.name}
+                  </a>
+                </td>
+
+                <td>
+                  {item.cabin.length} ×{" "}
+                  {item.cabin.width} ×{" "}
+                  {item.cabin.height} cm
+                </td>
+
+                <td>
+                  {item.cabin.maxWeight} kg
+                </td>
+
+              </tr>
+            ))}
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <p className="standard-table-note">
+        These limits are provided as a quick reference.
+        Airline rules can change and may vary by fare,
+        route or travel class. Always confirm the final
+        allowance with your airline.
+      </p>
+
+    </div>
+
+  </section>
+)}
+
+
+
 
 
     {airlineParam && (
