@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import airlines from "./data/data";
 import "./App.css";
-
+const BASE_URL = "https://baginair.vercel.app";
 function App() {
   const { airline: airlineParam } = useParams();
 
@@ -67,9 +67,9 @@ if (!airlineParam) {
     );
 }
 
-  const canonicalUrl = `https://bag-checker-omega.vercel.app${
-    airlineParam ? `/${airlineParam}` : "/"
-  }`;
+const canonicalUrl = `${BASE_URL}${
+  airlineParam ? `/${airlineParam}` : "/"
+}`;
 
   let canonical = document.querySelector(
     'link[rel="canonical"]'
@@ -95,7 +95,7 @@ if (!existingSchema) {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: "BagChecker",
-    url: "https://bag-checker-omega.vercel.app/",
+    url: `${BASE_URL}/`,
     description:
       "Check airline baggage size and weight limits before you travel.",
     applicationCategory: "TravelApplication",
@@ -156,7 +156,7 @@ script.textContent = JSON.stringify({
       "@type": "ListItem",
       position: 1,
       name: "BagChecker",
-      item: "https://bag-checker-omega.vercel.app/",
+      item: `${BASE_URL}/`,
     },
     ...(urlAirline
       ? [
@@ -164,7 +164,7 @@ script.textContent = JSON.stringify({
             "@type": "ListItem",
             position: 2,
             name: `${urlAirline.name} Baggage`,
-            item: `https://bag-checker-omega.vercel.app/${airlineParam}`,
+            item: `${BASE_URL}/${airlineParam}`,
           },
         ]
       : []),
