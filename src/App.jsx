@@ -17,6 +17,7 @@ function App() {
   const [result, setResult] = useState(null);
   const [allAirlineResults, setAllAirlineResults] = useState(null);
   const resultRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -230,7 +231,24 @@ function App() {
   const selectedAirline = airlines.find(
     (item) => item.id === airline
   );
+  
+  useEffect(() => {
+  const handleOutsideClick = (event) => {
+    if (
+      menuOpen &&
+      !event.target.closest(".nav") &&
+      !event.target.closest(".hamburger")
+    ) {
+      setMenuOpen(false);
+    }
+  };
 
+  document.addEventListener("click", handleOutsideClick);
+
+  return () => {
+    document.removeEventListener("click", handleOutsideClick);
+  };
+}, [menuOpen]);
   useEffect(() => {
     if (!result) return;
 
@@ -427,32 +445,61 @@ const handleCheckBag = () => {
       <header className="header">
         <div className="header-inner">
 
-          <a
-            href="/"
-            className="brand"
-            aria-label="BagInAir home"
-          >
-            <div className="brand-mark">B</div>
-            <span>BagInAir</span>
-          </a>
+<a
+  href="/"
+  className="brand"
+  aria-label="BagInAir home"
+>
+  <img
+    src="/logo.png"
+    alt="BagInAir"
+    className="brand-logo"
+  />
 
-          <nav
-            className="nav"
-            aria-label="Main navigation"
-          >
-            <a href="#checker">
-              Baggage Checker
-            </a>
+  <span className="brand-name">
+    <span className="brand-bag">Bag</span><span className="brand-inair">InAir</span>
+  </span>
+</a>
+<div className="header-actions">
 
-            <a href="#baggage-info">
-              Baggage Guide
-            </a>
+  <nav
+    className={`nav ${menuOpen ? "nav-open" : ""}`}
+    aria-label="Main navigation"
+  >
+    <a
+      href="#checker"
+      onClick={() => setMenuOpen(false)}
+    >
+      Baggage Checker
+    </a>
 
-            <a href="#faq">
-              FAQ
-            </a>
+    <a
+      href="#baggage-info"
+      onClick={() => setMenuOpen(false)}
+    >
+      Baggage Guide
+    </a>
 
-          </nav>
+    <a
+      href="#faq"
+      onClick={() => setMenuOpen(false)}
+    >
+      FAQ
+    </a>
+  </nav>
+
+<button
+  className={`hamburger ${menuOpen ? "active" : ""}`}
+  onClick={() => setMenuOpen(!menuOpen)}
+  aria-label="Toggle navigation"
+  aria-expanded={menuOpen}
+>
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+</div>
 
         </div>
       </header>
