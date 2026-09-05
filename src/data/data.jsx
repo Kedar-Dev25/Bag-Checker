@@ -4,14 +4,14 @@ const airlines = [
     name: "IndiGo",
 
     seo: {
-      title: "IndiGo Baggage Size & Weight Checker | BagInAir",
+      title: "IndiGo Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check IndiGo cabin and checked baggage size and weight limits before your flight.",
+        "Check your IndiGo domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits IndiGo baggage limits.",
     },
 
     content: {
       intro:
-        "Check your IndiGo baggage size and weight before your flight. Enter your bag dimensions and weight to see if it meets the available IndiGo baggage limits.",
+        "Check your IndiGo domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to see if your bag fits the applicable IndiGo baggage limits.",
 
       cabinTitle: "IndiGo Cabin Baggage Size & Weight",
 
@@ -39,17 +39,17 @@ const airlines = [
           "IndiGo allows one cabin bag with a maximum weight of 7 kg, subject to the applicable fare and travel rules.",
       },
       {
-        question: "What is the checked baggage size limit for IndiGo?",
+        question: "What is the IndiGo check-in baggage size limit?",
         answer:
           "The maximum checked baggage dimension is 158 cm in total, calculated as length + width + height.",
       },
       {
-        question: "How much checked baggage is allowed on IndiGo?",
+        question: "How much checked baggage is allowed on IndiGo domestic flights?",
         answer:
-          "The standard domestic checked baggage allowance is 15 kg, although baggage allowance can vary depending on the route and fare.",
+          "The standard domestic checked baggage allowance is 15 kg, although the actual allowance can vary depending on the route and fare.",
       },
       {
-        question: "How does the IndiGo baggage checker work?",
+        question: "How does the IndiGo baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available IndiGo baggage limits.",
       },
@@ -76,14 +76,14 @@ const airlines = [
     name: "Air India",
 
     seo: {
-      title: "Air India Baggage Size & Weight Checker | BagInAir",
+      title: "Air India Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check Air India cabin and checked baggage size and weight limits before your flight.",
+        "Check your Air India domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits Air India baggage limits.",
     },
 
     content: {
       intro:
-        "Check your Air India baggage size and weight before travelling. Enter your bag dimensions and weight to compare them with the available Air India baggage limits.",
+        "Check your Air India domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the applicable Air India baggage limits.",
 
       cabinTitle: "Air India Cabin Baggage Size & Weight",
 
@@ -111,7 +111,7 @@ const airlines = [
           "The cabin baggage weight limit used by BagInAir is 7 kg. The applicable allowance can vary by fare, route and travel class.",
       },
       {
-        question: "What is the checked baggage size limit for Air India?",
+        question: "What is the Air India check-in baggage size limit?",
         answer:
           "The maximum checked baggage dimension used by BagInAir is 158 cm in total, calculated as length + width + height.",
       },
@@ -121,7 +121,7 @@ const airlines = [
           "The standard allowance used by this checker is 15 kg, but the actual allowance can vary depending on your fare, route and travel class.",
       },
       {
-        question: "How does the Air India baggage checker work?",
+        question: "How does the Air India baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Air India baggage limits.",
       },
@@ -149,14 +149,14 @@ const airlines = [
     name: "SpiceJet",
 
     seo: {
-      title: "SpiceJet Baggage Size & Weight Checker | BagInAir",
+      title: "SpiceJet Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check SpiceJet cabin and checked baggage size and weight limits before your flight.",
+        "Check your SpiceJet domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits SpiceJet baggage limits.",
     },
 
     content: {
       intro:
-        "Check your SpiceJet baggage size and weight before your flight. Enter your bag dimensions and weight to compare them with the available SpiceJet baggage limits.",
+        "Check your SpiceJet domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the available SpiceJet baggage limits.",
 
       cabinTitle: "SpiceJet Cabin Baggage Size & Weight",
 
@@ -184,7 +184,7 @@ const airlines = [
           "The cabin baggage weight limit used by BagInAir is 7 kg. The applicable allowance may vary depending on your fare and route.",
       },
       {
-        question: "What is the checked baggage size limit for SpiceJet?",
+        question: "What is the SpiceJet check-in baggage size limit?",
         answer:
           "The maximum checked baggage dimension used by BagInAir is 158 cm in total, calculated as length + width + height.",
       },
@@ -194,7 +194,7 @@ const airlines = [
           "The standard checked baggage limit used by this checker is 15 kg, although the actual allowance can vary by route and fare.",
       },
       {
-        question: "How does the SpiceJet baggage checker work?",
+        question: "How does the SpiceJet baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available SpiceJet baggage limits.",
       },
@@ -221,14 +221,14 @@ const airlines = [
     name: "Akasa Air",
 
     seo: {
-      title: "Akasa Air Baggage Size & Weight Checker | BagInAir",
+      title: "Akasa Air Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check Akasa Air cabin and checked baggage size and weight limits before your flight.",
+        "Check your Akasa Air domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits Akasa Air baggage limits.",
     },
 
     content: {
       intro:
-        "Check your Akasa Air baggage size and weight before your flight. Enter your bag dimensions and weight to compare them with the available Akasa Air baggage limits.",
+        "Check your Akasa Air domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the available Akasa Air baggage limits.",
 
       cabinTitle: "Akasa Air Cabin Baggage Size & Weight",
 
@@ -256,7 +256,7 @@ const airlines = [
           "The cabin baggage weight limit used by BagInAir is 7 kg. The applicable allowance may vary according to the airline's current rules.",
       },
       {
-        question: "What is the checked baggage size limit for Akasa Air?",
+        question: "What is the Akasa Air check-in baggage size limit?",
         answer:
           "The maximum checked baggage dimension used by BagInAir is 158 cm in total, calculated as length + width + height.",
       },
@@ -266,7 +266,7 @@ const airlines = [
           "The standard checked baggage limit used by this checker is 15 kg, but the actual allowance may vary by fare and route.",
       },
       {
-        question: "How does the Akasa Air baggage checker work?",
+        question: "How does the Akasa Air baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Akasa Air baggage limits.",
       },
@@ -294,14 +294,14 @@ const airlines = [
     name: "Alliance Air",
 
     seo: {
-      title: "Alliance Air Baggage Size & Weight Checker | BagInAir",
+      title: "Alliance Air Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check Alliance Air cabin and checked baggage size and weight limits before your flight.",
+        "Check your Alliance Air domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits Alliance Air baggage limits.",
     },
 
     content: {
       intro:
-        "Check your Alliance Air baggage size and weight before your flight. Enter your bag dimensions and weight to compare them with the available Alliance Air baggage limits.",
+        "Check your Alliance Air domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the available Alliance Air baggage limits.",
 
       cabinTitle: "Alliance Air Cabin Baggage Size & Weight",
 
@@ -329,7 +329,7 @@ const airlines = [
           "The cabin baggage weight limit used by BagInAir is 5 kg, with maximum dimensions of 40 × 30 × 15 cm.",
       },
       {
-        question: "What is the checked baggage size limit for Alliance Air?",
+        question: "What is the Alliance Air check-in baggage size limit?",
         answer:
           "The maximum checked baggage total dimension used by BagInAir is 270 cm.",
       },
@@ -339,7 +339,7 @@ const airlines = [
           "The checked baggage weight limit used by BagInAir is 15 kg. The actual allowance can depend on the applicable booking and route.",
       },
       {
-        question: "How does the Alliance Air baggage checker work?",
+        question: "How does the Alliance Air baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Alliance Air baggage limits.",
       },
@@ -367,14 +367,14 @@ const airlines = [
     name: "FLY91",
 
     seo: {
-      title: "FLY91 Baggage Size & Weight Checker | BagInAir",
+      title: "FLY91 Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check FLY91 cabin and checked baggage size and weight limits before your flight.",
+        "Check your FLY91 domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits FLY91 baggage limits.",
     },
 
     content: {
       intro:
-        "Check your FLY91 baggage size and weight before your flight. Enter your bag dimensions and weight to compare them with the available FLY91 baggage limits.",
+        "Check your FLY91 domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the available FLY91 baggage limits.",
 
       cabinTitle: "FLY91 Cabin Baggage Size & Weight",
 
@@ -402,7 +402,7 @@ const airlines = [
           "The cabin baggage weight limit used by BagInAir is 7 kg, with maximum dimensions of 35 × 30 × 20 cm.",
       },
       {
-        question: "What is the checked baggage size limit for FLY91?",
+        question: "What is the FLY91 check-in baggage size limit?",
         answer:
           "The maximum checked baggage total dimension used by BagInAir is 158 cm.",
       },
@@ -412,7 +412,7 @@ const airlines = [
           "The checked baggage weight limit used by BagInAir is 15 kg. Actual baggage allowance can depend on the applicable airline rules.",
       },
       {
-        question: "How does the FLY91 baggage checker work?",
+        question: "How does the FLY91 baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available FLY91 baggage limits.",
       },
@@ -441,14 +441,14 @@ const airlines = [
 
     seo: {
       title:
-        "Air India Express Baggage Size & Weight Checker | BagInAir",
+        "Air India Express Baggage Size Checker – Cabin & Checked | BagInAir",
       description:
-        "Check Air India Express cabin and checked baggage size and weight limits before your flight.",
+        "Check your Air India Express domestic cabin or checked bag size and weight. Enter your dimensions to see if your bag fits the available limits.",
     },
 
     content: {
       intro:
-        "Check your Air India Express baggage size and weight before your flight. Enter your bag dimensions and weight to compare them with the available Air India Express baggage limits.",
+        "Check your Air India Express domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the available Air India Express baggage limits.",
 
       cabinTitle: "Air India Express Cabin Baggage Size & Weight",
 
@@ -480,7 +480,7 @@ const airlines = [
       },
       {
         question:
-          "What is the checked baggage size limit for Air India Express?",
+          "What is the Air India Express check-in baggage size limit?",
         answer:
           "The maximum total checked baggage dimensions used by BagInAir are 319 cm, calculated from the length, width and height.",
       },
@@ -492,7 +492,7 @@ const airlines = [
       },
       {
         question:
-          "How does the Air India Express baggage checker work?",
+          "How does the Air India Express baggage size checker work?",
         answer:
           "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Air India Express baggage limits.",
       },
