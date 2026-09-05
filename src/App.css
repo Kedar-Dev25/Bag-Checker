@@ -433,8 +433,7 @@ input::placeholder {
   border-color: #111827;
   background: #f8fafc;
 
-  box-shadow:
-    0 0 0 1px #111827;
+
 }
 
 .bag-option input {
