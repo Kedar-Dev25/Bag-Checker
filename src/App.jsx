@@ -231,7 +231,7 @@ function App() {
   const selectedAirline = airlines.find(
     (item) => item.id === airline
   );
-  
+
   useEffect(() => {
   const handleOutsideClick = (event) => {
     if (
@@ -570,14 +570,18 @@ const handleCheckBag = () => {
 
         {isAllAirlinesPage ? (
 
-<section className="standard-baggage-section all-airlines-section">
+<section
+  id="checker"
+  className="product-layout all-airlines-product-layout"
+  aria-label="All airline baggage size and weight checker"
+>
 
-
-<div className="standard-answer">
-
-  <span className="standard-answer-label">
-    WHAT IS YOUR BAG TYPE?
-  </span>
+<section className="card">
+    <div className="checker-heading">
+    <h2>
+      Check your bag
+    </h2>
+  </div>
 
   <div className="bag-types">
 
@@ -773,120 +777,123 @@ const handleCheckBag = () => {
     </div>
 
   </div>
-
-</div>
-
-<button
+        <button
   type="button"
   className="all-airlines-check-button"
   onClick={handleCheckBag}
 >
   Check my bag
 </button>
+</section>
+<section
+  className="result all-airlines-result-panel"
+  aria-live="polite"
+>
+  {!allAirlineResults ? (
+    <div className="result-placeholder">
 
-{allAirlineResults && (
-  <section
-    className="all-airlines-results"
-    aria-live="polite"
-  >
+      <span className="detail-label">
+        BAGGAGE CHECK RESULT
+      </span>
 
-    <div className="all-airlines-results-header">
+      <h2>
+        Your result will appear here
+      </h2>
 
-      <div>
+      <p>
+        Enter your bag details to compare your
+        baggage allowance across airlines.
+      </p>
 
-        <span className="standard-table-label">
-          BAGGAGE CHECK RESULT
-        </span>
+    </div>
+  ) : (
+    <div className="all-airlines-result-content">
 
-        <h3>
-          {allAirlineResults.filter(
-            (item) => item.allowed
-          ).length} of {allAirlineResults.length} airlines fit your bag
-        </h3>
+      <span className="detail-label">
+        BAGGAGE CHECK RESULT
+      </span>
+
+      <h2>
+        {allAirlineResults.filter(
+          (item) => item.allowed
+        ).length} of {allAirlineResults.length} airlines fit your bag
+      </h2>
+
+      <div className="all-airlines-results-grid">
+
+        {allAirlineResults.map((item) => (
+
+          <a
+            key={item.id}
+            href={`/${item.id}`}
+            className={`airline-result-card ${
+              item.allowed
+                ? "airline-result-allowed"
+                : "airline-result-not-allowed"
+            }`}
+          >
+
+            <div className="airline-result-top">
+
+              <span className="airline-result-icon">
+                {item.allowed ? "✓" : "×"}
+              </span>
+
+              <strong>
+                {item.name}
+              </strong>
+
+            </div>
+
+            <div className="airline-result-details">
+
+              {bagtype === "cabin" ? (
+                <>
+                  <span>
+                    {item.rule.length} ×{" "}
+                    {item.rule.width} ×{" "}
+                    {item.rule.height} cm
+                  </span>
+
+                  <span>
+                    {item.rule.maxWeight} kg
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    {item.rule.maxTotalDimensions} cm total
+                  </span>
+
+                  <span>
+                    {item.rule.maxWeight !== null
+                      ? `${item.rule.maxWeight} kg`
+                      : "Varies by fare"}
+                  </span>
+                </>
+              )}
+
+            </div>
+
+            <span className="airline-result-status">
+              {item.allowed
+                ? "Your bag fits"
+                : "Does not fit"}
+            </span>
+
+          </a>
+
+        ))}
 
       </div>
 
     </div>
+  )}
+</section>
 
 
-    <div className="all-airlines-results-grid">
-
-      {allAirlineResults.map((item) => (
-
-        <a
-          key={item.id}
-          href={`/${item.id}`}
-          className={`airline-result-card ${
-            item.allowed
-              ? "airline-result-allowed"
-              : "airline-result-not-allowed"
-          }`}
-        >
-
-          <div className="airline-result-top">
-
-            <span className="airline-result-icon">
-              {item.allowed ? "✓" : "×"}
-            </span>
-
-            <strong>
-              {item.name}
-            </strong>
-
-          </div>
 
 
-          <div className="airline-result-details">
-
-            {bagtype === "cabin" ? (
-
-              <>
-                <span>
-                  {item.rule.length} ×{" "}
-                  {item.rule.width} ×{" "}
-                  {item.rule.height} cm
-                </span>
-
-                <span>
-                  {item.rule.maxWeight} kg
-                </span>
-              </>
-
-            ) : (
-
-              <>
-                <span>
-                  {item.rule.maxTotalDimensions} cm total
-                </span>
-
-                <span>
-                  {item.rule.maxWeight !== null
-                    ? `${item.rule.maxWeight} kg`
-                    : "Varies by fare"}
-                </span>
-              </>
-
-            )}
-
-          </div>
-
-
-          <span className="airline-result-status">
-
-            {item.allowed
-              ? "Your bag fits"
-              : "Does not fit"}
-
-          </span>
-
-        </a>
-
-      ))}
-
-    </div>
-
-  </section>
-)}
             <div className="standard-table-wrapper">
 
               <div className="standard-table-heading">
@@ -982,10 +989,6 @@ const handleCheckBag = () => {
                   Check your bag
                 </h2>
 
-                <p>
-                  Enter your bag measurements to compare them
-                  with your airline's baggage limits.
-                </p>
 
               </div>
 
@@ -1174,8 +1177,7 @@ const handleCheckBag = () => {
 
               </div>
 
-
-              {/* Check Button */}
+                                  {/* Check Button */}
               <button
                 className="check-button"
                 onClick={handleCheckBag}
@@ -1183,9 +1185,31 @@ const handleCheckBag = () => {
                 Check my bag
               </button>
 
+
             </section>
 
+            {/* Desktop Result Placeholder */}
+{!result && (
+  <section
+    className="result homepage-result-placeholder"
+    aria-hidden="true"
+  >
+    <div className="result-placeholder">
+      <span className="detail-label">
+        BAGGAGE CHECK RESULT
+      </span>
 
+      <h2>
+        Your result will appear here
+      </h2>
+
+      <p>
+        Enter your bag details to check whether your bag
+        meets the airline's baggage limits.
+      </p>
+    </div>
+  </section>
+)}
             {/* Result */}
             {result && (
 
@@ -1419,7 +1443,6 @@ const handleCheckBag = () => {
               </p>
 
             </div>
-
 
             <div className="standard-table-wrapper">
 
