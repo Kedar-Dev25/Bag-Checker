@@ -86,17 +86,17 @@ function App() {
           "content",
           "Compare cabin and checked baggage size and weight limits across supported airlines with BagInAir."
         );
-    } else if (!airlineParam) {
-      document.title =
-        "Airline Baggage Size Checker – Bag Size & Weight | BagInAir";
+} else if (!airlineParam) {
+  document.title =
+    "Baggage Size Checker – Check Bag Size & Weight | BagInAir";
 
-      document
-        .querySelector('meta[name="description"]')
-        ?.setAttribute(
-          "content",
-          "Check your bag size and weight against airline baggage limits. Compare cabin and checked baggage rules for popular airlines with BagInAir."
-        );
-    } else {
+  document
+    .querySelector('meta[name="description"]')
+    ?.setAttribute(
+      "content",
+      "Check your cabin or checked bag size and weight against airline baggage limits. Compare baggage rules for popular airlines with BagInAir."
+    );
+}else {
       document.title = selected.seo.title;
 
       document
@@ -532,11 +532,11 @@ const handleCheckBag = () => {
       : "Check Your Bag Size & Weight Against Airline Limits"}
   </h1>
 
-  <p className="hero-text">
-    {isAllAirlinesPage
-      ? "Compare your bag size and weight with baggage limits across supported airlines."
-      : "Check your cabin or checked baggage size and weight before you fly."}
-  </p>
+<p className="hero-text">
+  {isAllAirlinesPage
+    ? "Compare your bag size and weight with baggage limits across supported airlines."
+    : `Check your ${selectedAirline.name} cabin or checked baggage size and weight before you fly.`}
+</p>
 
 </section>
 
@@ -1543,9 +1543,9 @@ const handleCheckBag = () => {
                 BEFORE YOU FLY
               </p>
 
-              <h2>
-                {selectedAirline.name} baggage size and weight limits
-              </h2>
+<h2>
+  {selectedAirline.name} baggage size, weight and allowance
+</h2>
 
               <p>
                 {selectedAirline.content.intro}
