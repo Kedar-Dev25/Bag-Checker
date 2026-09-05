@@ -78,23 +78,22 @@ function App() {
 
     if (isAllAirlinesPage) {
       document.title =
-        "Compare Airline Baggage Size & Weight | BagChecker";
-
+  "Compare Airline Baggage Size & Weight | BagInAir";
       document
         .querySelector('meta[name="description"]')
         ?.setAttribute(
           "content",
-          "Compare cabin and checked baggage size and weight limits across supported airlines with BagChecker."
+          "Compare cabin and checked baggage size and weight limits across supported airlines with BagInAir."
         );
     } else if (!airlineParam) {
       document.title =
-        "Airline Baggage Size Checker – Bag Size & Weight | BagChecker";
+        "Airline Baggage Size Checker – Bag Size & Weight | BagInAir";
 
       document
         .querySelector('meta[name="description"]')
         ?.setAttribute(
           "content",
-          "Check your bag size and weight against airline baggage limits. Compare cabin and checked baggage rules for popular airlines with BagChecker."
+          "Check your bag size and weight against airline baggage limits. Compare cabin and checked baggage rules for popular airlines with BagInAir."
         );
     } else {
       document.title = selected.seo.title;
@@ -135,7 +134,7 @@ function App() {
       script.textContent = JSON.stringify({
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        name: "BagChecker",
+        name: "BagInAir",
         url: `${BASE_URL}/`,
         description:
           "Check airline baggage size and weight limits before you travel.",
@@ -197,7 +196,7 @@ function App() {
         {
           "@type": "ListItem",
           position: 1,
-          name: "BagChecker",
+          name: "BagInAir",
           item: `${BASE_URL}/`,
         },
 
@@ -431,10 +430,10 @@ const handleCheckBag = () => {
           <a
             href="/"
             className="brand"
-            aria-label="BagChecker home"
+            aria-label="BagInAir home"
           >
             <div className="brand-mark">B</div>
-            <span>BagChecker</span>
+            <span>BagInAir</span>
           </a>
 
           <nav
@@ -1641,7 +1640,7 @@ const handleCheckBag = () => {
 
           <p>
             Baggage allowances can vary by airline, route,
-            fare type and travel class. BagChecker is a
+            fare type and travel class. BagInAir is a
             quick reference tool. Always confirm the final
             baggage allowance with your airline before
             travelling.
@@ -1835,7 +1834,7 @@ const handleCheckBag = () => {
                   </summary>
 
                   <p>
-                    Yes. BagChecker is designed as a quick reference,
+                    Yes. BagInAir is designed as a quick reference,
                     but baggage rules can change and may depend on your
                     specific flight. Always confirm the final allowance
                     with the airline.
@@ -2018,7 +2017,7 @@ const handleCheckBag = () => {
             <div>
 
               <strong>
-                BagChecker
+                BagInAir
               </strong>
 
               <p>
@@ -2051,7 +2050,7 @@ const handleCheckBag = () => {
 
 
           <p className="footer-copy">
-            © {new Date().getFullYear()} BagChecker.
+            © {new Date().getFullYear()} BagInAir.
             Always verify baggage rules with your airline.
           </p>
 
