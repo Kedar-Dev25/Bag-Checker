@@ -124,27 +124,29 @@ function App() {
     canonical.setAttribute("href", canonicalUrl);
 
     const existingSchema =
-      document.getElementById("webapp-schema");
+  document.getElementById("webapp-schema");
 
-    if (!existingSchema) {
-      const script = document.createElement("script");
+if (existingSchema) {
+  existingSchema.remove();
+}
 
-      script.id = "webapp-schema";
-      script.type = "application/ld+json";
+const webAppScript = document.createElement("script");
 
-      script.textContent = JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        name: "BagInAir",
-        url: `${BASE_URL}/`,
-        description:
-          "Check airline baggage size and weight limits before you travel.",
-        applicationCategory: "TravelApplication",
-        operatingSystem: "Any",
-      });
+webAppScript.id = "webapp-schema";
+webAppScript.type = "application/ld+json";
 
-      document.head.appendChild(script);
-    }
+webAppScript.textContent = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "BagInAir",
+  url: canonicalUrl,
+  description:
+    "Check airline baggage size and weight limits before you travel.",
+  applicationCategory: "TravelApplication",
+  operatingSystem: "Any",
+});
+
+document.head.appendChild(webAppScript);
 
     const existingFaqSchema =
       document.getElementById("faq-schema");
