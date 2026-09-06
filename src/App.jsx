@@ -2076,55 +2076,86 @@ const handleCheckBag = () => {
 
 
         {/* Footer */}
-        <footer className="footer">
+{/* Footer */}
+<footer className="footer">
 
-          <div className="footer-brand">
+<div className="footer-brand">
+  <img
+    src="/logo.png"
+    alt="BagInAir"
+    className="footer-brand-icon"
+  />
 
-            <div className="brand-mark">
-              B
-            </div>
+  <div>
+    <strong>BagInAir</strong>
 
-            <div>
-
-              <strong>
-                BagInAir
-              </strong>
-
-              <p>
-                Airline baggage size and weight checker.
-              </p>
-
-            </div>
-
-          </div>
+    <p>
+      Check airline baggage size and weight limits before you fly.
+    </p>
+  </div>
+</div>
 
 
-          <nav
-            className="footer-links"
-            aria-label="Footer navigation"
-          >
+  <div className="footer-columns">
 
-            <a href="#checker">
-              Baggage Checker
-            </a>
+    {/* Baggage Tools */}
+    <div className="footer-column">
+      <h3>Baggage Tools</h3>
 
-            <a href="#baggage-info">
-              Baggage Guide
-            </a>
+      <a href="/">
+        Baggage Size Checker
+      </a>
 
-            <a href="#faq">
-              FAQ
-            </a>
-
-          </nav>
+      <a href="/airlines">
+        Compare All Airlines
+      </a>
+    </div>
 
 
-          <p className="footer-copy">
-            © {new Date().getFullYear()} BagInAir.
-            Always verify baggage rules with your airline.
-          </p>
+    {/* Airline Checkers */}
+    <div className="footer-column">
+      <h3>Airline Baggage Checkers</h3>
 
-        </footer>
+      {airlines.map((item) => (
+        <a
+          key={item.id}
+          href={`/${item.id}`}
+        >
+          {item.name} Baggage Checker
+        </a>
+      ))}
+    </div>
+
+
+    {/* Information */}
+    <div className="footer-column">
+      <h3>Information</h3>
+
+      <a href="#baggage-info">
+        Baggage Guide
+      </a>
+
+      <a href="#faq">
+        FAQ
+      </a>
+    </div>
+
+  </div>
+
+
+  <div className="footer-bottom">
+
+    <p>
+      © {new Date().getFullYear()} BagInAir.
+    </p>
+
+    <p>
+      Always verify baggage rules with your airline before travelling.
+    </p>
+
+  </div>
+
+</footer>
 
       </main>
 

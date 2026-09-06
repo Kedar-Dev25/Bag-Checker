@@ -1267,13 +1267,20 @@ input::placeholder {
 ========================================= */
 
 .footer {
-  margin-top: 58px;
+  max-width: 960px;
 
-  padding-top: 27px;
-  padding-bottom: 20px;
+  margin: 70px auto 0;
+
+  padding-top: 32px;
+  padding-bottom: 24px;
 
   border-top: 1px solid #e2e5e9;
 }
+
+
+/* =========================================
+   FOOTER BRAND
+========================================= */
 
 .footer-brand {
   display: flex;
@@ -1290,47 +1297,110 @@ input::placeholder {
   color: #1f2937;
 
   font-size: 14px;
+  font-weight: 750;
 }
+.footer-brand-icon {
+  width: 30px;
+  height: 30px;
 
+  display: block;
+  flex-shrink: 0;
+
+  object-fit: contain;
+}
 .footer-brand p {
-  margin: 4px 0 0;
+  max-width: 300px;
+
+  margin: 5px 0 0;
 
   color: #7a8493;
 
   font-size: 11px;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-.footer-links {
+
+/* =========================================
+   FOOTER COLUMNS
+========================================= */
+
+.footer-columns {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 28px 24px;
+
+  margin-top: 30px;
+}
+
+.footer-column {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 
-  gap: 15px;
-
-  margin-top: 19px;
+  gap: 9px;
 }
 
-.footer-links a {
+.footer-column h3 {
+  margin: 0 0 3px;
+
+  color: #344054;
+
+  font-size: 11px;
+  font-weight: 750;
+
+  letter-spacing: 0.03em;
+}
+
+.footer-column a {
+  width: fit-content;
+
   color: #667085;
 
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 550;
 
   text-decoration: none;
+
+  transition:
+    color 0.15s ease,
+    transform 0.15s ease;
 }
 
-.footer-links a:hover {
+.footer-column a:hover {
   color: #111827;
+
+  transform: translateX(2px);
 }
 
-.footer-copy {
-  margin: 19px 0 0;
+
+/* =========================================
+   FOOTER BOTTOM
+========================================= */
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  margin-top: 30px;
+  padding-top: 18px;
+
+  border-top: 1px solid #eef0f2;
+}
+
+.footer-bottom p {
+  margin: 0;
 
   color: #98a2b3;
 
   font-size: 10px;
   line-height: 1.6;
 }
+
+
+
 
 
 /* =========================================
@@ -1388,6 +1458,22 @@ input::placeholder {
   display: block;
   height: 100%;
 }
+
+  .footer-columns {
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 30px;
+
+    margin-top: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+  }
 }
 
 
@@ -1803,6 +1889,23 @@ input::placeholder {
     max-width: 960px;
 
     margin: 70px auto 0;
+  }
+
+    .footer {
+    max-width: 960px;
+
+    margin: 70px auto 0;
+
+    padding-top: 34px;
+    padding-bottom: 26px;
+  }
+
+  .footer-columns {
+    gap: 50px;
+  }
+
+  .footer-column a {
+    font-size: 11px;
   }
 }
 
