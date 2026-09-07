@@ -9,51 +9,64 @@ const airlines = [
         "Check your IndiGo domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits IndiGo baggage limits.",
     },
 
-    content: {
-      intro:
-        "Check your IndiGo domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to see if your bag fits the applicable IndiGo baggage limits.",
+content: {
+intro:
+"Check your IndiGo baggage size, weight and allowance before your flight. Enter your cabin or checked bag dimensions and weight to see whether your luggage fits the available IndiGo baggage limits.",
 
-      cabinTitle: "IndiGo Cabin Baggage Size & Weight",
+cabinTitle: "IndiGo Cabin Baggage Size & Weight",
 
-      cabinText:
-        "IndiGo cabin baggage can be up to 55 × 35 × 25 cm and must not exceed 7 kg.",
+cabinText:
+"IndiGo cabin baggage can be up to 55 × 35 × 25 cm and must not exceed 7 kg. This is the main cabin bag size and weight limit used by the checker.",
 
-      checkedTitle: "IndiGo Checked Baggage Size & Weight",
+checkedTitle: "IndiGo Checked Baggage Size & Weight",
 
-      checkedText:
-        "For standard domestic travel, IndiGo checked baggage allowance is 15 kg. The maximum checked baggage dimensions are 158 cm in total.",
+checkedText:
+"For standard domestic travel, IndiGo checked baggage allowance is 15 kg. The maximum checked baggage dimensions are 158 cm in total, calculated by adding length, width and height.",
 
-      sizeCalculation:
-        "Checked baggage size is calculated by adding the length, width and height of the bag.",
-    },
+sizeCalculation:
+"Checked baggage size is calculated by adding the length, width and height of the bag. For example, a bag measuring 70 × 50 × 38 cm has total dimensions of 158 cm.",
 
-    faq: [
-      {
-        question: "What is the cabin baggage size for IndiGo?",
-        answer:
-          "IndiGo cabin baggage can be up to 55 × 35 × 25 cm and must not exceed 7 kg.",
-      },
-      {
-        question: "How much cabin baggage can I carry on IndiGo?",
-        answer:
-          "IndiGo allows one cabin bag with a maximum weight of 7 kg, subject to the applicable fare and travel rules.",
-      },
-      {
-        question: "What is the IndiGo check-in baggage size limit?",
-        answer:
-          "The maximum checked baggage dimension is 158 cm in total, calculated as length + width + height.",
-      },
-      {
-        question: "How much checked baggage is allowed on IndiGo domestic flights?",
-        answer:
-          "The standard domestic checked baggage allowance is 15 kg, although the actual allowance can vary depending on the route and fare.",
-      },
-      {
-        question: "How does the IndiGo baggage size checker work?",
-        answer:
-          "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available IndiGo baggage limits.",
-      },
-    ],
+cabinGuide:
+"When checking an IndiGo cabin bag, measure its length, width and height in centimetres and check the total weight. A cabin bag may meet the size requirement but still exceed the allowed weight, so both measurements matter.",
+
+checkedGuide:
+"For IndiGo checked baggage, check both the weight allowance and total bag dimensions. The applicable allowance can depend on your flight details, so use the baggage checker as a quick reference and confirm the final allowance with IndiGo."
+},
+
+
+faq: [
+{
+question: "What is the cabin baggage size for IndiGo?",
+answer:
+"IndiGo cabin baggage can be up to 55 × 35 × 25 cm and must not exceed 7 kg."
+},
+{
+question: "What is the IndiGo cabin baggage size in cm?",
+answer:
+"The cabin baggage size used by BagInAir for IndiGo is 55 × 35 × 25 cm, with a maximum weight of 7 kg."
+},
+{
+question: "How much cabin baggage can I carry on IndiGo?",
+answer:
+"IndiGo allows one cabin bag with a maximum weight of 7 kg, subject to the applicable fare and travel rules."
+},
+{
+question: "What is the IndiGo check-in baggage size limit?",
+answer:
+"The maximum checked baggage dimension used by the checker is 158 cm in total, calculated as length + width + height."
+},
+{
+question: "How much checked baggage is allowed on IndiGo domestic flights?",
+answer:
+"The standard domestic checked baggage allowance used by BagInAir is 15 kg, although the actual allowance can vary depending on the route and fare."
+},
+{
+question: "How does the IndiGo baggage size checker work?",
+answer:
+"Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available IndiGo baggage limits."
+}
+],
+
 
     cabin: {
       maxWeight: 7,

@@ -1590,7 +1590,45 @@ const handleCheckBag = () => {
                 </p>
 
               </article>
+              <article className="seo-card">
 
+  <span className="seo-card-label">
+    BAG DIMENSIONS
+  </span>
+
+          <h3>
+  How to Measure Your {selectedAirline.name} Bag
+</h3>
+
+  <p>
+    Measure the complete length, width and height of your
+    luggage in centimetres. For a cabin bag, compare each
+    dimension with the allowed IndiGo cabin baggage size.
+    For checked baggage, also consider the total dimensions
+    of the bag.
+  </p>
+
+</article>
+
+
+<article className="seo-card">
+
+  <span className="seo-card-label">
+    BAGGAGE CHECKER
+  </span>
+
+<h3>
+  Check Your {selectedAirline.name} Bag Size and Weight
+</h3>
+
+  <p>
+    Enter your bag dimensions and weight above to check
+    whether your cabin or checked bag meets the available
+    IndiGo baggage limits. BagInAir provides a quick way
+    to check your luggage before travelling.
+  </p>
+
+</article>
             </div>
 
           </section>
