@@ -1482,13 +1482,26 @@ input::placeholder {
 ========================================= */
 
 @media (min-width: 900px) {
+    .baggage-guide-cta-button {
+    grid-column: 1 / -1;
+    justify-self: center;
 
+    margin-top: 28px;
+  }
   .header-inner {
     max-width: 1120px;
 
     padding: 0 28px;
   }
+  .airline-links {
+    width: 100%;
+    max-width: 960px;
+    margin: 70px auto 0;
 
+    display: block !important;
+    grid-template-columns: none;
+    gap: 0;
+  }
 .hamburger {
   display: none;
 }
@@ -1496,46 +1509,63 @@ input::placeholder {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: start;
 }
-.nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 25px;
 
-  position: static;
-  width: auto;
-  padding: 0;
+  .nav {
+    display: flex;
 
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-}
+    position: static;
 
-.nav a {
-  padding: 0;
+    width: auto;
 
-  color: #667085;
-  font-size: 12px;
-  font-weight: 650;
-}
+    flex-direction: row;
+    align-items: center;
+
+    gap: 28px;
+
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+  .nav a {
+    position: relative;
+
+    display: inline-block;
+
+    padding: 0;
+
+    color: #667085;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+  }
 
   .nav a::after {
     content: "";
 
     position: absolute;
 
-    left: 0;
-    right: 0;
-    bottom: -7px;
+    left: 50%;
+    bottom: -6px;
 
-    height: 1px;
+    width: 14px;
+    height: 2px;
+
+    border-radius: 999px;
 
     background: #111827;
 
-    transform: scaleX(0);
-    transform-origin: center;
+    transform: translateX(-50%) scaleX(0);
 
-    transition: transform 0.15s ease;
+    transition: transform 0.2s ease;
   }
 
   .nav a:hover {
@@ -1543,8 +1573,14 @@ input::placeholder {
   }
 
   .nav a:hover::after {
-    transform: scaleX(1);
+    transform: translateX(-50%) scaleX(1);
   }
+
+  .hamburger {
+    display: none;
+  }
+
+
 
 
   /* Main */
@@ -1869,18 +1905,23 @@ input::placeholder {
 
 
   /* Airline links */
+/* Airline links */
 
-  .airline-links {
-    max-width: 960px;
+.airline-links {
+  width: 100%;
+  max-width: 960px;
 
-    margin: 70px auto 0;
-  }
+  grid-column: 1 / -1;
 
-  .airline-grid {
-    grid-template-columns: repeat(3, 1fr);
+  margin: 70px auto 0;
+}
 
-    gap: 11px;
-  }
+.airline-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+}
 
 
   /* Footer */
@@ -3038,3 +3079,129 @@ input::placeholder {
     padding: 0 16px;
   }
 }
+
+
+
+
+
+
+
+/* =====================================================
+   BAGGAGE GUIDE CTA
+===================================================== */
+
+.baggage-guide-cta {
+  margin-top: 28px;
+  padding: 28px 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+
+  border: 1px solid rgba(99, 102, 241, 0.22);
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.08),
+      rgba(168, 85, 247, 0.06)
+    );
+}
+
+.baggage-guide-cta-content {
+  max-width: 650px;
+}
+
+.baggage-guide-cta-label {
+  display: inline-block;
+
+  margin-bottom: 8px;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: #6366f1;
+}
+
+.baggage-guide-cta h2 {
+  margin: 0 0 8px;
+
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.baggage-guide-cta p {
+  margin: 0;
+
+  max-width: 620px;
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  color: #6b7280;
+}
+
+.baggage-guide-cta-button {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  background: #6366f1;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.baggage-guide-cta-button span {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.baggage-guide-cta-button:hover {
+  background: #4f46e5;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.22);
+}
+
+
+/* Mobile */
+@media (max-width: 700px) {
+
+  .baggage-guide-cta {
+    padding: 22px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .baggage-guide-cta h2 {
+    font-size: 20px;
+  }
+
+  .baggage-guide-cta-button {
+    width: 100%;
+  }
+
+}
+
+

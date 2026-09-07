@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import airlines from "./data/data";
 import "./App.css";
+import Navbar from "./components/NavBar";
 
 const BASE_URL = "https://baginair.vercel.app";
 
@@ -17,7 +18,6 @@ function App() {
   const [result, setResult] = useState(null);
   const [allAirlineResults, setAllAirlineResults] = useState(null);
   const resultRef = useRef(null);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -235,23 +235,6 @@ document.head.appendChild(webAppScript);
   );
 
   useEffect(() => {
-  const handleOutsideClick = (event) => {
-    if (
-      menuOpen &&
-      !event.target.closest(".nav") &&
-      !event.target.closest(".hamburger")
-    ) {
-      setMenuOpen(false);
-    }
-  };
-
-  document.addEventListener("click", handleOutsideClick);
-
-  return () => {
-    document.removeEventListener("click", handleOutsideClick);
-  };
-}, [menuOpen]);
-  useEffect(() => {
     if (!result) return;
 
     const timer = setTimeout(() => {
@@ -444,67 +427,7 @@ const handleCheckBag = () => {
     <div className="app">
 
       {/* Header */}
-      <header className="header">
-        <div className="header-inner">
-
-<a
-  href="/"
-  className="brand"
-  aria-label="BagInAir home"
->
-  <img
-    src="/logo.png"
-    alt="BagInAir"
-    className="brand-logo"
-  />
-
-  <span className="brand-name">
-    <span className="brand-bag">Bag</span><span className="brand-inair">InAir</span>
-  </span>
-</a>
-<div className="header-actions">
-
-  <nav
-    className={`nav ${menuOpen ? "nav-open" : ""}`}
-    aria-label="Main navigation"
-  >
-    <a
-      href="#checker"
-      onClick={() => setMenuOpen(false)}
-    >
-      Baggage Checker
-    </a>
-
-    <a
-      href="#baggage-info"
-      onClick={() => setMenuOpen(false)}
-    >
-      Baggage Guide
-    </a>
-
-    <a
-      href="#faq"
-      onClick={() => setMenuOpen(false)}
-    >
-      FAQ
-    </a>
-  </nav>
-
-<button
-  className={`hamburger ${menuOpen ? "active" : ""}`}
-  onClick={() => setMenuOpen(!menuOpen)}
-  aria-label="Toggle navigation"
-  aria-expanded={menuOpen}
->
-  <span></span>
-  <span></span>
-  <span></span>
-</button>
-
-</div>
-
-        </div>
-      </header>
+      <Navbar />
 
 
       <main className="container">
@@ -2277,9 +2200,15 @@ const handleCheckBag = () => {
             </a>
 
           </div>
-
+              <a
+            href="/baggage-guide"
+            className="baggage-guide-cta-button"
+          >
+            Read the complete baggage guide
+            <span>→</span>
+          </a>
         </div>
-
+        
 
         {/* FAQ */}
         {airlineParam && !isAllAirlinesPage && (
@@ -2389,7 +2318,7 @@ const handleCheckBag = () => {
     <div className="footer-column">
       <h3>Information</h3>
 
-      <a href="#baggage-info">
+      <a href="/baggage-guide">
         Baggage Guide
       </a>
 
@@ -2397,7 +2326,7 @@ const handleCheckBag = () => {
         FAQ
       </a>
     </div>
-
+      
   </div>
 
 
