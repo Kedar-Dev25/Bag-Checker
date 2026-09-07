@@ -1921,7 +1921,225 @@ const handleCheckBag = () => {
 
         )}
 
+        {!airlineParam && (
+  <section className="seo-search-content">
+    <div className="section-header">
+      <span className="section-eyebrow">BAGGAGE SIZE & WEIGHT</span>
 
+      <h2>
+        Check Baggage Size, Luggage Dimensions & Weight Limits
+      </h2>
+
+      <p>
+        Looking for a quick way to check baggage size before flying?
+        BagInAir is an airline baggage size checker that helps you
+        check your bag size, luggage dimensions and baggage weight
+        against available airline limits.
+      </p>
+    </div>
+
+    <div className="seo-content-grid">
+
+      <div className="seo-content-card">
+        <h3>Check Your Baggage Size</h3>
+
+        <p>
+          You can use BagInAir to check baggage size and weight
+          before travelling. Enter the length, width and height
+          of your bag along with its weight to check whether your
+          luggage fits the available airline baggage limits.
+        </p>
+
+        <p>
+          If you are searching for a baggage size checker,
+          luggage size checker, bag size checker or baggage
+          dimensions checker, BagInAir lets you check your
+          measurements against airline requirements.
+        </p>
+      </div>
+
+      <div className="seo-content-card">
+        <h3>Check Bag Size and Weight Before Flying</h3>
+
+        <p>
+          Airlines can have different baggage size and weight
+          limits. Before flying, check your bag dimensions and
+          weight instead of relying only on a general luggage size
+          guide.
+        </p>
+
+        <p>
+          This baggage size and weight checker can help you check
+          cabin bags and checked bags against the available
+          airline baggage allowance.
+        </p>
+      </div>
+
+      <div className="seo-content-card">
+        <h3>Airline Baggage Size Checker</h3>
+
+        <p>
+          An airline baggage size checker helps travellers compare
+          their luggage dimensions with the size limits of their
+          airline. BagInAir supports baggage checking for multiple
+          airlines so you can check your bag before reaching the
+          airport.
+        </p>
+
+        <p>
+          You can check airline baggage size, airline baggage
+          weight limits, cabin baggage dimensions, checked baggage
+          dimensions and baggage allowance by airline.
+        </p>
+      </div>
+
+      <div className="seo-content-card">
+        <h3>Check Cabin Baggage Size</h3>
+
+        <p>
+          Want to check your cabin bag size? Measure the length,
+          width and height of your cabin luggage and compare the
+          dimensions with your airline's cabin baggage allowance.
+        </p>
+
+        <p>
+          Common searches include check cabin baggage size,
+          check cabin bag size and weight, cabin baggage dimensions,
+          cabin bag size limits and cabin baggage weight limits.
+          Always verify the final allowance with your airline.
+        </p>
+      </div>
+
+      <div className="seo-content-card">
+        <h3>Check Checked Baggage Size</h3>
+
+        <p>
+          Checked luggage can have both maximum weight and maximum
+          dimensions. Use a baggage dimensions checker to understand
+          whether your checked bag is within the available airline
+          limits.
+        </p>
+
+        <p>
+          Some airlines use total dimensions for checked baggage.
+          For example, 158 cm total dimensions means adding the
+          length, width and height of the bag together.
+        </p>
+      </div>
+
+      <div className="seo-content-card">
+        <h3>Check Luggage Dimensions</h3>
+
+        <p>
+          To check luggage size correctly, measure the three main
+          baggage dimensions: length, width and height. These
+          measurements are commonly shown in centimetres.
+        </p>
+
+        <p>
+          If you are looking for how to measure baggage dimensions,
+          how to measure luggage size or how to check bag dimensions,
+          start by measuring the complete bag and then compare the
+          measurements with the airline's rules.
+        </p>
+      </div>
+
+    </div>
+
+    <div className="seo-content-wide">
+      <h3>
+        Airline Baggage Allowance and Size Limits
+      </h3>
+
+      <p>
+        Baggage allowance is not always the same for every airline.
+        Cabin baggage size, cabin baggage weight, checked baggage
+        weight and maximum luggage dimensions can vary depending
+        on the airline, route, fare and type of ticket.
+      </p>
+
+      <p>
+        Travellers commonly search for airline baggage size limits,
+        airline baggage weight limits, baggage allowance by airline,
+        luggage size limits by airline, cabin baggage size by airline
+        and checked baggage allowance. BagInAir brings these
+        measurements together in one place so you can check your
+        baggage before travelling.
+      </p>
+
+      <p>
+        If your cabin bag is around 55 × 35 × 25 cm or weighs around
+        7 kg, do not assume that every airline will accept exactly
+        the same dimensions. Airline baggage rules can differ, so
+        check the specific airline's baggage requirements before
+        your flight.
+      </p>
+    </div>
+
+    <div className="seo-content-wide">
+      <h3>
+        Common Baggage Size Searches
+      </h3>
+
+      <p>
+        People often search for terms such as check baggage size,
+        check bag size, check luggage size, baggage size checker,
+        luggage size checker, airline luggage size checker,
+        baggage dimensions checker, luggage dimensions checker,
+        baggage size and weight checker and airline baggage
+        size and weight checker.
+      </p>
+
+      <p>
+        Other common searches include check my baggage size,
+        check my bag against airline limits, check if my bag fits
+        airline limits, check bag size and weight before flying,
+        check baggage size for airline, check airline baggage
+        allowance and airline baggage allowance checker.
+      </p>
+    </div>
+
+    <div className="seo-content-wide">
+      <h3>
+        Cabin Bag and Luggage Size Guide
+      </h3>
+
+      <p>
+        When checking cabin luggage, look at both dimensions and
+        weight. A bag may have acceptable dimensions but still
+        exceed the airline's cabin baggage weight limit.
+      </p>
+
+      <p>
+        Popular baggage-related measurements include 55 × 35 × 25 cm
+        cabin baggage, 7 kg cabin baggage, 115 cm total cabin
+        dimensions and 158 cm checked baggage dimensions. These
+        numbers are not universal airline rules, so always compare
+        them with the requirements for your specific airline.
+      </p>
+    </div>
+
+    <div className="seo-content-wide">
+      <h3>
+        How to Check Your Bag Before Travelling
+      </h3>
+
+      <p>
+        First, measure your luggage length, width and height.
+        Next, weigh your bag. Then select your airline and baggage
+        type in the BagInAir baggage checker. The tool compares
+        your entered measurements with the available baggage
+        limits and shows whether your bag meets those requirements.
+      </p>
+
+      <p>
+        This makes it easier to check baggage size online,
+        check luggage weight, check cabin bag dimensions and
+        understand airline baggage limits before you travel.
+      </p>
+    </div>
+  </section>
+)}
         {/* Airline Links */}
         <div className="airline-links">
 
