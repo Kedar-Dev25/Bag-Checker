@@ -1779,282 +1779,328 @@ function App() {
 
                 <div className="seo-guides">
 
-                  <article className="seo-card">
+  {/* BAGGAGE OVERVIEW */}
 
-                    <span className="seo-card-label">
-                      QUICK ANSWER
-                    </span>
+  {selectedAirline.content.baggageOverviewTitle && (
+    <article className="seo-card seo-card-featured">
 
-                    <h3>
-                      {
-                        selectedAirline.name
-                      } baggage limits at a glance
-                    </h3>
+      <span className="seo-card-label">
+        BAGGAGE OVERVIEW
+      </span>
 
-                    <p>
-                      <strong>
-                        Cabin:
-                      </strong>{" "}
-                      {
-                        selectedAirline.cabin
-                          .length
-                      }{" "}
-                      ×{" "}
-                      {
-                        selectedAirline.cabin
-                          .width
-                      }{" "}
-                      ×{" "}
-                      {
-                        selectedAirline.cabin
-                          .height
-                      }{" "}
-                      cm, up to{" "}
-                      {
-                        selectedAirline.cabin
-                          .maxWeight
-                      }{" "}
-                      kg.
-                    </p>
+      <h3>
+        {selectedAirline.content.baggageOverviewTitle}
+      </h3>
 
-                    <p>
-                      <strong>
-                        Checked:
-                      </strong>{" "}
-                      {
-                        selectedAirline
-                          .checked
-                          .maxTotalDimensions
-                      }{" "}
-                      cm total dimensions
-                      {selectedAirline
-                        .checked
-                        .maxWeight !==
-                      null
-                        ? `, up to ${selectedAirline.checked.maxWeight} kg.`
-                        : ", with weight varying by fare."}
-                    </p>
+      <p>
+        {selectedAirline.content.baggageOverviewText}
+      </p>
 
-                  </article>
+    </article>
+  )}
 
 
-                  {/* CABIN */}
+  {/* CABIN */}
 
-                  <article className="seo-card">
+  <article className="seo-card">
 
-                    <span className="seo-card-label">
-                      CABIN BAGGAGE
-                    </span>
+    <span className="seo-card-label">
+      CABIN BAGGAGE
+    </span>
 
-                    <h3>
-                      {
-                        selectedAirline
-                          .content.cabinTitle
-                      }
-                    </h3>
+    <h3>
+      {selectedAirline.content.cabinTitle}
+    </h3>
 
-                    <p>
-                      {
-                        selectedAirline
-                          .content.cabinText
-                      }
-                    </p>
+    <p>
+      {selectedAirline.content.cabinText}
+    </p>
 
-                  </article>
+  </article>
 
 
-                  {/* CHECKED */}
+  {/* PERSONAL ITEM */}
 
-                  <article className="seo-card">
+  {selectedAirline.content.personalItemTitle && (
+    <article className="seo-card">
 
-                    <span className="seo-card-label">
-                      CHECKED BAGGAGE
-                    </span>
+      <span className="seo-card-label">
+        PERSONAL ITEM
+      </span>
 
-                    <h3>
-                      {
-                        selectedAirline
-                          .content.checkedTitle
-                      }
-                    </h3>
+      <h3>
+        {selectedAirline.content.personalItemTitle}
+      </h3>
 
-                    <p>
-                      {
-                        selectedAirline
-                          .content.checkedText
-                      }
-                    </p>
+      <p>
+        {selectedAirline.content.personalItemText}
+      </p>
 
-                  </article>
+    </article>
+  )}
 
 
-                  {/* SIZE CALCULATION */}
+  {/* CHECKED BAGGAGE */}
 
-                  {selectedAirline.content
-                    .sizeCalculation && (
+  <article className="seo-card">
 
-                    <article className="seo-card">
+    <span className="seo-card-label">
+      CHECKED BAGGAGE
+    </span>
 
-                      <span className="seo-card-label">
-                        BAG DIMENSIONS
-                      </span>
+    <h3>
+      {selectedAirline.content.checkedTitle}
+    </h3>
 
-                      <h3>
-                        How are{" "}
-                        {
-                          selectedAirline
-                            .name
-                        }{" "}
-                        baggage dimensions calculated?
-                      </h3>
+    <p>
+      {selectedAirline.content.checkedText}
+    </p>
 
-                      <p>
-                        {
-                          selectedAirline
-                            .content
-                            .sizeCalculation
-                        }
-                      </p>
-
-                    </article>
-
-                  )}
+  </article>
 
 
-                  {/* CABIN GUIDE */}
+  {/* CHECKED DIMENSIONS */}
 
-                  {selectedAirline.content
-                    .cabinGuide && (
+  {selectedAirline.content.checkedDimensionsTitle && (
+    <article className="seo-card">
 
-                    <article className="seo-card">
+      <span className="seo-card-label">
+        BAG DIMENSIONS
+      </span>
 
-                      <span className="seo-card-label">
-                        CABIN BAGGAGE
-                      </span>
+      <h3>
+        {selectedAirline.content.checkedDimensionsTitle}
+      </h3>
 
-                      <h3>
-                        {
-                          selectedAirline.name
-                        }{" "}
-                        cabin baggage guide
-                      </h3>
+      <p>
+        {selectedAirline.content.checkedDimensionsText}
+      </p>
 
-                      <p>
-                        {
-                          selectedAirline
-                            .content.cabinGuide
-                        }
-                      </p>
-
-                    </article>
-
-                  )}
+    </article>
+  )}
 
 
-                  {/* CHECKED GUIDE */}
+  {/* SIZE CALCULATION */}
 
-                  {selectedAirline.content
-                    .checkedGuide && (
+  {selectedAirline.content.sizeCalculation && (
+    <article className="seo-card">
 
-                    <article className="seo-card">
+      <span className="seo-card-label">
+        DIMENSION CALCULATION
+      </span>
 
-                      <span className="seo-card-label">
-                        CHECKED BAGGAGE
-                      </span>
+      <h3>
+        How are {selectedAirline.name} baggage dimensions calculated?
+      </h3>
 
-                      <h3>
-                        {
-                          selectedAirline.name
-                        }{" "}
-                        checked baggage guide
-                      </h3>
+      <p>
+        {selectedAirline.content.sizeCalculation}
+      </p>
 
-                      <p>
-                        {
-                          selectedAirline
-                            .content.checkedGuide
-                        }
-                      </p>
-
-                    </article>
-
-                  )}
+    </article>
+  )}
 
 
-                  {/* HOW TO MEASURE */}
+  {/* CABIN GUIDE */}
 
-                  <article className="seo-card">
+  {selectedAirline.content.cabinGuide && (
+    <article className="seo-card">
 
-                    <span className="seo-card-label">
-                      MEASURING YOUR BAG
-                    </span>
+      <span className="seo-card-label">
+        CABIN BAGGAGE
+      </span>
 
-                    <h3>
-                      How to measure your{" "}
-                      {
-                        selectedAirline.name
-                      }{" "}
-                      bag
-                    </h3>
+      <h3>
+        {selectedAirline.name} cabin baggage guide
+      </h3>
 
-                    <p>
-                      Measure the complete length,
-                      width and height of your luggage
-                      in centimetres. For a cabin bag,
-                      compare each dimension with the
-                      allowed{" "}
-                      {
-                        selectedAirline.name
-                      }{" "}
-                      cabin baggage size.
-                    </p>
+      <p>
+        {selectedAirline.content.cabinGuide}
+      </p>
 
-                    <p>
-                      For checked baggage, also check
-                      the total dimensions when the
-                      airline uses a combined length,
-                      width and height limit.
-                    </p>
-
-                  </article>
+    </article>
+  )}
 
 
-                  {/* CHECKER */}
+  {/* CHECKED GUIDE */}
 
-                  <article className="seo-card">
+  {selectedAirline.content.checkedGuide && (
+    <article className="seo-card">
 
-                    <span className="seo-card-label">
-                      BAGGAGE CHECKER
-                    </span>
+      <span className="seo-card-label">
+        CHECKED BAGGAGE
+      </span>
 
-                    <h3>
-                      Check your{" "}
-                      {
-                        selectedAirline.name
-                      }{" "}
-                      bag size and weight
-                    </h3>
+      <h3>
+        {selectedAirline.name} checked baggage guide
+      </h3>
 
-                    <p>
-                      Enter your bag dimensions and
-                      weight above to check whether
-                      your cabin or checked bag meets
-                      the available{" "}
-                      {
-                        selectedAirline.name
-                      }{" "}
-                      baggage limits.
-                    </p>
+      <p>
+        {selectedAirline.content.checkedGuide}
+      </p>
 
-                    <p>
-                      BagInAir provides a quick way to
-                      compare your measurements before
-                      travelling.
-                    </p>
+    </article>
+  )}
 
-                  </article>
 
-                </div>
+  {/* HOW TO MEASURE */}
+
+  {selectedAirline.content.measuringSteps?.length > 0 ? (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        MEASURING YOUR BAG
+      </span>
+
+      <h3>
+        {selectedAirline.content.measuringStepsTitle}
+      </h3>
+
+      <p>
+        {selectedAirline.content.measuringGuide}
+      </p>
+
+      <ol className="seo-numbered-list">
+
+        {selectedAirline.content.measuringSteps.map(
+          (step, index) => (
+            <li key={index}>
+              {step}
+            </li>
+          )
+        )}
+
+      </ol>
+
+    </article>
+  ) : (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        MEASURING YOUR BAG
+      </span>
+
+      <h3>
+        How to measure your {selectedAirline.name} bag
+      </h3>
+
+      <p>
+        {selectedAirline.content.measuringGuide ||
+          `Measure the complete length, width and height of your luggage in centimetres and compare the measurements with the applicable ${selectedAirline.name} baggage limits.`}
+      </p>
+
+    </article>
+  )}
+
+
+  {/* EXCESS BAGGAGE */}
+
+  {selectedAirline.content.excessBaggageTitle ? (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        EXCESS BAGGAGE
+      </span>
+
+      <h3>
+        {selectedAirline.content.excessBaggageTitle}
+      </h3>
+
+      <p>
+        {selectedAirline.content.excessBaggageText}
+      </p>
+
+    </article>
+  ) : selectedAirline.content.excessBaggage ? (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        EXCESS BAGGAGE
+      </span>
+
+      <h3>
+        Excess baggage on {selectedAirline.name}
+      </h3>
+
+      <p>
+        {selectedAirline.content.excessBaggage}
+      </p>
+
+    </article>
+  ) : null}
+
+
+  {/* INFANT BAGGAGE */}
+
+  {selectedAirline.content.infantBaggage && (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        INFANT BAGGAGE
+      </span>
+
+      <h3>
+        {selectedAirline.content.infantBaggageTitle ||
+          `${selectedAirline.name} infant baggage allowance`}
+      </h3>
+
+      <p>
+        {selectedAirline.content.infantBaggage}
+      </p>
+
+    </article>
+  )}
+
+
+  {/* SPECIAL BAGGAGE */}
+
+  {selectedAirline.content.specialBaggage && (
+    <article className="seo-card">
+
+      <span className="seo-card-label">
+        SPECIAL BAGGAGE
+      </span>
+
+      <h3>
+        {selectedAirline.content.specialBaggageTitle ||
+          `${selectedAirline.name} special baggage`}
+      </h3>
+
+      <p>
+        {selectedAirline.content.specialBaggageText ||
+          selectedAirline.content.specialBaggage}
+      </p>
+
+    </article>
+  )}
+
+
+  {/* BAGGAGE CHECKER */}
+
+  <article className="seo-card">
+
+    <span className="seo-card-label">
+      BAGGAGE CHECKER
+    </span>
+
+    <h3>
+      Check your {selectedAirline.name} bag size and weight
+    </h3>
+
+    <p>
+      Enter your bag dimensions and weight above to check
+      whether your cabin or checked bag meets the available{" "}
+      {selectedAirline.name} baggage limits.
+    </p>
+
+    <p>
+      BagInAir compares your measurements with the available
+      baggage limits so you can check your bag before travelling.
+    </p>
+
+  </article>
+
+</div>
 
                 {/* REFERENCE NOTE */}
 
@@ -2077,7 +2123,57 @@ function App() {
 
               </section>
 
+              {/* =================================================
+    BAGGAGE CHECKLIST
+================================================= */}
 
+{selectedAirline.content.baggageChecklist?.length > 0 && (
+  <section
+    className="seo-checklist-section"
+    aria-labelledby="baggage-checklist-title"
+  >
+
+    <div className="seo-checklist-header">
+
+      <span className="seo-card-label">
+        BEFORE YOU FLY
+      </span>
+
+      <h2 id="baggage-checklist-title">
+        {selectedAirline.content.baggageChecklistTitle}
+      </h2>
+
+      <p>
+        Use this quick checklist before heading to the airport.
+      </p>
+
+    </div>
+
+
+    <ol className="seo-checklist">
+
+      {selectedAirline.content.baggageChecklist.map(
+        (item, index) => (
+
+          <li key={index}>
+
+            <span className="seo-checklist-number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+
+            <span>
+              {item}
+            </span>
+
+          </li>
+
+        )
+      )}
+
+    </ol>
+
+  </section>
+)}
               {/* =================================================
                   CARRY THINGS — OUTSIDE SEO CONTENT
               ================================================= */}

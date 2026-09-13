@@ -116,7 +116,59 @@ content: {
     "Special or non-standard baggage such as bicycles, musical instruments and other oversized items may have additional conditions or charges. Check IndiGo's current baggage rules before travelling with special items.",
 
   restrictedItems:
-    "Some items are restricted or prohibited in cabin or checked baggage for safety and security reasons. Always check IndiGo's current dangerous-goods and baggage rules before travelling with an item that may have special restrictions."
+    "Some items are restricted or prohibited in cabin or checked baggage for safety and security reasons. Always check IndiGo's current dangerous-goods and baggage rules before travelling with an item that may have special restrictions.",
+    // Add these inside the IndiGo content object
+
+  baggageOverviewTitle: "IndiGo Baggage Allowance at a Glance",
+
+  baggageOverviewText:
+    "For domestic travel, IndiGo's standard baggage allowance includes one cabin bag up to 7 kg and 55 × 35 × 25 cm, plus one personal article up to 3 kg. Standard domestic checked baggage allowance is 15 kg per passenger, although the allowance shown on your booking should always be treated as the final reference. IndiGo also applies a 158 cm total dimension limit to checked baggage, and a checked piece should not exceed 23 kg.",
+
+  personalItemTitle: "IndiGo Personal Item and Laptop Bag",
+
+  personalItemText:
+    "In addition to the permitted cabin bag, IndiGo allows one additional personal article such as a small laptop bag, purse or small infant bag. The personal article must not weigh more than 3 kg. This personal article is different from carrying a second full-size cabin suitcase.",
+
+  checkedDimensionsTitle: "What Does 158 cm Baggage Size Mean?",
+
+  checkedDimensionsText:
+    "For checked baggage, 158 cm refers to the combined length, width and height of the bag. Add all three measurements together to calculate the total size. For example, a suitcase measuring 70 × 50 × 38 cm has total dimensions of 158 cm.",
+
+  measuringStepsTitle: "How to Measure Your IndiGo Suitcase",
+
+  measuringSteps: [
+    "Place the suitcase on a flat surface.",
+    "Measure the outside length, width and height in centimetres.",
+    "For cabin baggage, compare each dimension with the permitted 55 × 35 × 25 cm size.",
+    "For checked baggage, add length + width + height and compare the total with the applicable limit.",
+    "Measure the bag with its permanent wheels and handles included where applicable.",
+    "Check the actual weight separately using a luggage scale."
+  ],
+
+  excessBaggageTitle: "What Happens If Your IndiGo Baggage Is Over the Limit?",
+
+  excessBaggageText:
+    "If your baggage exceeds the applicable free allowance, size or weight limit, additional charges or other conditions may apply. IndiGo offers prepaid excess baggage options for eligible journeys, while airport charges may differ. Check your booking and IndiGo's current baggage charges before travelling.",
+
+  infantBaggageTitle: "IndiGo Infant Baggage Allowance",
+
+  specialBaggageTitle: "IndiGo Special and Oversized Baggage",
+
+  specialBaggageText:
+    "Bicycles, sports equipment, musical instruments and other non-standard or oversized items can have separate baggage conditions and charges. Items whose combined dimensions exceed 158 cm may be treated as special baggage. Check IndiGo's current special baggage rules before travelling with non-standard luggage.",
+
+  baggageChecklistTitle: "IndiGo Baggage Checklist Before Your Flight",
+
+  baggageChecklist: [
+    "Check your cabin bag dimensions.",
+    "Check your cabin bag weight.",
+    "Check whether your fare includes checked baggage.",
+    "Check your checked baggage weight allowance.",
+    "Measure the total checked baggage dimensions.",
+    "Keep important documents, medicines and valuable electronics in cabin baggage.",
+    "Check restricted-item rules before packing.",
+    "Confirm the final baggage allowance shown on your booking."
+  ],
 },
 
 
@@ -169,6 +221,7 @@ answer:
 
     baggagePolicyUrl: "https://www.goindigo.in/baggage.html",
   },
+  
 
 {
   id: "airindia",
