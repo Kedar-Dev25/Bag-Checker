@@ -170,78 +170,201 @@ answer:
     baggagePolicyUrl: "https://www.goindigo.in/baggage.html",
   },
 
-  {
-    id: "airindia",
-    name: "Air India",
+{
+  id: "airindia",
+  name: "Air India",
 
-    seo: {
-      title: "Air India Baggage Size Checker – Cabin & Checked | BagInAir",
-      description:
-        "Check your Air India domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits Air India baggage limits.",
-    },
+  seo: {
+    title: "Air India Baggage Size Checker – Cabin & Checked | BagInAir",
+    description:
+      "Check your Air India domestic cabin or checked bag size and weight. Enter your bag dimensions to see if it fits Air India baggage limits.",
+  },
 
-    content: {
-      intro:
-        "Check your Air India domestic baggage size and weight before your flight. Enter your cabin or checked bag dimensions and weight to compare your bag with the applicable Air India baggage limits.",
+  content: {
+    intro:
+      "Check your Air India domestic baggage size, weight and allowance before your flight. Enter your cabin or checked bag dimensions and weight to compare your luggage with the available Air India baggage limits.",
 
-      cabinTitle: "Air India Cabin Baggage Size & Weight",
+    cabinTitle: "Air India Cabin Baggage Size & Weight",
 
-      cabinText:
-        "Air India cabin baggage can be up to 55 × 40 × 20 cm with a maximum weight of 7 kg.",
+    cabinText:
+      "For Economy and Premium Economy travel, Air India allows one cabin bag up to 55 × 40 × 20 cm with a maximum weight of 7 kg. One additional small personal item may also be carried if it fits under the seat and weighs no more than 3 kg.",
 
-      checkedTitle: "Air India Checked Baggage Size & Weight",
+    checkedTitle: "Air India Checked Baggage Size & Weight",
 
-      checkedText:
-        "The standard checked baggage limit used by this checker is 15 kg with maximum total dimensions of 158 cm. Allowances may vary by route, fare and travel class.",
+    checkedText:
+      "Air India checked baggage allowance varies by fare, travel class and route. Current domestic Economy fares can include different checked baggage allowances, such as 15 kg or 25 kg. Check your booking for the exact free baggage allowance before travelling.",
 
-      sizeCalculation:
-        "Checked baggage size is calculated by adding the length, width and height of the bag.",
-    },
+    sizeCalculation:
+      "Checked baggage size is calculated by adding the length, width and height of the bag when a combined dimension limit applies.",
 
-    faq: [
+    cabinGuide:
+      "Measure your cabin bag's length, width and height in centimetres and check its weight. Air India's standard cabin baggage size for Economy and Premium Economy is 55 × 40 × 20 cm with a maximum weight of 7 kg.",
+
+    checkedGuide:
+      "For checked baggage, check both the applicable weight allowance and the permitted dimensions. Air India's checked baggage allowance can vary depending on your fare, travel class and route, so confirm the allowance shown on your booking.",
+
+    measuringGuide:
+      "Measure the complete length, width and height of your luggage in centimetres. For cabin baggage, compare each dimension with the permitted 55 × 40 × 20 cm size. For checked baggage, also check the applicable total dimension limit and weight allowance.",
+
+    carryItems: [
       {
-        question: "What is the cabin baggage size for Air India?",
-        answer:
-          "Air India cabin baggage can be up to 55 × 40 × 20 cm with a maximum weight of 7 kg.",
+        name: "Laptop",
+        cabin: "Yes",
+        checked: "No*",
+        note:
+          "Air India lists laptops with lithium batteries as cabin baggage. If carried in checked baggage, the battery must be removed and carried in the cabin."
       },
       {
-        question: "How much cabin baggage can I carry on Air India?",
-        answer:
-          "The cabin baggage weight limit used by BagInAir is 7 kg. The applicable allowance can vary by fare, route and travel class.",
+        name: "Mobile phone",
+        cabin: "Yes",
+        checked: "No",
+        note:
+          "Air India lists mobile phones as cabin baggage items."
       },
       {
-        question: "What is the Air India check-in baggage size limit?",
-        answer:
-          "The maximum checked baggage dimension used by BagInAir is 158 cm in total, calculated as length + width + height.",
+        name: "Power bank",
+        cabin: "Yes",
+        checked: "No",
+        note:
+          "Power banks are treated as spare batteries and must be carried in hand baggage."
       },
       {
-        question: "How much checked baggage is allowed on Air India?",
-        answer:
-          "The standard allowance used by this checker is 15 kg, but the actual allowance can vary depending on your fare, route and travel class.",
+        name: "Spare batteries",
+        cabin: "Yes",
+        checked: "No",
+        note:
+          "Spare or loose batteries for portable electronic devices must be carried in hand baggage."
       },
       {
-        question: "How does the Air India baggage size checker work?",
-        answer:
-          "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Air India baggage limits.",
+        name: "Camera equipment",
+        cabin: "Yes",
+        checked: "Yes",
+        note:
+          "Air India allows camera equipment in both cabin and checked baggage, subject to applicable conditions."
       },
+      {
+        name: "Medicines",
+        cabin: "Yes*",
+        checked: "Yes*",
+        note:
+          "Medical items may be subject to screening and documentation requirements."
+      },
+      {
+        name: "Clothes",
+        cabin: "Yes",
+        checked: "Yes"
+      },
+      {
+        name: "Baby food",
+        cabin: "Yes*",
+        checked: "Yes*",
+        note:
+          "Baby food and related items may be carried when reasonably required for the journey."
+      },
+      {
+        name: "Foldable umbrella",
+        cabin: "Yes*",
+        checked: "Yes",
+        note:
+          "Cabin carriage is subject to security clearance."
+      },
+      {
+        name: "Walking cane",
+        cabin: "Yes*",
+        checked: "Yes",
+        note:
+          "Cabin carriage is subject to security clearance."
+      },
+      {
+        name: "Sports racket",
+        cabin: "Yes*",
+        checked: "Yes*",
+        note:
+          "Must be properly packed and comply with applicable baggage conditions."
+      },
+      {
+        name: "Inflatable ball",
+        cabin: "Yes*",
+        checked: "Yes*",
+        note:
+          "Inflatable balls should be carried in the permitted condition and may need to be deflated."
+      }
     ],
 
-    cabin: {
-      maxWeight: 7,
-      length: 55,
-      width: 40,
-      height: 20,
-      maxTotalDimensions: 115,
-    },
+    cabinPacking: [
+      "Medicines",
+      "Valuables",
+      "Important documents",
+      "Laptop and electronics",
+      "Camera equipment"
+    ],
 
-    checked: {
-      maxWeight: 15,
-      maxTotalDimensions: 158,
-    },
+    liquids:
+      "Cabin liquids, aerosols and gels are generally limited to containers of 100 ml or less and should fit comfortably inside a transparent, resealable 1-litre bag. Medicines and baby food may have specific exceptions when necessary for the journey and remain subject to security screening.",
 
-    baggagePolicyUrl:
-      "https://www.airindia.com/in/en/travel-information/baggage-guidelines.html",
+    excessBaggage:
+      "Baggage exceeding the free allowance or applicable size and weight limits may require additional charges. The exact allowance and charges depend on the fare, route and travel class, so check your booking before travelling.",
+
+    infantBaggage:
+      "Air India allows personal and infant cabin items weighing up to a total of 5 kg for an infant, which may include food for the flight, feeding bottles and a carry-on tote for food and bottles. Additional infant equipment may be subject to applicable conditions.",
+
+    specialBaggage:
+      "Special baggage such as sports equipment, musical instruments, mobility aids and other non-standard items may have additional conditions or charges. Check Air India's current baggage guidelines before travelling with special items.",
+
+    restrictedItems:
+      "Air India restricts or prohibits various items for safety and security reasons, including certain hazardous materials, batteries, flammable substances and other restricted articles. Always check Air India's current baggage and restricted-items policy before travelling with an item that has special conditions."
   },
+
+  faq: [
+    {
+      question: "What is the cabin baggage size for Air India?",
+      answer:
+        "For Economy and Premium Economy, Air India allows one cabin bag up to 55 × 40 × 20 cm with a maximum weight of 7 kg."
+    },
+    {
+      question: "How much cabin baggage can I carry on Air India?",
+      answer:
+        "Air India's Economy and Premium Economy cabin baggage allowance is up to 7 kg. One additional small personal item may also be carried if it fits under the seat and weighs no more than 3 kg."
+    },
+    {
+      question: "What is the Air India check-in baggage size limit?",
+      answer:
+        "The applicable checked baggage dimensions depend on Air India's current baggage rules. Check the permitted dimensions and the allowance shown for your booking before travelling."
+    },
+    {
+      question: "How much checked baggage is allowed on Air India?",
+      answer:
+        "Air India's checked baggage allowance varies by fare, travel class and route. Current domestic Economy fares can include allowances such as 15 kg or 25 kg, so check your booking for the exact allowance."
+    },
+    {
+      question: "Can I carry a power bank on Air India?",
+      answer:
+        "Yes, power banks must be carried in hand baggage and are not permitted in checked baggage. Applicable battery limits and safety requirements also apply."
+    },
+    {
+      question: "How does the Air India baggage size checker work?",
+      answer:
+        "Enter your bag type, dimensions and weight. BagInAir compares your measurements with the available Air India baggage limits."
+    }
+  ],
+
+  cabin: {
+    maxWeight: 7,
+    length: 55,
+    width: 40,
+    height: 20,
+    maxTotalDimensions: 115
+  },
+
+  checked: {
+    maxWeight: null,
+    maxTotalDimensions: 158,
+    variesByFare: true
+  },
+
+  baggagePolicyUrl:
+    "https://www.airindia.com/in/en/travel-information/baggage-guidelines.html"
+},
 
   {
     id: "spicejet",
