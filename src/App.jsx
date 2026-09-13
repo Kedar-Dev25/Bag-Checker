@@ -17,11 +17,15 @@ function App() {
   const [weight, setWeight] = useState("");
   const [result, setResult] = useState(null);
   const [allAirlineResults, setAllAirlineResults] = useState(null);
-  const resultRef = useRef(null);
 
+  const resultRef = useRef(null);
   const navigate = useNavigate();
 
   const isAllAirlinesPage = airlineParam === "airlines";
+
+  /* =====================================================
+     LOAD SAVED BAG DATA
+  ===================================================== */
 
   useEffect(() => {
     const savedBag = localStorage.getItem("bagData");
@@ -41,17 +45,16 @@ function App() {
     }
   }, []);
 
-  /*
-    If URL contains an airline like /indigo,
-    automatically select that airline.
-  */
+  /* =====================================================
+     URL → AIRLINE
+  ===================================================== */
+
   useEffect(() => {
     if (!airlineParam) {
       setAirline("indigo");
       return;
     }
 
-    /* /airlines is a valid special page */
     if (airlineParam === "airlines") {
       return;
     }
@@ -67,9 +70,10 @@ function App() {
     }
   }, [airlineParam, navigate]);
 
-  /*
-    Update page SEO.
-  */
+  /* =====================================================
+     SEO
+  ===================================================== */
+
   useEffect(() => {
     const selected = airlines.find(
       (item) => item.id === airline
@@ -79,24 +83,25 @@ function App() {
 
     if (isAllAirlinesPage) {
       document.title =
-  "Compare Airline Baggage Size & Weight | BagInAir";
+        "Compare Airline Baggage Size & Weight | BagInAir";
+
       document
         .querySelector('meta[name="description"]')
         ?.setAttribute(
           "content",
           "Compare cabin and checked baggage size and weight limits across supported airlines with BagInAir."
         );
-} else if (!airlineParam) {
-  document.title =
-    "Baggage Size Checker – Check Bag Size & Weight | BagInAir";
+    } else if (!airlineParam) {
+      document.title =
+        "Baggage Size Checker – Check Bag Size & Weight | BagInAir";
 
-  document
-    .querySelector('meta[name="description"]')
-    ?.setAttribute(
-      "content",
-      "Check your cabin or checked bag size and weight against airline baggage limits. Compare baggage rules for popular airlines with BagInAir."
-    );
-}else {
+      document
+        .querySelector('meta[name="description"]')
+        ?.setAttribute(
+          "content",
+          "Check your cabin or checked bag size and weight against airline baggage limits. Compare baggage rules for popular airlines with BagInAir."
+        );
+    } else {
       document.title = selected.seo.title;
 
       document
@@ -106,6 +111,8 @@ function App() {
           selected.seo.description
         );
     }
+
+    /* Canonical */
 
     const canonicalUrl = `${BASE_URL}${
       airlineParam ? `/${airlineParam}` : "/"
@@ -123,30 +130,34 @@ function App() {
 
     canonical.setAttribute("href", canonicalUrl);
 
+    /* WebApplication Schema */
+
     const existingSchema =
-  document.getElementById("webapp-schema");
+      document.getElementById("webapp-schema");
 
-if (existingSchema) {
-  existingSchema.remove();
-}
+    if (existingSchema) {
+      existingSchema.remove();
+    }
 
-const webAppScript = document.createElement("script");
+    const webAppScript = document.createElement("script");
 
-webAppScript.id = "webapp-schema";
-webAppScript.type = "application/ld+json";
+    webAppScript.id = "webapp-schema";
+    webAppScript.type = "application/ld+json";
 
-webAppScript.textContent = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  name: "BagInAir",
-  url: canonicalUrl,
-  description:
-    "Check airline baggage size and weight limits before you travel.",
-  applicationCategory: "TravelApplication",
-  operatingSystem: "Any",
-});
+    webAppScript.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: "BagInAir",
+      url: canonicalUrl,
+      description:
+        "Check airline baggage size and weight limits before you travel.",
+      applicationCategory: "TravelApplication",
+      operatingSystem: "Any",
+    });
 
-document.head.appendChild(webAppScript);
+    document.head.appendChild(webAppScript);
+
+    /* FAQ Schema */
 
     const existingFaqSchema =
       document.getElementById("faq-schema");
@@ -155,7 +166,6 @@ document.head.appendChild(webAppScript);
       existingFaqSchema.remove();
     }
 
-    /* FAQ schema only for individual airline pages */
     if (airlineParam && !isAllAirlinesPage) {
       const faqScript = document.createElement("script");
 
@@ -177,6 +187,8 @@ document.head.appendChild(webAppScript);
 
       document.head.appendChild(faqScript);
     }
+
+    /* Breadcrumb Schema */
 
     const existingBreadcrumbSchema =
       document.getElementById("breadcrumb-schema");
@@ -230,9 +242,17 @@ document.head.appendChild(webAppScript);
     }
   }, [airline, airlineParam, isAllAirlinesPage]);
 
+  /* =====================================================
+     SELECTED AIRLINE
+  ===================================================== */
+
   const selectedAirline = airlines.find(
     (item) => item.id === airline
   );
+
+  /* =====================================================
+     RESULT SCROLL
+  ===================================================== */
 
   useEffect(() => {
     if (!result) return;
@@ -247,577 +267,681 @@ document.head.appendChild(webAppScript);
     return () => clearTimeout(timer);
   }, [result]);
 
-const handleCheckBag = () => {
-
-  if (!bagtype || !length || !width || !height || !weight) {
-    setResult({
-      status: "error",
-      message: "Please enter all bag details.",
-    });
-    return;
-  }
-
-  const bagLength = Number(length);
-  const bagWidth = Number(width);
-  const bagHeight = Number(height);
-  const bagWeight = Number(weight);
-
-  if (
-    !Number.isFinite(bagLength) ||
-    !Number.isFinite(bagWidth) ||
-    !Number.isFinite(bagHeight) ||
-    !Number.isFinite(bagWeight) ||
-    bagLength < 0 ||
-    bagWidth < 0 ||
-    bagHeight < 0 ||
-    bagWeight < 0
-  ) {
-    setResult({
-      status: "error",
-      message: "Please enter valid bag measurements.",
-    });
-    return;
-  }
-
-  const totalDimensions =
-    bagLength + bagWidth + bagHeight;
-
-  localStorage.setItem(
-    "bagData",
-    JSON.stringify({
-      bagtype,
-      length,
-      width,
-      height,
-      weight,
-    })
-  );
-
-
   /* =====================================================
-     ALL AIRLINES CHECK
+     CHECK BAG
   ===================================================== */
 
-  if (isAllAirlinesPage) {
+  const handleCheckBag = () => {
+    if (!bagtype || !length || !width || !height || !weight) {
+      setResult({
+        status: "error",
+        message: "Please enter all bag details.",
+      });
+      return;
+    }
 
-    const results = airlines.map((item) => {
-
-      const rule =
-        bagtype === "cabin"
-          ? item.cabin
-          : item.checked;
-
-      const problems = [];
-
-      if (
-        rule.maxWeight !== null &&
-        bagWeight > rule.maxWeight
-      ) {
-        problems.push("heavy");
-      }
-
-      if (bagtype === "cabin") {
-
-        if (
-          bagLength > rule.length ||
-          bagWidth > rule.width ||
-          bagHeight > rule.height
-        ) {
-          problems.push("large");
-        }
-
-      }
-
-      if (
-        totalDimensions > rule.maxTotalDimensions
-      ) {
-        if (!problems.includes("large")) {
-          problems.push("large");
-        }
-      }
-
-      return {
-        id: item.id,
-        name: item.name,
-        allowed: problems.length === 0,
-        problems,
-        rule,
-      };
-    });
-
-    setAllAirlineResults(results);
-
-    return;
-  }
-
-
-  /* =====================================================
-     SINGLE AIRLINE CHECK
-  ===================================================== */
-
-  const rule =
-    bagtype === "cabin"
-      ? selectedAirline.cabin
-      : selectedAirline.checked;
-
-  const problems = [];
-
-  if (
-    rule.maxWeight !== null &&
-    bagWeight > rule.maxWeight
-  ) {
-    problems.push("heavy");
-  }
-
-  if (bagtype === "cabin") {
+    const bagLength = Number(length);
+    const bagWidth = Number(width);
+    const bagHeight = Number(height);
+    const bagWeight = Number(weight);
 
     if (
-      bagLength > rule.length ||
-      bagWidth > rule.width ||
-      bagHeight > rule.height
+      !Number.isFinite(bagLength) ||
+      !Number.isFinite(bagWidth) ||
+      !Number.isFinite(bagHeight) ||
+      !Number.isFinite(bagWeight) ||
+      bagLength < 0 ||
+      bagWidth < 0 ||
+      bagHeight < 0 ||
+      bagWeight < 0
     ) {
-      problems.push("large");
+      setResult({
+        status: "error",
+        message: "Please enter valid bag measurements.",
+      });
+      return;
     }
 
-  }
+    const totalDimensions =
+      bagLength + bagWidth + bagHeight;
 
-  if (
-    totalDimensions > rule.maxTotalDimensions
-  ) {
-    if (!problems.includes("large")) {
-      problems.push("large");
+    localStorage.setItem(
+      "bagData",
+      JSON.stringify({
+        bagtype,
+        length,
+        width,
+        height,
+        weight,
+      })
+    );
+
+    /* =====================================================
+       ALL AIRLINES
+    ===================================================== */
+
+    if (isAllAirlinesPage) {
+      const results = airlines.map((item) => {
+        const rule =
+          bagtype === "cabin"
+            ? item.cabin
+            : item.checked;
+
+        const problems = [];
+
+        if (
+          rule.maxWeight !== null &&
+          bagWeight > rule.maxWeight
+        ) {
+          problems.push("heavy");
+        }
+
+        if (bagtype === "cabin") {
+          if (
+            bagLength > rule.length ||
+            bagWidth > rule.width ||
+            bagHeight > rule.height
+          ) {
+            problems.push("large");
+          }
+        }
+
+        if (
+          totalDimensions > rule.maxTotalDimensions
+        ) {
+          if (!problems.includes("large")) {
+            problems.push("large");
+          }
+        }
+
+        return {
+          id: item.id,
+          name: item.name,
+          allowed: problems.length === 0,
+          problems,
+          rule,
+        };
+      });
+
+      setAllAirlineResults(results);
+      return;
     }
-  }
 
-  if (problems.length === 0) {
+    /* =====================================================
+       SINGLE AIRLINE
+    ===================================================== */
 
-    setResult({
-      status: "allowed",
-    });
+    const rule =
+      bagtype === "cabin"
+        ? selectedAirline.cabin
+        : selectedAirline.checked;
 
-  } else {
+    const problems = [];
 
-    setResult({
-      status: "not-allowed",
-      problems,
-    });
+    if (
+      rule.maxWeight !== null &&
+      bagWeight > rule.maxWeight
+    ) {
+      problems.push("heavy");
+    }
 
-  }
+    if (bagtype === "cabin") {
+      if (
+        bagLength > rule.length ||
+        bagWidth > rule.width ||
+        bagHeight > rule.height
+      ) {
+        problems.push("large");
+      }
+    }
 
-  if (!airlineParam) {
-    navigate(`/${airline}`);
-  }
-};
+    if (
+      totalDimensions > rule.maxTotalDimensions
+    ) {
+      if (!problems.includes("large")) {
+        problems.push("large");
+      }
+    }
+
+    if (problems.length === 0) {
+      setResult({
+        status: "allowed",
+      });
+    } else {
+      setResult({
+        status: "not-allowed",
+        problems,
+      });
+    }
+
+    if (!airlineParam) {
+      navigate(`/${airline}`);
+    }
+  };
+
+  /* =====================================================
+     HELPERS
+  ===================================================== */
 
   const resetResult = () => {
     setResult(null);
   };
-  const handleModeChange = (mode) => {
-  if (mode === "all") {
-    navigate("/airlines");
-    return;
-  }
 
-  if (airlineParam === "airlines") {
-    navigate(`/${airline}`);
-  }
-};
+  const handleModeChange = (mode) => {
+    if (mode === "all") {
+      navigate("/airlines");
+      return;
+    }
+
+    if (airlineParam === "airlines") {
+      navigate(`/${airline}`);
+    }
+  };
+
+  const saveBagData = (updates = {}) => {
+    localStorage.setItem(
+      "bagData",
+      JSON.stringify({
+        bagtype,
+        length,
+        width,
+        height,
+        weight,
+        ...updates,
+      })
+    );
+  };
+
+  /* =====================================================
+     RENDER
+  ===================================================== */
 
   return (
     <div className="app">
 
-      {/* Header */}
       <Navbar />
 
-
       <main className="container">
-       
-  {/* Hero */}
-        {/* Hero */}
-<section
-  className={`hero ${
-    isAllAirlinesPage ? "all-airlines-hero" : ""
-  }`}
->
-  <p className="eyebrow">
-    {isAllAirlinesPage
-      ? "AIRLINE BAGGAGE COMPARISON"
-      : "AIRLINE BAGGAGE CHECKER"}
-  </p>
 
-  <h1 className="hero-title">
-    {isAllAirlinesPage
-      ? bagtype === "cabin"
-        ? "Find Airlines That Fit Your Cabin Bag"
-        : bagtype === "checked"
-        ? "Find Airlines That Fit Your Checked Bag"
-        : "Compare Your Bag Across Airlines"
-      : airlineParam
-      ? `${selectedAirline.name} Baggage Size Checker`
-      : "Check Your Bag Size & Weight Against Airline Limits"}
-  </h1>
+        {/* =================================================
+            HERO
+        ================================================= */}
 
-<p className="hero-text">
-  {isAllAirlinesPage
-    ? "Compare your bag size and weight with baggage limits across supported airlines."
-    : `Check your ${selectedAirline.name} cabin or checked baggage size and weight before you fly.`}
-</p>
+        <section
+          className={`hero ${
+            isAllAirlinesPage
+              ? "all-airlines-hero"
+              : ""
+          }`}
+        >
 
-</section>
+          <p className="eyebrow">
+            {isAllAirlinesPage
+              ? "AIRLINE BAGGAGE COMPARISON"
+              : "AIRLINE BAGGAGE CHECKER"}
+          </p>
 
-{/* Checker Mode Slider */}
-<div className="mode-switch" role="tablist" aria-label="Baggage checking mode">
+          <h1 className="hero-title">
+            {isAllAirlinesPage
+              ? bagtype === "cabin"
+                ? "Find Airlines That Fit Your Cabin Bag"
+                : bagtype === "checked"
+                ? "Find Airlines That Fit Your Checked Bag"
+                : "Compare Your Bag Across Airlines"
+              : airlineParam
+              ? `${selectedAirline.name} Baggage Size Checker`
+              : "Check Your Bag Size & Weight Against Airline Limits"}
+          </h1>
 
-  <button
-    type="button"
-    className={`mode-option ${
-      !isAllAirlinesPage ? "active" : ""
-    }`}
-    onClick={() => handleModeChange("single")}
-  >
-    Check against 1 airline
-  </button>
+          <p className="hero-text">
+            {isAllAirlinesPage
+              ? "Compare your bag size and weight with baggage limits across supported airlines."
+              : `Check your ${selectedAirline.name} cabin or checked baggage size and weight before you fly.`}
+          </p>
 
-  <button
-    type="button"
-    className={`mode-option ${
-      isAllAirlinesPage ? "active" : ""
-    }`}
-    onClick={() => handleModeChange("all")}
-  >
-    Check against all airlines
-  </button>
+        </section>
 
-</div>
-        {/* =====================================================
-            ALL AIRLINES PAGE
-        ===================================================== */}
+
+        {/* =================================================
+            MODE SWITCH
+        ================================================= */}
+
+        <div
+          className="mode-switch"
+          role="tablist"
+          aria-label="Baggage checking mode"
+        >
+
+          <button
+            type="button"
+            className={`mode-option ${
+              !isAllAirlinesPage
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              handleModeChange("single")
+            }
+          >
+            Check against 1 airline
+          </button>
+
+          <button
+            type="button"
+            className={`mode-option ${
+              isAllAirlinesPage
+                ? "active"
+                : ""
+            }`}
+            onClick={() =>
+              handleModeChange("all")
+            }
+          >
+            Check against all airlines
+          </button>
+
+        </div>
+
+
+        {/* =================================================
+            ALL AIRLINES CHECKER
+        ================================================= */}
 
         {isAllAirlinesPage ? (
 
-<section
-  id="checker"
-  className="product-layout all-airlines-product-layout"
-  aria-label="All airline baggage size and weight checker"
->
-
-<section className="card">
-    <div className="checker-heading">
-    <h2>
-      Check your bag
-    </h2>
-  </div>
-
-  <div className="bag-types">
-
-    <label
-      className={`bag-option ${
-        bagtype === "cabin"
-          ? "active"
-          : ""
-      }`}
-    >
-      <input
-        type="radio"
-        name="all-airlines-bagtype"
-        value="cabin"
-        checked={bagtype === "cabin"}
-        onChange={(e) => {
-          setBagtype(e.target.value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype: e.target.value,
-              length,
-              width,
-              height,
-              weight,
-            })
-          );
-        }}
-      />
-
-      <span>
-        <strong>Cabin bag</strong>
-        <small>Carry-on</small>
-      </span>
-    </label>
-
-
-    <label
-      className={`bag-option ${
-        bagtype === "checked"
-          ? "active"
-          : ""
-      }`}
-    >
-      <input
-        type="radio"
-        name="all-airlines-bagtype"
-        value="checked"
-        checked={bagtype === "checked"}
-        onChange={(e) => {
-          setBagtype(e.target.value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype: e.target.value,
-              length,
-              width,
-              height,
-              weight,
-            })
-          );
-        }}
-      />
-
-      <span>
-        <strong>Checked bag</strong>
-        <small>Checked in</small>
-      </span>
-    </label>
-
-  </div>
-
-
-  <div className="form-group">
-
-    <label>
-      Bag dimensions
-    </label>
-
-    <div className="dimensions">
-
-      <input
-        type="number"
-        min="0"
-        placeholder="Length"
-        value={length}
-        onChange={(e) => {
-          const value = e.target.value;
-          setLength(value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype,
-              length: value,
-              width,
-              height,
-              weight,
-            })
-          );
-        }}
-      />
-
-      <input
-        type="number"
-        min="0"
-        placeholder="Width"
-        value={width}
-        onChange={(e) => {
-          const value = e.target.value;
-          setWidth(value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype,
-              length,
-              width: value,
-              height,
-              weight,
-            })
-          );
-        }}
-      />
-
-      <input
-        type="number"
-        min="0"
-        placeholder="Height"
-        value={height}
-        onChange={(e) => {
-          const value = e.target.value;
-          setHeight(value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype,
-              length,
-              width,
-              height: value,
-              weight,
-            })
-          );
-        }}
-      />
-
-    </div>
-
-    <span className="input-help">
-      Measurements in cm
-    </span>
-
-  </div>
-
-
-  <div className="form-group">
-
-    <label htmlFor="all-airlines-weight">
-      Weight
-    </label>
-
-    <div className="weight-input">
-
-      <input
-        id="all-airlines-weight"
-        type="number"
-        min="0"
-        step="0.1"
-        placeholder="e.g. 7"
-        value={weight}
-        onChange={(e) => {
-          const value = e.target.value;
-          setWeight(value);
-
-          localStorage.setItem(
-            "bagData",
-            JSON.stringify({
-              bagtype,
-              length,
-              width,
-              height,
-              weight: value,
-            })
-          );
-        }}
-      />
-
-      <span>kg</span>
-
-    </div>
-
-  </div>
-        <button
-  type="button"
-  className="all-airlines-check-button"
-  onClick={handleCheckBag}
->
-  Check my bag
-</button>
-</section>
-<section
-  className="result all-airlines-result-panel"
-  aria-live="polite"
->
-  {!allAirlineResults ? (
-    <div className="result-placeholder">
-
-      <span className="detail-label">
-        BAGGAGE CHECK RESULT
-      </span>
-
-      <h2>
-        Your result will appear here
-      </h2>
-
-      <p>
-        Enter your bag details to compare your
-        baggage allowance across airlines.
-      </p>
-
-    </div>
-  ) : (
-    <div className="all-airlines-result-content">
-
-      <span className="detail-label">
-        BAGGAGE CHECK RESULT
-      </span>
-
-      <h2>
-        {allAirlineResults.filter(
-          (item) => item.allowed
-        ).length} of {allAirlineResults.length} airlines fit your bag
-      </h2>
-
-      <div className="all-airlines-results-grid">
-
-        {allAirlineResults.map((item) => (
-
-          <a
-            key={item.id}
-            href={`/${item.id}`}
-            className={`airline-result-card ${
-              item.allowed
-                ? "airline-result-allowed"
-                : "airline-result-not-allowed"
-            }`}
+          <section
+            id="checker"
+            className="product-layout all-airlines-product-layout"
+            aria-label="All airline baggage size and weight checker"
           >
 
-            <div className="airline-result-top">
+            {/* FORM */}
 
-              <span className="airline-result-icon">
-                {item.allowed ? "✓" : "×"}
-              </span>
+            <section className="card">
 
-              <strong>
-                {item.name}
-              </strong>
+              <div className="checker-heading">
+                <h2>Check your bag</h2>
 
-            </div>
+                <p>
+                  Enter your bag details to compare it
+                  across supported airlines.
+                </p>
+              </div>
 
-            <div className="airline-result-details">
 
-              {bagtype === "cabin" ? (
-                <>
-                  <span>
-                    {item.rule.length} ×{" "}
-                    {item.rule.width} ×{" "}
-                    {item.rule.height} cm
+              {/* BAG TYPE */}
+
+              <div className="form-group">
+
+                <label>Bag type</label>
+
+                <div className="bag-types">
+
+                  <label
+                    className={`bag-option ${
+                      bagtype === "cabin"
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+
+                    <input
+                      type="radio"
+                      name="all-airlines-bagtype"
+                      value="cabin"
+                      checked={
+                        bagtype === "cabin"
+                      }
+                      onChange={(e) => {
+                        const value =
+                          e.target.value;
+
+                        setBagtype(value);
+                        resetResult();
+                        saveBagData({
+                          bagtype: value,
+                        });
+                      }}
+                    />
+
+                    <span>
+                      <strong>
+                        Cabin bag
+                      </strong>
+
+                      <small>
+                        Carry-on
+                      </small>
+                    </span>
+
+                  </label>
+
+
+                  <label
+                    className={`bag-option ${
+                      bagtype === "checked"
+                        ? "active"
+                        : ""
+                    }`}
+                  >
+
+                    <input
+                      type="radio"
+                      name="all-airlines-bagtype"
+                      value="checked"
+                      checked={
+                        bagtype === "checked"
+                      }
+                      onChange={(e) => {
+                        const value =
+                          e.target.value;
+
+                        setBagtype(value);
+                        resetResult();
+                        saveBagData({
+                          bagtype: value,
+                        });
+                      }}
+                    />
+
+                    <span>
+                      <strong>
+                        Checked bag
+                      </strong>
+
+                      <small>
+                        Checked in
+                      </small>
+                    </span>
+
+                  </label>
+
+                </div>
+
+              </div>
+
+
+              {/* DIMENSIONS */}
+
+              <div className="form-group">
+
+                <label>
+                  Bag dimensions
+                </label>
+
+                <div className="dimensions">
+
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="Length"
+                    aria-label="Bag length in centimetres"
+                    value={length}
+                    onChange={(e) => {
+                      const value =
+                        e.target.value;
+
+                      setLength(value);
+                      resetResult();
+
+                      saveBagData({
+                        length: value,
+                      });
+                    }}
+                  />
+
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="Width"
+                    aria-label="Bag width in centimetres"
+                    value={width}
+                    onChange={(e) => {
+                      const value =
+                        e.target.value;
+
+                      setWidth(value);
+                      resetResult();
+
+                      saveBagData({
+                        width: value,
+                      });
+                    }}
+                  />
+
+                  <input
+                    type="number"
+                    min="0"
+                    placeholder="Height"
+                    aria-label="Bag height in centimetres"
+                    value={height}
+                    onChange={(e) => {
+                      const value =
+                        e.target.value;
+
+                      setHeight(value);
+                      resetResult();
+
+                      saveBagData({
+                        height: value,
+                      });
+                    }}
+                  />
+
+                </div>
+
+                <span className="input-help">
+                  Measurements in cm
+                </span>
+
+              </div>
+
+
+              {/* WEIGHT */}
+
+              <div className="form-group">
+
+                <label htmlFor="all-airlines-weight">
+                  Weight
+                </label>
+
+                <div className="weight-input">
+
+                  <input
+                    id="all-airlines-weight"
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    placeholder="e.g. 7"
+                    value={weight}
+                    onChange={(e) => {
+                      const value =
+                        e.target.value;
+
+                      setWeight(value);
+                      resetResult();
+
+                      saveBagData({
+                        weight: value,
+                      });
+                    }}
+                  />
+
+                  <span>kg</span>
+
+                </div>
+
+              </div>
+
+
+              <button
+                type="button"
+                className="all-airlines-check-button"
+                onClick={handleCheckBag}
+              >
+                Check my bag
+              </button>
+
+            </section>
+
+
+            {/* RESULTS */}
+
+            <section
+              className="result all-airlines-result-panel"
+              aria-live="polite"
+            >
+
+              {!allAirlineResults ? (
+
+                <div className="result-placeholder">
+
+                  <span className="detail-label">
+                    BAGGAGE CHECK RESULT
                   </span>
 
-                  <span>
-                    {item.rule.maxWeight} kg
-                  </span>
-                </>
+                  <h2>
+                    Your result will appear here
+                  </h2>
+
+                  <p>
+                    Enter your bag details to compare
+                    your baggage allowance across
+                    airlines.
+                  </p>
+
+                </div>
+
               ) : (
-                <>
-                  <span>
-                    {item.rule.maxTotalDimensions} cm total
+
+                <div className="all-airlines-result-content">
+
+                  <span className="detail-label">
+                    BAGGAGE CHECK RESULT
                   </span>
 
-                  <span>
-                    {item.rule.maxWeight !== null
-                      ? `${item.rule.maxWeight} kg`
-                      : "Varies by fare"}
-                  </span>
-                </>
+                  <h2>
+                    {
+                      allAirlineResults.filter(
+                        (item) =>
+                          item.allowed
+                      ).length
+                    }{" "}
+                    of{" "}
+                    {allAirlineResults.length}{" "}
+                    airlines fit your bag
+                  </h2>
+
+
+                  <div className="all-airlines-results-grid">
+
+                    {allAirlineResults.map(
+                      (item) => (
+
+                        <a
+                          key={item.id}
+                          href={`/${item.id}`}
+                          className={`airline-result-card ${
+                            item.allowed
+                              ? "airline-result-allowed"
+                              : "airline-result-not-allowed"
+                          }`}
+                        >
+
+                          <div className="airline-result-top">
+
+                            <span className="airline-result-icon">
+                              {item.allowed
+                                ? "✓"
+                                : "×"}
+                            </span>
+
+                            <strong>
+                              {item.name}
+                            </strong>
+
+                          </div>
+
+
+                          <div className="airline-result-details">
+
+                            {bagtype ===
+                            "cabin" ? (
+
+                              <>
+                                <span>
+                                  {
+                                    item.rule
+                                      .length
+                                  }{" "}
+                                  ×{" "}
+                                  {
+                                    item.rule
+                                      .width
+                                  }{" "}
+                                  ×{" "}
+                                  {
+                                    item.rule
+                                      .height
+                                  }{" "}
+                                  cm
+                                </span>
+
+                                <span>
+                                  {
+                                    item.rule
+                                      .maxWeight
+                                  }{" "}
+                                  kg
+                                </span>
+                              </>
+
+                            ) : (
+
+                              <>
+                                <span>
+                                  {
+                                    item.rule
+                                      .maxTotalDimensions
+                                  }{" "}
+                                  cm total
+                                </span>
+
+                                <span>
+                                  {item.rule
+                                    .maxWeight !==
+                                  null
+                                    ? `${item.rule.maxWeight} kg`
+                                    : "Varies by fare"}
+                                </span>
+                              </>
+
+                            )}
+
+                          </div>
+
+
+                          <span className="airline-result-status">
+                            {item.allowed
+                              ? "Your bag fits"
+                              : "Does not fit"}
+                          </span>
+
+                        </a>
+
+                      )
+                    )}
+
+                  </div>
+
+                </div>
+
               )}
 
-            </div>
-
-            <span className="airline-result-status">
-              {item.allowed
-                ? "Your bag fits"
-                : "Does not fit"}
-            </span>
-
-          </a>
-
-        ))}
-
-      </div>
-
-    </div>
-  )}
-</section>
+            </section>
 
 
-
+            {/* TABLE */}
 
             <div className="standard-table-wrapper">
 
@@ -847,41 +971,43 @@ const handleCheckBag = () => {
                 <table className="standard-baggage-table">
 
                   <thead>
-
                     <tr>
                       <th>Airline</th>
                       <th>Cabin bag size</th>
                       <th>Weight</th>
                     </tr>
-
                   </thead>
 
 
                   <tbody>
 
-                    {airlines.map((item) => (
+                    {airlines.map(
+                      (item) => (
 
-                      <tr key={item.id}>
+                        <tr key={item.id}>
 
-                        <td>
-                          <a href={`/${item.id}`}>
-                            {item.name}
-                          </a>
-                        </td>
+                          <td>
+                            <a
+                              href={`/${item.id}`}
+                            >
+                              {item.name}
+                            </a>
+                          </td>
 
-                        <td>
-                          {item.cabin.length} ×{" "}
-                          {item.cabin.width} ×{" "}
-                          {item.cabin.height} cm
-                        </td>
+                          <td>
+                            {item.cabin.length} ×{" "}
+                            {item.cabin.width} ×{" "}
+                            {item.cabin.height} cm
+                          </td>
 
-                        <td>
-                          {item.cabin.maxWeight} kg
-                        </td>
+                          <td>
+                            {item.cabin.maxWeight} kg
+                          </td>
 
-                      </tr>
+                        </tr>
 
-                    ))}
+                      )
+                    )}
 
                   </tbody>
 
@@ -889,15 +1015,23 @@ const handleCheckBag = () => {
 
               </div>
 
+              <p className="standard-table-note">
+                These limits are provided as a quick
+                reference. Airline rules can change and
+                may vary by fare, route or travel class.
+                Always confirm the final allowance with
+                your airline.
+              </p>
+
             </div>
 
           </section>
 
         ) : (
 
-          /* =====================================================
-             EXISTING SINGLE AIRLINE CHECKER
-          ===================================================== */
+          /* =================================================
+             SINGLE AIRLINE CHECKER
+          ================================================= */
 
           <section
             id="checker"
@@ -905,7 +1039,8 @@ const handleCheckBag = () => {
             aria-label="Baggage size and weight checker"
           >
 
-            {/* Form */}
+            {/* FORM */}
+
             <section className="card">
 
               <div className="checker-heading">
@@ -914,11 +1049,18 @@ const handleCheckBag = () => {
                   Check your bag
                 </h2>
 
+                <p>
+                  Enter your bag measurements and
+                  compare them with{" "}
+                  {selectedAirline.name}'s
+                  available baggage limits.
+                </p>
 
               </div>
 
 
-              {/* Airline */}
+              {/* AIRLINE */}
+
               <div className="form-group">
 
                 <label htmlFor="airline">
@@ -929,36 +1071,41 @@ const handleCheckBag = () => {
                   id="airline"
                   value={airline}
                   onChange={(e) => {
-                    const selected = e.target.value;
+                    const selected =
+                      e.target.value;
 
                     setAirline(selected);
                     resetResult();
-                    navigate(`/${selected}`);
+
+                    navigate(
+                      `/${selected}`
+                    );
                   }}
                 >
 
-                  {airlines.map((item) => (
+                  {airlines.map(
+                    (item) => (
 
-                    <option
-                      key={item.id}
-                      value={item.id}
-                    >
-                      {item.name}
-                    </option>
+                      <option
+                        key={item.id}
+                        value={item.id}
+                      >
+                        {item.name}
+                      </option>
 
-                  ))}
+                    )
+                  )}
 
                 </select>
 
               </div>
 
 
-              {/* Bag Type */}
+              {/* BAG TYPE */}
+
               <div className="form-group">
 
-                <label>
-                  Bag type
-                </label>
+                <label>Bag type</label>
 
                 <div className="bag-types">
 
@@ -974,16 +1121,25 @@ const handleCheckBag = () => {
                       type="radio"
                       name="bagtype"
                       value="cabin"
-                      checked={bagtype === "cabin"}
+                      checked={
+                        bagtype === "cabin"
+                      }
                       onChange={(e) => {
-                        setBagtype(e.target.value);
+                        setBagtype(
+                          e.target.value
+                        );
                         resetResult();
                       }}
                     />
 
                     <span>
-                      <strong>Cabin bag</strong>
-                      <small>Carry-on</small>
+                      <strong>
+                        Cabin bag
+                      </strong>
+
+                      <small>
+                        Carry-on
+                      </small>
                     </span>
 
                   </label>
@@ -1001,16 +1157,25 @@ const handleCheckBag = () => {
                       type="radio"
                       name="bagtype"
                       value="checked"
-                      checked={bagtype === "checked"}
+                      checked={
+                        bagtype === "checked"
+                      }
                       onChange={(e) => {
-                        setBagtype(e.target.value);
+                        setBagtype(
+                          e.target.value
+                        );
                         resetResult();
                       }}
                     />
 
                     <span>
-                      <strong>Checked bag</strong>
-                      <small>Checked in</small>
+                      <strong>
+                        Checked bag
+                      </strong>
+
+                      <small>
+                        Checked in
+                      </small>
                     </span>
 
                   </label>
@@ -1020,7 +1185,8 @@ const handleCheckBag = () => {
               </div>
 
 
-              {/* Dimensions */}
+              {/* DIMENSIONS */}
+
               <div className="form-group">
 
                 <label>
@@ -1036,7 +1202,9 @@ const handleCheckBag = () => {
                     aria-label="Bag length in centimetres"
                     value={length}
                     onChange={(e) => {
-                      setLength(e.target.value);
+                      setLength(
+                        e.target.value
+                      );
                       resetResult();
                     }}
                   />
@@ -1048,7 +1216,9 @@ const handleCheckBag = () => {
                     aria-label="Bag width in centimetres"
                     value={width}
                     onChange={(e) => {
-                      setWidth(e.target.value);
+                      setWidth(
+                        e.target.value
+                      );
                       resetResult();
                     }}
                   />
@@ -1060,7 +1230,9 @@ const handleCheckBag = () => {
                     aria-label="Bag height in centimetres"
                     value={height}
                     onChange={(e) => {
-                      setHeight(e.target.value);
+                      setHeight(
+                        e.target.value
+                      );
                       resetResult();
                     }}
                   />
@@ -1074,7 +1246,8 @@ const handleCheckBag = () => {
               </div>
 
 
-              {/* Weight */}
+              {/* WEIGHT */}
+
               <div className="form-group">
 
                 <label htmlFor="weight">
@@ -1091,7 +1264,9 @@ const handleCheckBag = () => {
                     placeholder="e.g. 7"
                     value={weight}
                     onChange={(e) => {
-                      setWeight(e.target.value);
+                      setWeight(
+                        e.target.value
+                      );
                       resetResult();
                     }}
                   />
@@ -1102,53 +1277,72 @@ const handleCheckBag = () => {
 
               </div>
 
-                                  {/* Check Button */}
+
+              {/* BUTTON */}
+
               <button
+                type="button"
                 className="check-button"
                 onClick={handleCheckBag}
               >
                 Check my bag
               </button>
 
-
             </section>
 
-            {/* Desktop Result Placeholder */}
-{!result && (
-  <section
-    className="result homepage-result-placeholder"
-    aria-hidden="true"
-  >
-    <div className="result-placeholder">
-      <span className="detail-label">
-        BAGGAGE CHECK RESULT
-      </span>
 
-      <h2>
-        Your result will appear here
-      </h2>
+            {/* =================================================
+                RESULT
+            ================================================= */}
 
-      <p>
-        Enter your bag details to check whether your bag
-        meets the airline's baggage limits.
-      </p>
-    </div>
-  </section>
-)}
-            {/* Result */}
+            {!result && (
+
+              <section
+                className="result homepage-result-placeholder"
+                aria-hidden="true"
+              >
+
+                <div className="result-placeholder">
+
+                  <span className="detail-label">
+                    BAGGAGE CHECK RESULT
+                  </span>
+
+                  <h2>
+                    Your result will appear here
+                  </h2>
+
+                  <p>
+                    Enter your bag details to check
+                    whether your bag meets the{" "}
+                    {selectedAirline.name} baggage
+                    limits.
+                  </p>
+
+                </div>
+
+              </section>
+
+            )}
+
+
             {result && (
 
               <section
                 ref={resultRef}
                 className={`result ${
-                  result.status === "allowed"
+                  result.status ===
+                  "allowed"
                     ? "result-success"
                     : "result-error"
                 }`}
                 aria-live="polite"
               >
 
-                {result.status === "allowed" ? (
+                {/* RESULT HEADER */}
+
+                {result.status ===
+                "allowed" ? (
 
                   <div className="result-header">
 
@@ -1164,8 +1358,11 @@ const handleCheckBag = () => {
 
                       <p>
                         Your bag meets the{" "}
-                        {selectedAirline.name}{" "}
-                        {bagtype === "cabin"
+                        {
+                          selectedAirline.name
+                        }{" "}
+                        {bagtype ===
+                        "cabin"
                           ? "cabin"
                           : "checked"}{" "}
                         baggage limits.
@@ -1175,7 +1372,8 @@ const handleCheckBag = () => {
 
                   </div>
 
-                ) : result.status === "not-allowed" ? (
+                ) : result.status ===
+                  "not-allowed" ? (
 
                   <div className="result-header">
 
@@ -1190,10 +1388,16 @@ const handleCheckBag = () => {
                       </h2>
 
                       <p>
-                        {result.problems.includes("large") &&
-                        result.problems.includes("heavy")
+                        {result.problems.includes(
+                          "large"
+                        ) &&
+                        result.problems.includes(
+                          "heavy"
+                        )
                           ? "Your bag is too large and too heavy."
-                          : result.problems.includes("large")
+                          : result.problems.includes(
+                              "large"
+                            )
                           ? "Your bag is too large."
                           : "Your bag is too heavy."}
                       </p>
@@ -1227,7 +1431,10 @@ const handleCheckBag = () => {
                 )}
 
 
-                {result.status !== "error" && (
+                {/* RESULT DETAILS */}
+
+                {result.status !==
+                  "error" && (
 
                   <>
 
@@ -1240,7 +1447,9 @@ const handleCheckBag = () => {
                         </span>
 
                         <p>
-                          {length} × {width} × {height} cm
+                          {length} ×{" "}
+                          {width} ×{" "}
+                          {height} cm
                         </p>
 
                         <p>
@@ -1256,18 +1465,39 @@ const handleCheckBag = () => {
                           Allowed
                         </span>
 
-                        {bagtype === "cabin" ? (
+                        {bagtype ===
+                        "cabin" ? (
 
                           <>
 
                             <p>
-                              {selectedAirline.cabin.length} ×{" "}
-                              {selectedAirline.cabin.width} ×{" "}
-                              {selectedAirline.cabin.height} cm
+                              {
+                                selectedAirline
+                                  .cabin
+                                  .length
+                              }{" "}
+                              ×{" "}
+                              {
+                                selectedAirline
+                                  .cabin
+                                  .width
+                              }{" "}
+                              ×{" "}
+                              {
+                                selectedAirline
+                                  .cabin
+                                  .height
+                              }{" "}
+                              cm
                             </p>
 
                             <p>
-                              {selectedAirline.cabin.maxWeight} kg
+                              {
+                                selectedAirline
+                                  .cabin
+                                  .maxWeight
+                              }{" "}
+                              kg
                             </p>
 
                           </>
@@ -1277,14 +1507,23 @@ const handleCheckBag = () => {
                           <>
 
                             <p>
-                              {selectedAirline.checked.maxTotalDimensions}{" "}
+                              {
+                                selectedAirline
+                                  .checked
+                                  .maxTotalDimensions
+                              }{" "}
                               cm total
                             </p>
 
                             <p>
-                              {selectedAirline.checked.maxWeight !== null
-                                ? `${selectedAirline.checked.maxWeight} kg`
-                                : "Varies by fare"}
+                              {
+                                selectedAirline
+                                  .checked
+                                  .maxWeight !==
+                                null
+                                  ? `${selectedAirline.checked.maxWeight} kg`
+                                  : "Varies by fare"
+                              }
                             </p>
 
                           </>
@@ -1298,12 +1537,17 @@ const handleCheckBag = () => {
 
                     <a
                       className="policy-link"
-                      href={selectedAirline.baggagePolicyUrl}
+                      href={
+                        selectedAirline.baggagePolicyUrl
+                      }
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       Check official{" "}
-                      {selectedAirline.name} baggage rules ↗
+                      {
+                        selectedAirline.name
+                      }{" "}
+                      baggage rules ↗
                     </a>
 
                   </>
@@ -1319,17 +1563,25 @@ const handleCheckBag = () => {
         )}
 
 
-        {/* Disclaimer */}
+        {/* =================================================
+            DISCLAIMER
+        ================================================= */}
+
         {!isAllAirlinesPage && (
+
           <p className="disclaimer">
-            Baggage rules can vary by fare, route and flight.
-            Always check the airline's official policy before
-            travelling.
+            Baggage rules can vary by fare, route and
+            flight. Always check the airline's official
+            policy before travelling.
           </p>
+
         )}
 
 
-        {/* Homepage Standard Baggage Information */}
+        {/* =================================================
+            HOMEPAGE STANDARD BAGGAGE
+        ================================================= */}
+
         {!airlineParam && (
 
           <section className="standard-baggage-section">
@@ -1341,7 +1593,8 @@ const handleCheckBag = () => {
               </p>
 
               <h2>
-                What is the standard cabin baggage size in India?
+                What is the standard cabin baggage
+                size in India?
               </h2>
 
               <div className="standard-answer">
@@ -1351,23 +1604,34 @@ const handleCheckBag = () => {
                 </span>
 
                 <p>
-                  Many major Indian airlines allow a cabin bag
-                  around <strong>55 × 35 × 25 cm</strong> with a
-                  <strong> 7 kg</strong> weight limit. However,
-                  baggage dimensions can differ between airlines.
+                  Many major Indian airlines allow a
+                  cabin bag around{" "}
+                  <strong>
+                    55 × 35 × 25 cm
+                  </strong>{" "}
+                  with a{" "}
+                  <strong>
+                    7 kg
+                  </strong>{" "}
+                  weight limit. However, baggage
+                  dimensions can differ between
+                  airlines.
                 </p>
 
               </div>
 
               <p className="standard-baggage-description">
-                Cabin baggage rules are not identical across every
-                airline. The allowed dimensions and weight can depend
-                on the airline, route, fare and travel class. Before
-                travelling, measure your bag and check the rules for
-                your specific airline.
+                Cabin baggage rules are not identical
+                across every airline. The allowed
+                dimensions and weight can depend on
+                the airline, route, fare and travel
+                class. Before travelling, measure your
+                bag and check the rules for your
+                specific airline.
               </p>
 
             </div>
+
 
             <div className="standard-table-wrapper">
 
@@ -1409,29 +1673,49 @@ const handleCheckBag = () => {
 
                   <tbody>
 
-                    {airlines.map((item) => (
+                    {airlines.map(
+                      (item) => (
 
-                      <tr key={item.id}>
+                        <tr key={item.id}>
 
-                        <td>
-                          <a href={`/${item.id}`}>
-                            {item.name}
-                          </a>
-                        </td>
+                          <td>
+                            <a
+                              href={`/${item.id}`}
+                            >
+                              {item.name}
+                            </a>
+                          </td>
 
-                        <td>
-                          {item.cabin.length} ×{" "}
-                          {item.cabin.width} ×{" "}
-                          {item.cabin.height} cm
-                        </td>
+                          <td>
+                            {
+                              item.cabin
+                                .length
+                            }{" "}
+                            ×{" "}
+                            {
+                              item.cabin
+                                .width
+                            }{" "}
+                            ×{" "}
+                            {
+                              item.cabin
+                                .height
+                            }{" "}
+                            cm
+                          </td>
 
-                        <td>
-                          {item.cabin.maxWeight} kg
-                        </td>
+                          <td>
+                            {
+                              item.cabin
+                                .maxWeight
+                            }{" "}
+                            kg
+                          </td>
 
-                      </tr>
+                        </tr>
 
-                    ))}
+                      )
+                    )}
 
                   </tbody>
 
@@ -1441,9 +1725,10 @@ const handleCheckBag = () => {
 
 
               <p className="standard-table-note">
-                These limits are provided as a quick reference.
-                Airline rules can change and may vary by fare,
-                route or travel class. Always confirm the final
+                These limits are provided as a quick
+                reference. Airline rules can change
+                and may vary by fare, route or travel
+                class. Always confirm the final
                 allowance with your airline.
               </p>
 
@@ -1454,112 +1739,467 @@ const handleCheckBag = () => {
         )}
 
 
-        {/* Airline SEO Content */}
-        {airlineParam && !isAllAirlinesPage && (
+        {/* =================================================
+            AIRLINE-SPECIFIC SEO CONTENT
+        ================================================= */}
 
-          <section
-            id="baggage-info"
-            className="seo-content"
-          >
+        {airlineParam &&
+          !isAllAirlinesPage && (
+            <>
+              <section
+                id="baggage-info"
+                className="seo-content"
+              >
 
-            <div className="seo-intro">
+                {/* INTRO */}
 
-              <p className="eyebrow">
-                BEFORE YOU FLY
-              </p>
+                <div className="seo-intro">
 
-<h2>
-  {selectedAirline.name} baggage size, weight and allowance
-</h2>
+                  <p className="eyebrow">
+                    {selectedAirline.name.toUpperCase()} BAGGAGE GUIDE
+                  </p>
 
-              <p>
-                {selectedAirline.content.intro}
-              </p>
+                  <h2>
+                    {
+                      selectedAirline.name
+                    } baggage size, weight and allowance
+                  </h2>
 
-            </div>
+                  <p>
+                    {
+                      selectedAirline
+                        .content.intro
+                    }
+                  </p>
 
-
-            <div className="seo-guides">
-
-              <article className="seo-card">
-
-                <span className="seo-card-label">
-                  CABIN BAGGAGE
-                </span>
-
-                <h3>
-                  {selectedAirline.content.cabinTitle}
-                </h3>
-
-                <p>
-                  {selectedAirline.content.cabinText}
-                </p>
-
-              </article>
+                </div>
 
 
-              <article className="seo-card">
+                {/* QUICK ANSWER */}
 
-                <span className="seo-card-label">
-                  CHECKED BAGGAGE
-                </span>
+                <div className="seo-guides">
 
-                <h3>
-                  {selectedAirline.content.checkedTitle}
-                </h3>
+                  <article className="seo-card">
 
-                <p>
-                  {selectedAirline.content.checkedText}
-                </p>
+                    <span className="seo-card-label">
+                      QUICK ANSWER
+                    </span>
 
-              </article>
-              <article className="seo-card">
+                    <h3>
+                      {
+                        selectedAirline.name
+                      } baggage limits at a glance
+                    </h3>
 
-  <span className="seo-card-label">
-    BAG DIMENSIONS
-  </span>
+                    <p>
+                      <strong>
+                        Cabin:
+                      </strong>{" "}
+                      {
+                        selectedAirline.cabin
+                          .length
+                      }{" "}
+                      ×{" "}
+                      {
+                        selectedAirline.cabin
+                          .width
+                      }{" "}
+                      ×{" "}
+                      {
+                        selectedAirline.cabin
+                          .height
+                      }{" "}
+                      cm, up to{" "}
+                      {
+                        selectedAirline.cabin
+                          .maxWeight
+                      }{" "}
+                      kg.
+                    </p>
 
-          <h3>
-  How to Measure Your {selectedAirline.name} Bag
-</h3>
+                    <p>
+                      <strong>
+                        Checked:
+                      </strong>{" "}
+                      {
+                        selectedAirline
+                          .checked
+                          .maxTotalDimensions
+                      }{" "}
+                      cm total dimensions
+                      {selectedAirline
+                        .checked
+                        .maxWeight !==
+                      null
+                        ? `, up to ${selectedAirline.checked.maxWeight} kg.`
+                        : ", with weight varying by fare."}
+                    </p>
 
-  <p>
-    Measure the complete length, width and height of your
-    luggage in centimetres. For a cabin bag, compare each
-    dimension with the allowed IndiGo cabin baggage size.
-    For checked baggage, also consider the total dimensions
-    of the bag.
-  </p>
-
-</article>
-
-
-<article className="seo-card">
-
-  <span className="seo-card-label">
-    BAGGAGE CHECKER
-  </span>
-
-<h3>
-  Check Your {selectedAirline.name} Bag Size and Weight
-</h3>
-
-  <p>
-    Enter your bag dimensions and weight above to check
-    whether your cabin or checked bag meets the available
-    IndiGo baggage limits. BagInAir provides a quick way
-    to check your luggage before travelling.
-  </p>
-
-</article>
-            </div>
-
-          </section>
-
-        )}
+                  </article>
 
 
-        {/* How It Works */}
+                  {/* CABIN */}
+
+                  <article className="seo-card">
+
+                    <span className="seo-card-label">
+                      CABIN BAGGAGE
+                    </span>
+
+                    <h3>
+                      {
+                        selectedAirline
+                          .content.cabinTitle
+                      }
+                    </h3>
+
+                    <p>
+                      {
+                        selectedAirline
+                          .content.cabinText
+                      }
+                    </p>
+
+                  </article>
+
+
+                  {/* CHECKED */}
+
+                  <article className="seo-card">
+
+                    <span className="seo-card-label">
+                      CHECKED BAGGAGE
+                    </span>
+
+                    <h3>
+                      {
+                        selectedAirline
+                          .content.checkedTitle
+                      }
+                    </h3>
+
+                    <p>
+                      {
+                        selectedAirline
+                          .content.checkedText
+                      }
+                    </p>
+
+                  </article>
+
+
+                  {/* SIZE CALCULATION */}
+
+                  {selectedAirline.content
+                    .sizeCalculation && (
+
+                    <article className="seo-card">
+
+                      <span className="seo-card-label">
+                        BAG DIMENSIONS
+                      </span>
+
+                      <h3>
+                        How are{" "}
+                        {
+                          selectedAirline
+                            .name
+                        }{" "}
+                        baggage dimensions calculated?
+                      </h3>
+
+                      <p>
+                        {
+                          selectedAirline
+                            .content
+                            .sizeCalculation
+                        }
+                      </p>
+
+                    </article>
+
+                  )}
+
+
+                  {/* CABIN GUIDE */}
+
+                  {selectedAirline.content
+                    .cabinGuide && (
+
+                    <article className="seo-card">
+
+                      <span className="seo-card-label">
+                        CABIN BAGGAGE
+                      </span>
+
+                      <h3>
+                        {
+                          selectedAirline.name
+                        }{" "}
+                        cabin baggage guide
+                      </h3>
+
+                      <p>
+                        {
+                          selectedAirline
+                            .content.cabinGuide
+                        }
+                      </p>
+
+                    </article>
+
+                  )}
+
+
+                  {/* CHECKED GUIDE */}
+
+                  {selectedAirline.content
+                    .checkedGuide && (
+
+                    <article className="seo-card">
+
+                      <span className="seo-card-label">
+                        CHECKED BAGGAGE
+                      </span>
+
+                      <h3>
+                        {
+                          selectedAirline.name
+                        }{" "}
+                        checked baggage guide
+                      </h3>
+
+                      <p>
+                        {
+                          selectedAirline
+                            .content.checkedGuide
+                        }
+                      </p>
+
+                    </article>
+
+                  )}
+
+
+                  {/* HOW TO MEASURE */}
+
+                  <article className="seo-card">
+
+                    <span className="seo-card-label">
+                      MEASURING YOUR BAG
+                    </span>
+
+                    <h3>
+                      How to measure your{" "}
+                      {
+                        selectedAirline.name
+                      }{" "}
+                      bag
+                    </h3>
+
+                    <p>
+                      Measure the complete length,
+                      width and height of your luggage
+                      in centimetres. For a cabin bag,
+                      compare each dimension with the
+                      allowed{" "}
+                      {
+                        selectedAirline.name
+                      }{" "}
+                      cabin baggage size.
+                    </p>
+
+                    <p>
+                      For checked baggage, also check
+                      the total dimensions when the
+                      airline uses a combined length,
+                      width and height limit.
+                    </p>
+
+                  </article>
+
+
+                  {/* CHECKER */}
+
+                  <article className="seo-card">
+
+                    <span className="seo-card-label">
+                      BAGGAGE CHECKER
+                    </span>
+
+                    <h3>
+                      Check your{" "}
+                      {
+                        selectedAirline.name
+                      }{" "}
+                      bag size and weight
+                    </h3>
+
+                    <p>
+                      Enter your bag dimensions and
+                      weight above to check whether
+                      your cabin or checked bag meets
+                      the available{" "}
+                      {
+                        selectedAirline.name
+                      }{" "}
+                      baggage limits.
+                    </p>
+
+                    <p>
+                      BagInAir provides a quick way to
+                      compare your measurements before
+                      travelling.
+                    </p>
+
+                  </article>
+
+                </div>
+
+                {/* REFERENCE NOTE */}
+
+                <div className="seo-note">
+
+                  <strong>
+                    Quick reference:
+                  </strong>
+
+                  <p>
+                    The information above is intended
+                    to help you understand the baggage
+                    limits. Airline rules can vary by
+                    fare, route and travel conditions.
+                    Always confirm the final allowance
+                    with the airline before travelling.
+                  </p>
+
+                </div>
+
+              </section>
+
+
+              {/* =================================================
+                  CARRY THINGS — OUTSIDE SEO CONTENT
+              ================================================= */}
+
+              {selectedAirline.content.carryItems?.length > 0 && (
+                <section
+                  className="carry-section"
+                  aria-labelledby="carry-section-title"
+                >
+                  <div className="carry-header">
+                    <span className="carry-eyebrow">
+                      BAGGAGE RULES
+                    </span>
+
+                    <h2 id="carry-section-title">
+                      What can I carry on {selectedAirline.name}?
+                    </h2>
+
+                    <p>
+                      Check where common travel items can usually be packed before you
+                      reach the airport. Some items have special conditions or restrictions.
+                    </p>
+                  </div>
+
+                  <div className="carry-list">
+                    {selectedAirline.content.carryItems.map((item, index) => (
+                      <article
+                        className="carry-item"
+                        key={`${item.name}-${index}`}
+                      >
+                        <div className="carry-item-main">
+                          <h3>{item.name}</h3>
+
+                          {item.note && (
+                            <p>{item.note}</p>
+                          )}
+                        </div>
+
+                        <div className="carry-status">
+                          <div className="carry-status-block">
+                            <span>Cabin</span>
+                            <strong>{item.cabin}</strong>
+                          </div>
+
+                          <div className="carry-status-block">
+                            <span>Checked</span>
+                            <strong>{item.checked}</strong>
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+
+                  {selectedAirline.content.cabinPacking?.length > 0 && (
+                    <div className="carry-advice">
+                      <span className="carry-advice-label">
+                        BETTER IN CABIN BAGGAGE
+                      </span>
+
+                      <h3>
+                        Keep important items with you
+                      </h3>
+
+                      <p>
+                        For {selectedAirline.name}, items such as medicines, valuables,
+                        fragile belongings, important documents and personal electronics
+                        are generally better kept in cabin baggage.
+                      </p>
+
+                      <div className="carry-tags">
+                        {selectedAirline.content.cabinPacking.map((item, index) => (
+                          <span key={`${item}-${index}`}>
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedAirline.content.liquids && (
+                    <div className="carry-rule">
+                      <span className="carry-rule-label">
+                        LIQUIDS
+                      </span>
+
+                      <h3>
+                        Cabin liquids have additional restrictions
+                      </h3>
+
+                      <p>
+                        {selectedAirline.content.liquids}
+                      </p>
+                    </div>
+                  )}
+
+                  {selectedAirline.content.restrictedItems && (
+                    <div className="carry-warning">
+                      <div>
+                        <span className="carry-warning-label">
+                          RESTRICTED ITEMS
+                        </span>
+
+                        <h3>
+                          Some items cannot be carried normally
+                        </h3>
+
+                        <p>
+                          {selectedAirline.content.restrictedItems}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </section>
+              )}
+            </>
+          )}
+
+
+        {/* =================================================
+            HOW IT WORKS
+        ================================================= */}
+
         <div className="seo-how">
 
           <div className="seo-how-header">
@@ -1573,9 +2213,8 @@ const handleCheckBag = () => {
             </h2>
 
             <p>
-              You don't need to search through long baggage
-              policies just to find out if your bag is
-              within the available limit.
+              Check your luggage against available
+              airline limits in a few simple steps.
             </p>
 
           </div>
@@ -1594,7 +2233,8 @@ const handleCheckBag = () => {
                 </h3>
 
                 <p>
-                  Choose the airline you are travelling with.
+                  Choose the airline you are
+                  travelling with.
                 </p>
 
               </div>
@@ -1632,7 +2272,8 @@ const handleCheckBag = () => {
                 </h3>
 
                 <p>
-                  Add your bag's dimensions and weight.
+                  Add your bag's length, width,
+                  height and weight.
                 </p>
 
               </div>
@@ -1651,8 +2292,8 @@ const handleCheckBag = () => {
                 </h3>
 
                 <p>
-                  See whether your bag meets the available
-                  baggage limits.
+                  See whether your bag meets the
+                  available baggage limits.
                 </p>
 
               </div>
@@ -1664,7 +2305,10 @@ const handleCheckBag = () => {
         </div>
 
 
-        {/* Important Note */}
+        {/* =================================================
+            IMPORTANT NOTE
+        ================================================= */}
+
         <div className="seo-note">
 
           <strong>
@@ -1672,17 +2316,21 @@ const handleCheckBag = () => {
           </strong>
 
           <p>
-            Baggage allowances can vary by airline, route,
-            fare type and travel class. BagInAir is a
-            quick reference tool. Always confirm the final
-            baggage allowance with your airline before
+            Baggage allowances can vary by airline,
+            route, fare type and travel class.
+            BagInAir is a quick reference tool.
+            Always confirm the final baggage
+            allowance with your airline before
             travelling.
           </p>
 
         </div>
 
 
-        {/* Generic Baggage Guide - Homepage */}
+        {/* =================================================
+            HOMEPAGE GUIDE
+        ================================================= */}
+
         {!airlineParam && (
 
           <section className="homepage-guide">
@@ -1694,14 +2342,16 @@ const handleCheckBag = () => {
               </p>
 
               <h2>
-                Understand your baggage limits before you fly
+                Understand your baggage limits before
+                you fly
               </h2>
 
               <p>
-                Baggage rules can be confusing. Your allowed bag size
-                and weight can depend on the airline, fare, route and
-                type of baggage. Here are the basics you should know
-                before packing.
+                Baggage rules can vary between
+                airlines. Understanding dimensions,
+                weight and baggage type can make it
+                easier to prepare your luggage before
+                travelling.
               </p>
 
             </div>
@@ -1720,10 +2370,11 @@ const handleCheckBag = () => {
                 </h3>
 
                 <p>
-                  Bag dimensions are normally measured as length,
-                  width and height. For checked baggage, airlines may
-                  also use total dimensions, calculated as length +
-                  width + height.
+                  Bag dimensions are normally measured
+                  as length, width and height. For
+                  checked baggage, airlines may also
+                  use total dimensions calculated as
+                  length + width + height.
                 </p>
 
               </article>
@@ -1736,13 +2387,16 @@ const handleCheckBag = () => {
                 </span>
 
                 <h3>
-                  What size bag can I take into the cabin?
+                  What size bag can I take into the
+                  cabin?
                 </h3>
 
                 <p>
-                  Cabin baggage size and weight limits vary between
-                  airlines. Always check both the dimensions and
-                  maximum weight allowed for your flight.
+                  Cabin baggage size and weight
+                  limits vary between airlines.
+                  Always check both the dimensions
+                  and maximum weight allowed for your
+                  flight.
                 </p>
 
               </article>
@@ -1759,9 +2413,10 @@ const handleCheckBag = () => {
                 </h3>
 
                 <p>
-                  Checked baggage is stored in the aircraft's hold.
-                  Airlines may specify a maximum weight as well as a
-                  maximum total dimension for each bag.
+                  Checked baggage is stored in the
+                  aircraft's hold. Airlines may
+                  specify a maximum weight as well as
+                  maximum dimensions for each bag.
                 </p>
 
               </article>
@@ -1769,7 +2424,8 @@ const handleCheckBag = () => {
             </div>
 
 
-            {/* Common Questions */}
+            {/* COMMON QUESTIONS */}
+
             <div className="homepage-faq">
 
               <div className="faq-header">
@@ -1779,12 +2435,14 @@ const handleCheckBag = () => {
                 </p>
 
                 <h2>
-                  Baggage questions people ask before flying
+                  Baggage questions people ask before
+                  flying
                 </h2>
 
                 <p>
-                  Quick answers to common questions about airline
-                  baggage size, weight and allowances.
+                  Quick answers to common questions
+                  about airline baggage size, weight
+                  and allowances.
                 </p>
 
               </div>
@@ -1793,85 +2451,112 @@ const handleCheckBag = () => {
               <div className="faq-list">
 
                 <details>
+
                   <summary>
-                    What size bag can I take on a flight?
+                    What size bag can I take on a
+                    flight?
                   </summary>
 
                   <p>
-                    There is no single baggage size that applies to
-                    every airline. Cabin and checked baggage limits
-                    vary, so check the rules for the airline you are
-                    travelling with.
+                    There is no single baggage size
+                    that applies to every airline.
+                    Cabin and checked baggage limits
+                    vary, so check the rules for the
+                    airline you are travelling with.
                   </p>
+
                 </details>
 
 
                 <details>
+
                   <summary>
-                    What is the standard cabin baggage size?
+                    What is the standard cabin
+                    baggage size?
                   </summary>
 
                   <p>
-                    Cabin baggage dimensions vary by airline. Common
-                    limits are around 55 cm in length, but the allowed
-                    width, height and weight can be different for each
-                    airline.
+                    Cabin baggage dimensions vary by
+                    airline. Common limits are around
+                    55 cm in length, but the allowed
+                    width, height and weight can be
+                    different for each airline.
                   </p>
+
                 </details>
 
 
                 <details>
+
                   <summary>
-                    What does 158 cm total dimensions mean?
+                    What does 158 cm total dimensions
+                    mean?
                   </summary>
 
                   <p>
-                    It means the length, width and height of the bag
-                    together should not exceed 158 cm. For example,
+                    It means the length, width and
+                    height of the bag together should
+                    not exceed 158 cm. For example,
                     70 + 50 + 38 cm equals 158 cm.
                   </p>
+
                 </details>
 
 
                 <details>
+
                   <summary>
-                    Is baggage allowance the same for every airline?
+                    Is baggage allowance the same for
+                    every airline?
                   </summary>
 
                   <p>
-                    No. Airlines can have different baggage size and
-                    weight limits. Allowances can also change depending
-                    on your fare, route and travel class.
+                    No. Airlines can have different
+                    baggage size and weight limits.
+                    Allowances can also change
+                    depending on your fare, route and
+                    travel class.
                   </p>
+
                 </details>
 
 
                 <details>
+
                   <summary>
-                    Does baggage allowance depend on my fare?
+                    Does baggage allowance depend on
+                    my fare?
                   </summary>
 
                   <p>
-                    Yes. Some fares include different baggage
-                    allowances, particularly for checked baggage.
-                    Your booking confirmation and the airline's
-                    official baggage policy are the best sources for
-                    your exact allowance.
+                    Yes. Some fares include different
+                    baggage allowances, particularly
+                    for checked baggage. Your booking
+                    confirmation and the airline's
+                    official baggage policy are the
+                    best sources for your exact
+                    allowance.
                   </p>
+
                 </details>
 
 
                 <details>
+
                   <summary>
-                    Should I check my airline's baggage policy before flying?
+                    Should I check my airline's
+                    baggage policy before flying?
                   </summary>
 
                   <p>
-                    Yes. BagInAir is designed as a quick reference,
-                    but baggage rules can change and may depend on your
-                    specific flight. Always confirm the final allowance
-                    with the airline.
+                    Yes. BagInAir is designed as a
+                    quick reference, but baggage rules
+                    can change and may depend on your
+                    specific flight. Always confirm
+                    the final allowance with the
+                    airline.
                   </p>
+
                 </details>
 
               </div>
@@ -1882,226 +2567,11 @@ const handleCheckBag = () => {
 
         )}
 
-        {!airlineParam && (
-  <section className="seo-search-content">
-    <div className="section-header">
-      <span className="section-eyebrow">BAGGAGE SIZE & WEIGHT</span>
 
-      <h2>
-        Check Baggage Size, Luggage Dimensions & Weight Limits
-      </h2>
+        {/* =================================================
+            AIRLINE LINKS
+        ================================================= */}
 
-      <p>
-        Looking for a quick way to check baggage size before flying?
-        BagInAir is an airline baggage size checker that helps you
-        check your bag size, luggage dimensions and baggage weight
-        against available airline limits.
-      </p>
-    </div>
-
-    <div className="seo-content-grid">
-
-      <div className="seo-content-card">
-        <h3>Check Your Baggage Size</h3>
-
-        <p>
-          You can use BagInAir to check baggage size and weight
-          before travelling. Enter the length, width and height
-          of your bag along with its weight to check whether your
-          luggage fits the available airline baggage limits.
-        </p>
-
-        <p>
-          If you are searching for a baggage size checker,
-          luggage size checker, bag size checker or baggage
-          dimensions checker, BagInAir lets you check your
-          measurements against airline requirements.
-        </p>
-      </div>
-
-      <div className="seo-content-card">
-        <h3>Check Bag Size and Weight Before Flying</h3>
-
-        <p>
-          Airlines can have different baggage size and weight
-          limits. Before flying, check your bag dimensions and
-          weight instead of relying only on a general luggage size
-          guide.
-        </p>
-
-        <p>
-          This baggage size and weight checker can help you check
-          cabin bags and checked bags against the available
-          airline baggage allowance.
-        </p>
-      </div>
-
-      <div className="seo-content-card">
-        <h3>Airline Baggage Size Checker</h3>
-
-        <p>
-          An airline baggage size checker helps travellers compare
-          their luggage dimensions with the size limits of their
-          airline. BagInAir supports baggage checking for multiple
-          airlines so you can check your bag before reaching the
-          airport.
-        </p>
-
-        <p>
-          You can check airline baggage size, airline baggage
-          weight limits, cabin baggage dimensions, checked baggage
-          dimensions and baggage allowance by airline.
-        </p>
-      </div>
-
-      <div className="seo-content-card">
-        <h3>Check Cabin Baggage Size</h3>
-
-        <p>
-          Want to check your cabin bag size? Measure the length,
-          width and height of your cabin luggage and compare the
-          dimensions with your airline's cabin baggage allowance.
-        </p>
-
-        <p>
-          Common searches include check cabin baggage size,
-          check cabin bag size and weight, cabin baggage dimensions,
-          cabin bag size limits and cabin baggage weight limits.
-          Always verify the final allowance with your airline.
-        </p>
-      </div>
-
-      <div className="seo-content-card">
-        <h3>Check Checked Baggage Size</h3>
-
-        <p>
-          Checked luggage can have both maximum weight and maximum
-          dimensions. Use a baggage dimensions checker to understand
-          whether your checked bag is within the available airline
-          limits.
-        </p>
-
-        <p>
-          Some airlines use total dimensions for checked baggage.
-          For example, 158 cm total dimensions means adding the
-          length, width and height of the bag together.
-        </p>
-      </div>
-
-      <div className="seo-content-card">
-        <h3>Check Luggage Dimensions</h3>
-
-        <p>
-          To check luggage size correctly, measure the three main
-          baggage dimensions: length, width and height. These
-          measurements are commonly shown in centimetres.
-        </p>
-
-        <p>
-          If you are looking for how to measure baggage dimensions,
-          how to measure luggage size or how to check bag dimensions,
-          start by measuring the complete bag and then compare the
-          measurements with the airline's rules.
-        </p>
-      </div>
-
-    </div>
-
-    <div className="seo-content-wide">
-      <h3>
-        Airline Baggage Allowance and Size Limits
-      </h3>
-
-      <p>
-        Baggage allowance is not always the same for every airline.
-        Cabin baggage size, cabin baggage weight, checked baggage
-        weight and maximum luggage dimensions can vary depending
-        on the airline, route, fare and type of ticket.
-      </p>
-
-      <p>
-        Travellers commonly search for airline baggage size limits,
-        airline baggage weight limits, baggage allowance by airline,
-        luggage size limits by airline, cabin baggage size by airline
-        and checked baggage allowance. BagInAir brings these
-        measurements together in one place so you can check your
-        baggage before travelling.
-      </p>
-
-      <p>
-        If your cabin bag is around 55 × 35 × 25 cm or weighs around
-        7 kg, do not assume that every airline will accept exactly
-        the same dimensions. Airline baggage rules can differ, so
-        check the specific airline's baggage requirements before
-        your flight.
-      </p>
-    </div>
-
-    <div className="seo-content-wide">
-      <h3>
-        Common Baggage Size Searches
-      </h3>
-
-      <p>
-        People often search for terms such as check baggage size,
-        check bag size, check luggage size, baggage size checker,
-        luggage size checker, airline luggage size checker,
-        baggage dimensions checker, luggage dimensions checker,
-        baggage size and weight checker and airline baggage
-        size and weight checker.
-      </p>
-
-      <p>
-        Other common searches include check my baggage size,
-        check my bag against airline limits, check if my bag fits
-        airline limits, check bag size and weight before flying,
-        check baggage size for airline, check airline baggage
-        allowance and airline baggage allowance checker.
-      </p>
-    </div>
-
-    <div className="seo-content-wide">
-      <h3>
-        Cabin Bag and Luggage Size Guide
-      </h3>
-
-      <p>
-        When checking cabin luggage, look at both dimensions and
-        weight. A bag may have acceptable dimensions but still
-        exceed the airline's cabin baggage weight limit.
-      </p>
-
-      <p>
-        Popular baggage-related measurements include 55 × 35 × 25 cm
-        cabin baggage, 7 kg cabin baggage, 115 cm total cabin
-        dimensions and 158 cm checked baggage dimensions. These
-        numbers are not universal airline rules, so always compare
-        them with the requirements for your specific airline.
-      </p>
-    </div>
-
-    <div className="seo-content-wide">
-      <h3>
-        How to Check Your Bag Before Travelling
-      </h3>
-
-      <p>
-        First, measure your luggage length, width and height.
-        Next, weigh your bag. Then select your airline and baggage
-        type in the BagInAir baggage checker. The tool compares
-        your entered measurements with the available baggage
-        limits and shows whether your bag meets those requirements.
-      </p>
-
-      <p>
-        This makes it easier to check baggage size online,
-        check luggage weight, check cabin bag dimensions and
-        understand airline baggage limits before you travel.
-      </p>
-    </div>
-  </section>
-)}
-        {/* Airline Links */}
         <div className="airline-links">
 
           <div className="airline-links-header">
@@ -2115,7 +2585,8 @@ const handleCheckBag = () => {
             </h2>
 
             <p>
-              Check baggage size and weight limits for popular airlines.
+              Check baggage size and weight limits
+              for supported airlines.
             </p>
 
           </div>
@@ -2123,226 +2594,226 @@ const handleCheckBag = () => {
 
           <div className="airline-grid">
 
-            <a href="/indigo" className="airline-card">
-              <span className="airline-card-name">
-                IndiGo
-              </span>
+            {airlines.map(
+              (item) => (
 
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
+                <a
+                  key={item.id}
+                  href={`/${item.id}`}
+                  className="airline-card"
+                >
 
+                  <span className="airline-card-name">
+                    {item.name}
+                  </span>
 
-            <a href="/airindia" className="airline-card">
-              <span className="airline-card-name">
-                Air India
-              </span>
+                  <span className="airline-card-action">
+                    Check baggage{" "}
+                    <span>→</span>
+                  </span>
 
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
+                </a>
 
-
-            <a href="/spicejet" className="airline-card">
-              <span className="airline-card-name">
-                SpiceJet
-              </span>
-
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
-
-
-            <a href="/akasa" className="airline-card">
-              <span className="airline-card-name">
-                Akasa Air
-              </span>
-
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
-
-
-            <a href="/allianceair" className="airline-card">
-              <span className="airline-card-name">
-                Alliance Air
-              </span>
-
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
-
-
-            <a href="/fly91" className="airline-card">
-              <span className="airline-card-name">
-                FLY91
-              </span>
-
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
-
-
-            <a href="/airindiaexpress" className="airline-card">
-              <span className="airline-card-name">
-                Air India Express
-              </span>
-
-              <span className="airline-card-action">
-                Check baggage <span>→</span>
-              </span>
-            </a>
+              )
+            )}
 
           </div>
-              <a
+
+
+          <a
             href="/baggage-guide"
             className="baggage-guide-cta-button"
           >
             Read the complete baggage guide
             <span>→</span>
           </a>
+
         </div>
-        
 
-        {/* FAQ */}
-        {airlineParam && !isAllAirlinesPage && (
 
-          <section
-            id="faq"
-            className="faq-section"
-          >
+        {/* =================================================
+            AIRLINE FAQ
+        ================================================= */}
 
-            <div className="faq-header">
+        {airlineParam &&
+          !isAllAirlinesPage && (
 
-              <p className="eyebrow">
-                FAQ
-              </p>
+            <section
+              id="faq"
+              className="faq-section"
+            >
 
-              <h2>
-                Frequently asked questions
-              </h2>
+              <div className="faq-header">
+
+                <p className="eyebrow">
+                  FAQ
+                </p>
+
+                <h2>
+                  Frequently asked questions about{" "}
+                  {
+                    selectedAirline.name
+                  }{" "}
+                  baggage
+                </h2>
+
+                <p>
+                  Common questions about{" "}
+                  {
+                    selectedAirline.name
+                  }{" "}
+                  baggage size, weight limits and
+                  baggage rules.
+                </p>
+
+              </div>
+
+
+              <div className="faq-list">
+
+                {
+                  selectedAirline.faq.map(
+                    (item, index) => (
+
+                      <details
+                        key={index}
+                      >
+
+                        <summary>
+                          {
+                            item.question
+                          }
+                        </summary>
+
+                        <p>
+                          {item.answer}
+                        </p>
+
+                      </details>
+
+                    )
+                  )
+                }
+
+              </div>
+
+            </section>
+
+          )}
+
+
+        {/* =================================================
+            FOOTER
+        ================================================= */}
+
+        <footer className="footer">
+
+          <div className="footer-brand">
+
+            <img
+              src="/logo.png"
+              alt="BagInAir"
+              className="footer-brand-icon"
+            />
+
+            <div>
+
+              <strong>
+                BagInAir
+              </strong>
 
               <p>
-                Common questions about{" "}
-                {selectedAirline.name} baggage size,
-                weight limits and baggage rules.
+                Check airline baggage size and
+                weight limits before you fly.
               </p>
 
             </div>
 
+          </div>
 
-            <div className="faq-list">
 
-              {selectedAirline.faq.map((item, index) => (
+          <div className="footer-columns">
 
-                <details key={index}>
+            {/* TOOLS */}
 
-                  <summary>
-                    {item.question}
-                  </summary>
+            <div className="footer-column">
 
-                  <p>
-                    {item.answer}
-                  </p>
+              <h3>
+                Baggage Tools
+              </h3>
 
-                </details>
+              <a href="/">
+                Baggage Size Checker
+              </a>
 
-              ))}
+              <a href="/airlines">
+                Compare All Airlines
+              </a>
 
             </div>
 
-          </section>
 
-        )}
+            {/* AIRLINES */}
 
+            <div className="footer-column">
 
-        {/* Footer */}
-{/* Footer */}
-<footer className="footer">
+              <h3>
+                Airline Baggage Checkers
+              </h3>
 
-<div className="footer-brand">
-  <img
-    src="/logo.png"
-    alt="BagInAir"
-    className="footer-brand-icon"
-  />
+              {airlines.map(
+                (item) => (
 
-  <div>
-    <strong>BagInAir</strong>
+                  <a
+                    key={item.id}
+                    href={`/${item.id}`}
+                  >
+                    {item.name} Baggage Checker
+                  </a>
 
-    <p>
-      Check airline baggage size and weight limits before you fly.
-    </p>
-  </div>
-</div>
+                )
+              )}
 
-
-  <div className="footer-columns">
-
-    {/* Baggage Tools */}
-    <div className="footer-column">
-      <h3>Baggage Tools</h3>
-
-      <a href="/">
-        Baggage Size Checker
-      </a>
-
-      <a href="/airlines">
-        Compare All Airlines
-      </a>
-    </div>
+            </div>
 
 
-    {/* Airline Checkers */}
-    <div className="footer-column">
-      <h3>Airline Baggage Checkers</h3>
+            {/* INFORMATION */}
 
-      {airlines.map((item) => (
-        <a
-          key={item.id}
-          href={`/${item.id}`}
-        >
-          {item.name} Baggage Checker
-        </a>
-      ))}
-    </div>
+            <div className="footer-column">
 
+              <h3>
+                Information
+              </h3>
 
-    {/* Information */}
-    <div className="footer-column">
-      <h3>Information</h3>
+              <a href="/baggage-guide">
+                Baggage Guide
+              </a>
 
-      <a href="/baggage-guide">
-        Baggage Guide
-      </a>
+              <a href="#faq">
+                FAQ
+              </a>
 
-      <a href="#faq">
-        FAQ
-      </a>
-    </div>
-      
-  </div>
+            </div>
+
+          </div>
 
 
-  <div className="footer-bottom">
+          <div className="footer-bottom">
 
-    <p>
-      © {new Date().getFullYear()} BagInAir.
-    </p>
+            <p>
+              ©{" "}
+              {new Date().getFullYear()}{" "}
+              BagInAir.
+            </p>
 
-    <p>
-      Always verify baggage rules with your airline before travelling.
-    </p>
+            <p>
+              Always verify baggage rules with your
+              airline before travelling.
+            </p>
 
-  </div>
+          </div>
 
-</footer>
+        </footer>
 
       </main>
 

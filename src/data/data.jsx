@@ -10,27 +10,113 @@ const airlines = [
     },
 
 content: {
-intro:
-"Check your IndiGo baggage size, weight and allowance before your flight. Enter your cabin or checked bag dimensions and weight to see whether your luggage fits the available IndiGo baggage limits.",
+  intro:
+    "Check your IndiGo domestic baggage size, weight and allowance before your flight. Enter your cabin or checked bag dimensions and weight to compare your luggage with the available IndiGo baggage limits.",
 
-cabinTitle: "IndiGo Cabin Baggage Size & Weight",
+  cabinTitle: "IndiGo Cabin Baggage Size & Weight",
 
-cabinText:
-"IndiGo cabin baggage can be up to 55 × 35 × 25 cm and must not exceed 7 kg. This is the main cabin bag size and weight limit used by the checker.",
+  cabinText:
+    "For domestic travel, IndiGo allows one cabin bag up to 55 × 35 × 25 cm with a maximum weight of 7 kg. One additional personal article, such as a small laptop bag or purse, may also be carried up to 3 kg.",
 
-checkedTitle: "IndiGo Checked Baggage Size & Weight",
+  checkedTitle: "IndiGo Checked Baggage Size & Weight",
 
-checkedText:
-"For standard domestic travel, IndiGo checked baggage allowance is 15 kg. The maximum checked baggage dimensions are 158 cm in total, calculated by adding length, width and height.",
+  checkedText:
+    "For standard domestic travel, IndiGo provides a 15 kg checked baggage allowance per passenger. The maximum checked baggage dimension is 158 cm in total, calculated as length + width + height. The applicable allowance can vary depending on the booking and travel conditions.",
 
-sizeCalculation:
-"Checked baggage size is calculated by adding the length, width and height of the bag. For example, a bag measuring 70 × 50 × 38 cm has total dimensions of 158 cm.",
+  sizeCalculation:
+    "Checked baggage size is calculated by adding the length, width and height of the bag. For example, a bag measuring 70 × 50 × 38 cm has total dimensions of 158 cm.",
 
-cabinGuide:
-"When checking an IndiGo cabin bag, measure its length, width and height in centimetres and check the total weight. A cabin bag may meet the size requirement but still exceed the allowed weight, so both measurements matter.",
+  cabinGuide:
+    "Measure your cabin bag's length, width and height in centimetres and check its weight. IndiGo's standard cabin baggage limit is 55 × 35 × 25 cm and 7 kg, with an additional personal article allowed up to 3 kg.",
 
-checkedGuide:
-"For IndiGo checked baggage, check both the weight allowance and total bag dimensions. The applicable allowance can depend on your flight details, so use the baggage checker as a quick reference and confirm the final allowance with IndiGo."
+  checkedGuide:
+    "For checked baggage, check both the total dimensions and weight. The standard domestic allowance is 15 kg, while the applicable baggage allowance can vary depending on your booking and travel conditions.",
+
+  measuringGuide:
+    "Measure the complete length, width and height of your luggage in centimetres. For checked baggage, add all three dimensions together. For cabin baggage, compare each dimension with the permitted cabin bag size.",
+
+  carryItems: [
+    {
+      name: "Laptop",
+      cabin: "Yes",
+      checked: "Yes*",
+      note: "IndiGo recommends carrying valuable electronics in cabin baggage."
+    },
+    {
+      name: "Mobile charger",
+      cabin: "Yes",
+      checked: "Yes"
+    },
+    {
+      name: "Medicines",
+      cabin: "Yes*",
+      checked: "Yes*",
+      note: "Carry medicines with the appropriate prescription where required."
+    },
+    {
+      name: "Clothes",
+      cabin: "Yes",
+      checked: "Yes"
+    },
+    {
+      name: "Dry food",
+      cabin: "Yes",
+      checked: "Yes"
+    },
+    {
+      name: "Dry fruits",
+      cabin: "Yes",
+      checked: "Yes*",
+      note: "Dry coconut/copra has restrictions."
+    },
+    {
+      name: "Baby stroller / pram",
+      cabin: "Yes*",
+      checked: "Yes*",
+      note: "Must be foldable."
+    },
+    {
+      name: "Bicycle",
+      cabin: "No",
+      checked: "Yes*",
+      note: "Special baggage conditions apply and it should be dismantled."
+    },
+    {
+      name: "Musical instrument",
+      cabin: "Yes*",
+      checked: "Yes*",
+      note: "Conditions and charges may apply."
+    },
+    {
+      name: "Glass items",
+      cabin: "Yes*",
+      checked: "Yes*",
+      note: "Must be properly packed to prevent damage."
+    }
+  ],
+
+  cabinPacking: [
+    "Medicines",
+    "Valuables",
+    "Fragile items",
+    "Important documents",
+    "Cameras and electronics"
+  ],
+
+  liquids:
+    "Liquids, gels, pastes and aerosols carried in cabin baggage are subject to security screening. Individual liquid containers should have a maximum volume of 100 ml and should fit comfortably inside a transparent, resealable 1-litre plastic bag, subject to applicable security rules.",
+
+  excessBaggage:
+    "Baggage exceeding the applicable free allowance may be subject to additional charges. The applicable excess baggage rules and charges can vary, so check your booking and IndiGo's current baggage information before travelling.",
+
+  infantBaggage:
+    "For domestic travel, IndiGo allows one hand baggage item up to 7 kg and 115 cm total dimensions for an infant. Checked baggage allowance for infants is NIL. One stroller or baby pram per infant is allowed without charge, subject to the applicable conditions.",
+
+  specialBaggage:
+    "Special or non-standard baggage such as bicycles, musical instruments and other oversized items may have additional conditions or charges. Check IndiGo's current baggage rules before travelling with special items.",
+
+  restrictedItems:
+    "Some items are restricted or prohibited in cabin or checked baggage for safety and security reasons. Always check IndiGo's current dangerous-goods and baggage rules before travelling with an item that may have special restrictions."
 },
 
 
